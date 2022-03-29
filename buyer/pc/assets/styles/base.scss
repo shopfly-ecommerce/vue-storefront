@@ -1,0 +1,213 @@
+@import "color";
+
+/* 公共样式重置
+   ========================================================================== */
+body {
+  font: 12px/150% tahoma, arial, Microsoft YaHei, Hiragino Sans GB, "\u5b8b\u4f53", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #666;
+  background: #fff;
+  display: block;
+}
+
+body {
+  font-family: "Microsoft YaHei","Microsoft JhengHei",SimSun,verdana,Tahoma,arial;
+  position: relative;
+}
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup,
+tt, b, u, i, input, center, dl, dt, dd, ol, ul, li, fieldset, form, label,
+legend, table, caption, tbody, tfoot, thead, tr, th, td, button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+  color: #666
+}
+
+a:link {
+  text-decoration: none;
+  outline: none;
+}
+
+a:visited {
+  text-decoration: none;
+  outline: none;
+}
+
+a:hover {
+  text-decoration: none;
+  outline: none;
+  color: $color-main;
+}
+
+a:active {
+  text-decoration: none;
+  outline: none;
+}
+
+a:focus {
+  outline: none;
+}
+
+i, em {
+  font-style: normal;
+}
+
+li {
+  list-style: none;
+}
+
+a, p, span, div, th, td {
+  word-break: break-all;
+}
+
+img {
+  border: 0;
+  vertical-align:bottom
+}
+
+:focus {
+  outline: 0;
+}
+
+/* 公共样式
+   ========================================================================== */
+.w {
+  margin: auto;
+  width: 1210px;
+}
+
+.clear, .clr {
+  display: block;
+  overflow: hidden;
+  clear: both;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+}
+
+.clearfix:after {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
+}
+
+.clearfix {
+  display: inline-block;
+}
+
+html[xmlns] .clearfix {
+  display: block;
+}
+
+* html .clearfix {
+  height: 1%;
+}
+
+* + html .clearfix {
+  height: 1%;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+
+/** layer skin */
+.layer-skin-custom-msg {
+  border: 0 !important;
+  box-shadow: 0 5px 15px 1px rgba(0,0,0,.2) !important;
+}
+
+.layer-skin-common, .layui-layer-prompt {
+  .layui-layer-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    box-sizing: border-box;
+    padding: 0 40px;
+    text-align: center;
+    //color: #fff;
+    //background-color: darken($color-main, 10%);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    font-weight: 600;
+  }
+  .layui-layer-setwin {
+    color: #fff
+  }
+  .layui-layer-content {
+    margin-top: 44px;
+  }
+  .layui-layer-btn-c a {
+    color: #333;
+    min-width: 50px;
+    &:first-child {
+      background-color: $color-main;
+      border-color: $color-main;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+}
+
+/** dorpdown-layer */
+.dorpdown-layer {
+  display: none;
+  position: absolute;
+  border: 1px solid #d2d2d2;
+  background-color: #fff;
+  top: 30px;
+  right: 0;
+}
+
+/** input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type="number"]{
+  -moz-appearance: textfield;
+}
+
+/** others */
+.price {
+  color: $color-main !important;
+}
+
+.sku-spec {
+  color: #ff9800 !important;
+}
+
+.icon-custom-loading {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background: url("../images/loading.gif") no-repeat;
+  background-size: 100% 100%;
+}
+
+/** 懒加载 */
+img[lazy=loading] {
+  background-color: #fff !important;
+  background-image: url("../images/icon-place-loading.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+}

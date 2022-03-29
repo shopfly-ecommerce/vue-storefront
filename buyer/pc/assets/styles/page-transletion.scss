@@ -1,0 +1,7 @@
+.page-enter-active, .page-lave-active {
+  transition: opacity .5s;
+}
+
+.page-enter, .page-lave-active {
+  opacity: 0;
+}

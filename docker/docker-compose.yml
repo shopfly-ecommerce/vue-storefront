@@ -1,0 +1,22 @@
+version: '3'
+services:
+  buyer-pc:
+   image: buyer-pc:1.0
+   ports:
+     - 3000:3000
+   env_file:
+     - env_vars
+
+  buyer-wap:
+   image: buyer-wap:1.0
+   ports:
+     - 3001:3001
+   env_file:
+     - env_vars
+
+  manager-seller:
+    image: manager-seller:1.0
+    ports:
+      - 3002:80
+    env_file:
+      - env_vars
