@@ -48,7 +48,7 @@ let httpUrl = /^((http)?:\/\/)[^\s]+/
 // 固话
 let TEL = /0\d{2,3}-\d{7,8}/
 
-module.exports = {
+export default {
   mobile: mobile,
   email: email,
   password: password,

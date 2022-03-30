@@ -1,12 +1,3 @@
-let uiDomain = require('../ui-domain')
-let uiUtils = require('../ui-utils')
-
-Object.keys(uiUtils).forEach(key => {
-  Object.keys(uiUtils[key]).forEach(_key => {
-    uiUtils[key][_key] = uiUtils[key][_key].toString()
-  })
-})
-
 module.exports = {
   env: {
     /**
@@ -19,9 +10,7 @@ module.exports = {
      * 如果有IM使用权限，请设置为true
      * 如果没有启用IM，则会使用环信服务
      */
-    im: false,
-    uiDomain,
-    uiUtils: JSON.stringify(uiUtils),
+    im: false
   },
   head: {
     meta: [

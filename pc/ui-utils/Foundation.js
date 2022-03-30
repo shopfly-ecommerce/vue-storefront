@@ -144,7 +144,7 @@ let theNextDayTime = function theNextDayTime() {
   return parseInt(time / 1000)
 }
 
-module.exports = {
+export default {
   unixToDate: unixToDate,
   dateToUnix: dateToUnix,
   deepClone: deepClone,

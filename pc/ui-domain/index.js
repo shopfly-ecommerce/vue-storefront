@@ -1,26 +1,28 @@
-const uiDomain = process.env.uiDomain
-const is_dev = process.env.NODE_ENV === 'development'
-Object.keys(uiDomain).forEach(key => {
-  if (~key.indexOf('_')) return
-  uiDomain[key] = is_dev ? uiDomain[`${key}_dev`] : uiDomain[`${key}_pro`]
-})
+let api    = require('./api')
+let domain = require('./domain')
+
 let env = process.server
   ? process.env
   : (global.window && window.__NUXT__.state ? window.__NUXT__.state.env : {})
 
-env.API_BASE && (uiDomain.api.base = env.API_BASE)
-env.API_BUYER && (uiDomain.api.buyer = env.API_BUYER)
-env.API_SELLER && (uiDomain.api.seller = env.API_SELLER)
-env.API_ADMIN && (uiDomain.api.admin = env.API_ADMIN)
+// 后台提供的API模式【dev|pro】
+let api_model = 'dev'
+// 当前前台是否为开发模式
+let is_dev = process.env.NODE_ENV === 'development'
 
-env.DOMAIN_BUYER_PC && (uiDomain.domain.buyer_pc = env.DOMAIN_BUYER_PC)
-env.DOMAIN_BUYER_WAP && (uiDomain.domain.buyer_wap = env.DOMAIN_BUYER_WAP)
-env.DOMAIN_SELLER && (uiDomain.domain.seller = env.DOMAIN_SELLER)
-env.DOMAIN_ADMIN && (uiDomain.domain.admin = env.DOMAIN_ADMIN)
-
-export const api = uiDomain.api
-export const api_dev = uiDomain.api_dev
-export const api_pro = uiDomain.api_pro
-export const domain = uiDomain.domain
-export const domain_dev = uiDomain.domain_dev
-export const domain_pro = uiDomain.domain_pro
+module.exports =  {
+  // API模式
+  api_model,
+  // 开发环境下的API
+  api_dev: api.dev,
+  // 生产环境下的API
+  api_pro: api.pro,
+  // 开发环境下的域名
+  domain_dev: domain.dev,
+  // 生产环境下的域名
+  domain_pro: domain.pro,
+  // API根据前台环境自动适配
+  api: is_dev ? api.dev : api.pro,
+  // 域名根据前台环境自动适配
+  domain: is_dev ? domain.dev : domain.pro
+}
