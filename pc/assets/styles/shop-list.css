@@ -1,0 +1,419 @@
+@charset "UTF-8";
+
+/* 店铺列表页搜索区 */
+
+.shop-list .header-wraper {
+    height: 45px;
+    margin-top: 25px;
+}
+
+.header-wraper .shop-logo {
+    height: 45px;
+    width: 180px;
+    float: left;
+}
+
+.header-wraper .shop-logo a img {
+    height: 100%;
+    width: 100%;
+}
+
+.header-wraper .heard-shop-search {
+    float: left;
+    margin-left: 40px;
+}
+
+.header-wraper .more-market {
+    float: left;
+    width: 80px;
+    height: 25px;
+    margin: 10px 10px;
+    line-height: 25px;
+}
+
+.header-wraper .more-market .market-label {
+    border: 1px solid #e8e8e8;
+    width: 80px;
+    height: 25px;
+    cursor: pointer;
+}
+
+.header-wraper .more-market .market-label span {
+    margin-left: 5px;
+}
+
+
+/* 店铺内容 左侧 */
+
+.shop-list-content {
+    clear: both;
+  overflow: hidden;
+}
+
+.shop-list-content .shop-left {
+    float: left;
+    width: 990px;
+}
+
+.shop-left .shop-tips {
+    height: 40px;
+    line-height: 40px;
+    margin-top: 10px;
+    padding-left: 10px;
+}
+
+.shop-left .shop-tips i {
+  background: url(~assets/images/icons-shop-list.png) no-repeat 3px -35px;
+  width: 15px;
+    height: 15px;
+    float: left;
+    margin: 10px;
+}
+
+.shop-left .shop-tips p {
+    float: left;
+    cursor: default;
+}
+
+.shop-left .shop-tips p span {
+    color: red;
+}
+
+
+/* 默认排序 */
+
+.search-sort .search-sort-inner {
+    height: 41px;
+}
+
+.search-sort-inner .search-sort-ul {
+    height: 39px;
+    border: 1px solid #e8e8e8;
+    line-height: 39px;
+    background: #f5f5f5;
+}
+
+.search-sort-ul .default li {
+    float: left;
+}
+
+.search-sort-ul .default li a {
+    font-size: 13px;
+    padding: 0px 15px;
+    display: inline-block;
+}
+.default li a:hover{
+    background: white;
+}
+.active {
+    background: white;
+    color: red;
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+}
+
+
+/* 店铺类型 */
+
+.serch-sort-right {
+    float: right;
+}
+
+.shop-type {
+    float: left;
+    padding: 0px 13px;
+    position: relative;
+}
+
+.shop-type-con {
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+}
+.shop-type-con:hover i{
+    transform: rotate(180deg);
+}
+.shop-type-none {
+    position: absolute;
+    background: white;
+    z-index: 22;
+    border: 1px solid #f5f5f5;
+    width: 80px;
+    display: none;
+}
+
+.shop-type-none ul li {
+    padding: 0px 10px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.shop-type-none ul li a {
+    font-size: 12px;
+}
+.shop-type-none ul li a:hover{
+    color: red;
+}
+.shop-type .praise a {
+    display: block;
+    padding: 0px 5px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.pager {
+    float: left;
+}
+
+.pager ul li {
+    float: left;
+    padding: 0px 7px;
+}
+
+.shop-collection {
+    height: 40px;
+}
+
+.shop-coll-inner {
+    height: 39px;
+    border: 1px solid #e8e8e8;
+    border-top: none;
+    line-height: 39px;
+    padding-left: 10px;
+}
+
+.shop-coll-inner a {
+    padding: 0px 5px;
+}
+
+.shop-coll-inner a span {
+    font-size: 14px;
+}
+
+
+/* 列表内容 */
+
+.list-content {
+    clear: both;
+}
+
+.list-content .list-shop-con {
+    margin-top: 10px;
+}
+
+.list-content .list-shop-con ul li {
+    height: 208px;
+    margin-top: 20px;
+    width: 990px;
+    position: relative;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.list-shop-con .list-img {
+    float: left;
+    height: 70px;
+    width: 70px;
+    border: 1px solid #e8e8e8;
+}
+
+.list-shop-con .list-img a img {
+    width: 100%;
+    height: 100%;
+}
+
+.list-shop-con ul li .list-text {
+    float: left;
+    width: 270px;
+    padding: 0px 20px;
+}
+
+.list-content .list-shop-con .list-con-top {
+    height: 165px;
+}
+
+.list-shop-con ul li .list-text h4 a {
+    font-size: 15px;
+    color: #0063DC;
+}
+
+.list-shop-con ul li .list-text p a {
+    color: #0063DC;
+}
+
+.list-shop-con ul li .list-text .shop-main {
+    height: 25px;
+    line-height: 25px;
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.list-shop-con ul li .list-text .shop-main a {
+    text-overflow: ellipsis;
+    width: 220px;
+    height: 25px;
+    line-height: 25px;
+}
+
+.shop-products {
+    width: 600px;
+    height: 162px;
+    float: right;
+}
+
+.shop-products .products-list {
+    width: 150px;
+    float: left;
+    height: 160px;
+}
+
+.shop-products .products-list .one-list {
+    width: 140px;
+    border: 1px solid #e8e8e8;
+    height: 160px;
+    float: right;
+}
+
+.products-list .one-list .one-list-img {
+    width: 140px;
+    height: 140px;
+}
+
+.products-list .one-list .one-list-img a img {
+    width: 100%;
+    height: 100%;
+}
+
+.one-list .list-price {
+    height: 20px;
+    line-height: 20px;
+    cursor: default;
+}
+
+.shop-sales {
+    position: absolute;
+    top: 120px;
+    left: 0px;
+    cursor: default;
+}
+
+.similar-shop {
+    height: 40px;
+    line-height: 40px;
+    text-align: right;
+}
+
+.similar-shop a{
+    color: #0063DC;
+    cursor: pointer;
+}
+.similar-shop a:hover{
+    color: red;
+}
+.shopsearch-pager .left-pager {
+    margin: 30px auto;
+    width: 600px;
+    height: 40px;
+}
+
+.shopsearch-pager .left-pager ul {
+    height: 32px;
+    float: left;
+}
+
+.shopsearch-pager .left-pager ul li {
+    float: left;
+    padding: 0px 10px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #e8e8e8;
+}
+
+.shopsearch-pager .left-pager ul .previous-page {
+    margin-right: 10px;
+}
+
+.shopsearch-pager .left-pager ul .next-page {
+    margin-left: 10px;
+}
+
+.left-pager .page-content {
+    float: left;
+    height: 32px;
+    line-height: 32px;
+    margin-left: 20px;
+}
+
+.left-pager .page-content input {
+    width: 20px;
+    padding: 5px;
+    border: 1px solid #e8e8e8;
+    padding-left: 5px;
+}
+
+.left-pager .page-content a {
+    padding: 5px;
+    border: 1px solid #e8e8e8;
+}
+
+
+/* 商品店铺列表右侧 */
+
+.shop-right {
+    float: right;
+    width: 180px;
+    margin-right: 10px;
+    border: 1px solid #e8e8e8;
+    margin-bottom: 20px;
+}
+
+.shop-right .treasurer-hot {
+    height: 35px;
+    line-height: 35px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.shop-right .treasurer-hot a {
+    font-size: 15px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.treasurer-hot a:hover{
+    color: red;
+    text-decoration: underline;
+}
+.shop-right .treasurer {
+    width: 180px;
+    height: 180px;
+}
+
+.hover {
+    background: #F5F5F5;
+}
+
+.a-color {
+    color: red!important;
+}
+
+.shop-right ul li {
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.shop-right .treasurer img {
+    width: 100%;
+    height: 100%;
+}
+
+.shop-right .treasurer-text a {
+    padding: 0px 10px;
+    overflow: hidden;
+    display: block;
+    line-height: 16px;
+    height: 16px;
+    margin: 10px 0px;
+}
+
+.shop-right .treasurer-icon {
+    height: 16px;
+}
