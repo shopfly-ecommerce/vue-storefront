@@ -13,8 +13,8 @@ let env = process.server
 module.exports = {
   // 开发环境
   dev: {
-    base  : 'http://localhost:8080',
-    buyer : 'http://localhost:8080',
+    base  : 'https://api-b2c-v710.javamall.com.cn/base',
+    buyer : 'https://api-b2c-v710.javamall.com.cn/buyer',
     seller: 'https://api-b2c-v710.javamall.com.cn/seller',
     live  : 'https://api-b2c-v710.javamall.com.cn/live',
     im    : 'https://api-b2c-v710.javamall.com.cn/im'
