@@ -48,7 +48,7 @@
               </div>
             </li>
           </ul>
-          <p v-else class="no-sku" @click="handleClick"> 暂无商品... </p>
+          <p v-else class="no-sku" @click="handleClick">暂无商品</p>
         </div>
         <div class="mb">
           <div class="p-total">共计:<span class="cart-total">{{(cartTotal.goods_price || 0) | unitPrice }}</span></div>
