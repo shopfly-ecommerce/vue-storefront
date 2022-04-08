@@ -3,7 +3,6 @@
     <div class="inner-header-other" :style="{width: width + 'px'}">
       <div class="left-heander-other">
         <en-logo/>
-        <span class="logo-title" @click="handleClick">{{ title }}</span>
       </div>
       <div class="right-heander-other">
         <slot></slot>
@@ -36,15 +35,13 @@ export default {
 <style type="text/scss" lang="scss" scoped>
 .header-other {
   .inner-header-other {
-    position: relative;
     margin: 0 auto;
     padding: 20px 0;
-    height: 80px;
+    height: 50px;
 
     /deep/ #logo {
       float: left;
       width: 245px;
-      height: 60px;
     }
 
     .logo-title {
@@ -54,6 +51,10 @@ export default {
       margin: 25px 5px;
     }
 
+    .left-heander-other{
+      width: 245px;
+      margin: 0 auto;
+    }
     .right-heander-other {
       font-size: 16px;
       float: right;
