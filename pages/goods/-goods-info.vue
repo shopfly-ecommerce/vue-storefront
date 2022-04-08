@@ -29,7 +29,6 @@
         <goods-promotions :promotions="promotions"/>
       </div>
       <goods-coupons :goods="goodsInfo" :is-snapshot="is_snapshot"/>
-      <goods-ship :goods-id="goods.goods_id" @in-stock-change="handleInStockChange"/>
     </div>
     <div v-if="specList && specList.length" :class="['pro-spec', unselectedSku && 'error']">
       <div v-for="(spec, specIndex) in specList" :key="spec.spec_id" class="pro-list">
