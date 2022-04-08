@@ -51,7 +51,7 @@
           <p v-else class="no-sku" @click="handleClick"> 暂无商品... </p>
         </div>
         <div class="mb">
-          <div class="p-total">共<span class="cart-num">{{ allCount }}</span>件商品&nbsp;&nbsp;共计：<span class="cart-total">{{(cartTotal.goods_price || 0) | unitPrice }}</span></div>
+          <div class="p-total">共计:<span class="cart-total">{{(cartTotal.goods_price || 0) | unitPrice }}</span></div>
           <nuxt-link to="/cart" class="btn-cart">去购物车</nuxt-link>
         </div>
       </div>
