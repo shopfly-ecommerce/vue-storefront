@@ -4,7 +4,6 @@
     <div class="focus-container">
       <div class="w">
         <index-banner :focus-list="focusList"/>
-        <index-card/>
       </div>
     </div>
     <index-seckill/>
