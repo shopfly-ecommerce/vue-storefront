@@ -2,71 +2,52 @@
   <div id="shortcut">
     <div class="w">
       <div v-if="user" class="login-status logined">
-        <span>您好<nuxt-link to="/member">{{ user.nickname || user.uname }}</nuxt-link>，欢迎来到</span>
-        <a href="/">{{ site.site_name }} </a>
-        <span>[<a href="javascript:;" @click="handleLogout">退出</a>]</span>
+        <span><nuxt-link to="/member">My account</nuxt-link></span>
+        <span>[<a href="javascript:;" @click="handleLogout">exit</a>]</span>
       </div>
       <div v-else class="login-status">
-        <span>您好，欢迎来到</span>
-        <a href="/" style="color: #333">{{ site.site_name }}</a>
-        <span>[<nuxt-link :to="'/login' + MixinForward">登录</nuxt-link>] [<nuxt-link :to="'/register' + MixinForward">注册</nuxt-link>]</span>
+        <span>Hi&nbsp;&nbsp;</span>
+        <span>[<nuxt-link :to="'/login' + MixinForward">Sign in</nuxt-link>] [<nuxt-link :to="'/register' + MixinForward">Register</nuxt-link>]</span>
       </div>
       <ul class="links">
         <li>
           <div class="dt">
-            <a href="/shop/apply">{{ user.have_shop ? '我的店铺' : '' }}</a>
+            <a href="/shop/apply">{{ user.have_shop ? 'I shop' : '' }}</a>
           </div>
         </li>
         <li class="spacer"></li>
         <li class="dorpdown">
           <div class="dt hs-icon">
-            <nuxt-link to="/member/my-order">我的订单</nuxt-link>
+            <nuxt-link to="/member/my-order">Orders</nuxt-link>
             <i class="iconfont ea-icon-arrow-down"></i>
           </div>
           <div class="dd dorpdown-layer">
             <dl>
-              <dd><nuxt-link to="/member/my-order?order_status=WAIT_PAY">待付款订单</nuxt-link></dd>
-              <dd><nuxt-link to="/member/my-order?order_status=WAIT_ROG">待收货订单</nuxt-link></dd>
-              <dd><nuxt-link to="/member/my-order?order_status=WAIT_COMMENT">待评价订单</nuxt-link></dd>
+              <dd><nuxt-link to="/member/my-order?order_status=WAIT_PAY">Unpaid</nuxt-link></dd>
+              <dd><nuxt-link to="/member/my-order?order_status=WAIT_ROG">Shipped</nuxt-link></dd>
             </dl>
           </div>
         </li>
         <li class="spacer"></li>
         <li class="dorpdown">
           <div class="dt hs-icon">
-            <nuxt-link to="/member/my-collection">我的收藏</nuxt-link>
+            <nuxt-link to="/member/my-collection">Collection</nuxt-link>
             <i class="iconfont ea-icon-arrow-down"></i>
           </div>
-          <div class="dd dorpdown-layer">
-            <dl>
-              <dd><nuxt-link to="/member/my-collection">收藏的商品</nuxt-link></dd>
-            </dl>
-          </div>
+
         </li>
-        <li class="spacer"></li>
-        <li class="dorpdown">
-          <div class="dt hs-icon">
-            <a href="#">站点导航</a>
-            <i class="iconfont ea-icon-arrow-down"></i>
-          </div>
-          <div class="dd dorpdown-layer">
-            <dl>
-              <dd><a href="/">商城首页</a></dd>
-              <dd><nuxt-link to="/member">个人中心</nuxt-link></dd>
-            </dl>
-          </div>
-        </li>
+
         <li class="spacer"></li>
         <li class="dorpdown">
           <div class="dt">
-            <a href="/help">帮助中心</a>
+            <a href="/help">Help center</a>
             <!--<i class="iconfont ea-icon-arrow-down"></i>-->
           </div>
           <!--<div class="dd dorpdown-layer">
             <dl>
-              <dd><nuxt-link to="/help">帮助中心</nuxt-link></dd>
-              <dd><a href="/">售后中心</nuxt-link></dd>
-              <dd><a href="/">客服中心</nuxt-link></dd>
+              <dd><nuxt-link to="/help">Help center</nuxt-link></dd>
+              <dd><a href="/">Service center</nuxt-link></dd>
+              <dd><a href="/">Customer service center</nuxt-link></dd>
             </dl>
           </div>-->
         </li>
@@ -74,19 +55,19 @@
         <li class="dorpdown">
           <div v-if="im" class="dt hs-icon">
             <nuxt-link to="">
-              服务消息[{{ (unreadMessageNum + chat_unread_num) > 99 ? '99+' : (unreadMessageNum + chat_unread_num) }}]
+              Service message[{{ (unreadMessageNum + chat_unread_num) > 99 ? '99+' : (unreadMessageNum + chat_unread_num) }}]
             </nuxt-link>
             <i class="iconfont ea-icon-arrow-down"></i>
           </div>
           <div v-else class="dt">
             <nuxt-link to="/member/website-message">
-              站内消息[{{ unreadMessageNum > 99 ? '99+' : unreadMessageNum }}]
+              Messages[{{ unreadMessageNum > 99 ? '99+' : unreadMessageNum }}]
             </nuxt-link>
           </div>
           <div v-if="im" class="dd dorpdown-layer">
             <dl>
-              <dd><nuxt-link to="/chat">客服消息({{ chat_unread_num > 99 ? '99+' : chat_unread_num }})</nuxt-link></dd>
-              <dd><nuxt-link to="/member/website-message">站内消息({{ unreadMessageNum > 99 ? '99+' : unreadMessageNum }})</nuxt-link></dd>
+              <dd><nuxt-link to="/chat">The news of the service({{ chat_unread_num > 99 ? '99+' : chat_unread_num }})</nuxt-link></dd>
+              <dd><nuxt-link to="/member/website-message">Messages({{ unreadMessageNum > 99 ? '99+' : unreadMessageNum }})</nuxt-link></dd>
             </dl>
           </div>
         </li>
@@ -122,7 +103,7 @@
       ...mapGetters(['user', 'site', 'unreadMessageNum'])
     },
     mounted() {
-      // 如果是首页，并且有uuid，那么替换掉cookie中的uuid，并且移除url中的uuid
+      // If it is the home page and has a UUID, replace the UUID in the cookie and remove the UUID from the URL
       const { name, query } = this.$route
       if (name === 'index' && query.uuid) {
         Storage.setItem('uuid', query.uuid)
@@ -130,7 +111,7 @@
         location.href = '/'
         return
       }
-      // 如果有刷新Token，重新获取用户信息【第一次访问和用户刷新页面，会触发】
+      // If there is a refresh Token, the user information will be obtained again.
       if (Storage.getItem('refresh_token')) {
         this.getUserData()
       }
@@ -146,26 +127,26 @@
         cleanCartStore: 'cart/cleanCartStoreAction',
         getUnreadMessageNum: 'getUnreadMessageNumAction'
       }),
-      /** 账户登出 */
+      /** Account to log out*/
       handleLogout() {
         this.logout().then(() => {
           this.cleanCartStore()
           document.location.reload()
         })
       },
-      /** 获取未读消息 */
+      /** Gets unread messages*/
       async GET_UnreadMessage() {
         if (!Storage.getItem('refresh_token')) return;
         try {
           clearTimeout(this.message_timer)
           await this.getUnreadMessageNum();
         } finally {
-          // 消息轮询，5分钟查一次
+          // Message polling, every 5 minutes
           this.message_timer = setTimeout(this.GET_UnreadMessage, 1000 * 60 * 5)
         }
       },
       /**
-       * 获取未读客服消息数量
+       * Get the number of unread customer service messages
        * @returns {Promise<void>}
        */
       async GET_UnreadChatNum() {
@@ -174,7 +155,7 @@
           clearTimeout(this.chat_timer)
           this.chat_unread_num = await API_Message.getUnreadChatNum()
         } finally {
-          // 客服IM未读消息数量，1分钟查询一次
+          // Customer service Number of unread IM messages, which is queried once a minute
           this.chat_timer = setTimeout(this.GET_UnreadChatNum, 1000 * 60 * 1)
         }
       }
