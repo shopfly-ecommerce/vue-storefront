@@ -1,111 +1,86 @@
 <template>
   <div id="login">
-    <en-header-other title="欢迎登录"/>
-    <!-- 大图 -->
+    <en-header-other title="Welcome to login"/>
+    <!-- A larger version-->
     <div class="login-content">
-      <div class="prompt">
-        <div>
-          <i></i>
-          <p>依据《网络安全法》，{{ site.site_name }}为保障您的账户安全和正常使用，请尽快完成手机号验证！ 新版<a href="#">《{{ site.site_name }}隐私政策》</a>已上线，将更有利于保护您的个人隐私。</p>
-        </div>
-      </div>
-      <div class="login-banner">
-        <div class="bg-banner">
-          <div class="banner-img"></div>
-          <!-- 登录页 -->
-          <div class="login-box">
-            <div class="login-form">
-              <div class="tips-wapper">
-                <i></i>
-                <p>{{ site.site_name }}不会以任何理由要求您转账汇款，谨防诈骗。</p>
-              </div>
-              <div class="login-tab">
-                <ul>
-                  <li @click="!isConnect && (login_type = 'quick')">
-                    <a href="javascript:;" class="tab-a" :class="[login_type === 'quick' && 'active', isConnect && 'disabled']">快捷登录</a>
-                  </li>
-                  <li @click="login_type = 'account'">
-                    <a href="javascript:;" :class="[login_type === 'account' && 'active']">账号登录</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="login-interface">
-                <div v-show="login_type === 'quick'" class="login-show quick-login">
-                  <form class="quick-form" @keyup.enter="handleLogin">
-                    <div class="item item-form-o">
-                      <label for="mobile">
-                        <i class="iconfont ea-icon-mobile"></i>
-                      </label>
-                      <input id="mobile" v-model="quickForm.mobile" placeholder="请输入手机号" maxlength="11" autofocus>
-                    </div>
-                    <div class="item">
-                      <label for="validcode-mobile">
-                        <i class="iconfont ea-icon-safe"></i>
-                      </label>
-                      <input id="validcode-mobile" v-model="quickForm.captcha" placeholder="图片验证码" maxlength="4">
-                      <img v-if="val_code_url" class="validcode-img" :src="val_code_url" @click="handleChangeValUrl">
-                    </div>
-                    <div class="item item-form-t">
-                      <en-count-down-btn :start="sendValidMobileSms" @end="handleChangeValUrl" class="send-sms-btn"/>
-                    </div>
-                    <div class="item item-form-p">
-                      <label for="sms-code">
-                        <i class="iconfont ea-icon-sms"></i>
-                      </label>
-                      <input id="sms-code" v-model="quickForm.sms_code" placeholder="短信验证码" maxlength="6">
-                    </div>
-                    <div class="forget">
-                      <span><nuxt-link :to="'/find-password' + MixinForward">忘记密码</nuxt-link></span>
-                    </div>
-                    <button class="form-sub" type="button" @click="handleLogin">登&nbsp;&nbsp;&nbsp;录</button>
-                  </form>
+
+      <div class="login-box">
+        <div class="login-form">
+
+          <div class="login-tab">
+            <ul>
+              <li @click="!isConnect && (login_type = 'quick')">
+                <a href="javascript:;" class="tab-a" :class="[login_type === 'quick' && 'active', isConnect && 'disabled']">Mobile login</a>
+              </li>
+              <li @click="login_type = 'account'">
+                <a href="javascript:;" :class="[login_type === 'account' && 'active']">Password login</a>
+              </li>
+            </ul>
+          </div>
+          <div class="login-interface">
+            <div v-show="login_type === 'quick'" class="login-show quick-login">
+              <form class="quick-form" @keyup.enter="handleLogin">
+                <div class="item item-form-o">
+                  <label for="mobile">
+                    <i class="iconfont ea-icon-mobile"></i>
+                  </label>
+                  <input id="mobile" v-model="quickForm.mobile" placeholder="Please enter your cell phone number" maxlength="20" autofocus>
                 </div>
-                <div v-show=" login_type === 'account'" class="login-show account-login">
-                  <form class="account-form" @keyup.enter="handleLogin">
-                    <div class="item">
-                      <label for="username">
-                        <i class="iconfont ea-icon-persion"></i>
-                      </label>
-                      <input id="username" v-model="accountForm.username" placeholder="邮箱/用户名/已验证手机">
-                    </div>
-                    <div class="item">
-                      <label for="password">
-                        <i class="iconfont ea-icon-password"></i>
-                      </label>
-                      <input id="password" v-model="accountForm.password" type="password" placeholder="请输入密码">
-                    </div>
-                    <div class="item">
-                      <label for="validcode">
-                        <i class="iconfont ea-icon-safe"></i>
-                      </label>
-                      <input id="validcode" v-model="accountForm.captcha" placeholder="图片验证码" maxlength="4">
-                      <img v-if="val_code_url" class="validcode-img" :src="val_code_url" @click="handleChangeValUrl">
-                    </div>
-                    <div class="forget">
-                      <span><nuxt-link :to="'/find-password' + MixinForward">忘记密码</nuxt-link></span>
-                    </div>
-                    <button class="form-sub" type="button" @click="handleLogin">登&nbsp;&nbsp;&nbsp;录</button>
-                  </form>
+                <div class="item">
+                  <label for="validcode-mobile">
+                    <i class="iconfont ea-icon-safe"></i>
+                  </label>
+                  <input id="validcode-mobile" v-model="quickForm.captcha" placeholder="Image verification code" maxlength="4">
+                  <img v-if="val_code_url" class="validcode-img" :src="val_code_url" @click="handleChangeValUrl">
                 </div>
-              </div>
-              <!-- 第三方登录、立即注册 -->
-              <div class="other-login">
-                <ul>
-                  <li class="other-one"><a :href="getConnectUrl('pc', 'QQ')"><span>QQ</span></a></li>
-                  <li class="other-one"><a :href="getConnectUrl('pc', 'WECHAT')"><span>微信</span></a></li>
-                  <li class="other-one"><a :href="getConnectUrl('pc', 'WEIBO')"><span>微博</span></a></li>
-                  <li><a :href="getConnectUrl('pc', 'ALIPAY')"><span>支付宝</span></a></li>
-                  <li class="other-right">
-                    <nuxt-link :to="'/register' + MixinForward" class="registered">
-                      <b></b>立即注册
-                    </nuxt-link>
-                  </li>
-                </ul>
-              </div>
+                <div class="item item-form-t">
+                  <en-count-down-btn :start="sendValidMobileSms" @end="handleChangeValUrl" class="send-sms-btn"/>
+                </div>
+                <div class="item item-form-p">
+                  <label for="sms-code">
+                    <i class="iconfont ea-icon-sms"></i>
+                  </label>
+                  <input id="sms-code" v-model="quickForm.sms_code" placeholder="SMS verification code" maxlength="6">
+                </div>
+                <div class="forget">
+                  <span><nuxt-link :to="'/find-password' + MixinForward">Forgot password</nuxt-link></span>
+                </div>
+                <button class="form-sub" type="button" @click="handleLogin">Sign in</button>
+              </form>
+            </div>
+            <div v-show=" login_type === 'account'" class="login-show account-login">
+              <form class="account-form" @keyup.enter="handleLogin">
+                <div class="item">
+                  <label for="username">
+                    <i class="iconfont ea-icon-persion"></i>
+                  </label>
+                  <input id="username" v-model="accountForm.username" placeholder="email/username/mobile">
+                </div>
+                <div class="item">
+                  <label for="password">
+                    <i class="iconfont ea-icon-password"></i>
+                  </label>
+                  <input id="password" v-model="accountForm.password" type="password" placeholder="Please enter your password.">
+                </div>
+                <div class="item">
+                  <label for="validcode">
+                    <i class="iconfont ea-icon-safe"></i>
+                  </label>
+                  <input id="validcode" v-model="accountForm.captcha" placeholder="Image verification code" maxlength="4">
+                  <img v-if="val_code_url" class="validcode-img" :src="val_code_url" @click="handleChangeValUrl">
+                </div>
+                <div class="forget">
+                  <span><nuxt-link :to="'/find-password' + MixinForward">Forgot password</nuxt-link></span>
+                </div>
+                <button class="form-sub" type="button" @click="handleLogin">Sign in</button>
+              </form>
             </div>
           </div>
+
         </div>
       </div>
+
+
     </div>
   </div>
 </template>
@@ -123,22 +98,22 @@
     layout: 'full',
     head() {
       return {
-        title: `会员登录-${this.site.title}`
+        title: `Member login-${this.site.title}`
       }
     },
     data() {
       return {
         // uuid
         uuid: Storage.getItem('uuid'),
-        // 登录类型
+        // Login type
         login_type: 'quick',
-        // 图片验证码
+        // Image captcha
         val_code_url: '',
-        // 快捷登录 表单
+        // Quick Login form
         quickForm: {},
-        // 普通登录 表单
+        // Normal Login form
         accountForm: {},
-        // 是否为信任登录
+        // Whether the login is trusted
         isConnect: false
       }
     },
@@ -155,22 +130,22 @@
       ...mapGetters(['site'])
     },
     methods: {
-      /** 发送短信验证码异步回调 */
+      /** Send SMS verification code asynchronous callback*/
       sendValidMobileSms() {
         const { mobile, captcha } = this.quickForm
         return new Promise((resolve, reject) => {
           if (!mobile) {
-            this.$message.error('请输入手机号码！')
+            this.$message.error('Please enter your mobile phone number！')
             reject()
           } else if (!RegExp.mobile.test(mobile)) {
-            this.$message.error('手机号码格式有误！')
+            this.$message.error('The phone number is incorrectly formatted！')
             reject()
           } else if (!captcha) {
-            this.$message.error('请输入图片验证码！')
+            this.$message.error('Please enter the image verification code！')
             reject()
           } else {
             API_Passport.sendLoginSms(mobile, captcha).then(() => {
-              this.$message.success('短信发送成功，请注意查收！')
+              this.$message.success('The text message has been sent successfully, please note that check！')
               resolve()
             }).catch(() => {
               this.handleChangeValUrl()
@@ -179,11 +154,11 @@
           }
         })
       },
-      /** 改变图片验证码URL */
+      /** Change the image verification codeURL */
       handleChangeValUrl() {
         this.val_code_url = API_Common.getValidateCodeUrl(this.uuid, 'LOGIN')
       },
-      /** 登录事件 */
+      /** Log events*/
       handleLogin() {
         const _forwardMatch = this.MixinForward.match(/\?forward=(.+)/) || []
         let forward = _forwardMatch[1]
@@ -194,19 +169,19 @@
         const form = login_type === 'quick' ? this.quickForm : this.accountForm
         if (login_type === 'quick') {
           if (!form.mobile || !RegExp.mobile.test(form.mobile) || !form.sms_code) {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         } else {
           if (!form.username || !form.password || !form.captcha) {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         }
         if (this.isConnect) {
           const uuid = Storage.getItem('uuid_connect')
           if (!uuid) {
-            this.$message.error('参数异常，请刷新页面！')
+            this.$message.error('Parameters are abnormal. Please refresh the page！')
             return false
           }
           const params = JSON.parse(JSON.stringify(form))
@@ -221,7 +196,7 @@
               Storage.removeItem('uuid_connect')
               window.location.href = forward
             } else {
-              this.$alert('当前用户已绑定其它账号！', () => {
+              this.$alert('The current user has been bound to another account！', () => {
                 this.removeAccessToken()
                 this.removeRefreshToken()
                 Storage.removeItem('uuid_connect')
@@ -251,6 +226,9 @@
 
 <style type="text/scss" lang="scss" scoped>
   @import "../assets/styles/color";
+  .login-content{
+    margin-bottom: 20px;
+  }
   .login-content .prompt {
     width: 100%;
     text-align: center;
@@ -274,12 +252,11 @@
     }
   }
   .login-box {
-    float: right;
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    width: 346px;
+    position: relative;
+    margin: 0 auto;
+    width: 400px;
     background: #ffffff;
+    border: 1px solid #DDDDDD;
   }
   .login-box .login-form .tips-wapper {
     background: #fff8f0;
@@ -317,7 +294,7 @@
   }
   .login-form .login-interface .account-login { display: block }
   .login-form .login-interface .login-show form {
-    width: 280px;
+    width: 350px;
     margin: 25px auto;
   }
   .active { color: $color-main }
