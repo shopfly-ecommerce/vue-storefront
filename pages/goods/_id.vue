@@ -17,7 +17,6 @@
           <goods-info :goods="goods" @spec-img-change="(img) => { this.specImage = img }"/>
         </div>
         <div v-show="showShare" class="bdsharebuttonbox bdshare-button-style1-16" style="margin-top: 10px">
-          <a class="bds_more" data-cmd="more" href="javascript:">分享到：</a><a class="bds_qzone" data-cmd="qzone" href="#" title="分享到QQ空间">QQ空间</a><a class="bds_tsina" data-cmd="tsina" href="#" title="分享到新浪微博">新浪微博</a><a class="bds_weixin" data-cmd="weixin" href="#" title="分享到微信">微信</a><a class="bds_tieba" data-cmd="tieba" href="#" title="分享到百度贴吧">百度贴吧</a>
           <a href="javascript:" :class="['collect-goods-btn', collected && 'collected']" @click="handleCollectionGoods">{{ collected ? '已收藏' : '收藏商品' }}</a>
         </div>
       </div>
