@@ -72,7 +72,7 @@
     </div>
     <template v-else>
       <div class="pro-list buy-num">
-        <div class="pro-title">购买数量</div>
+        <div class="pro-title">Quantity</div>
         <div class="pro-content">
           <div class="count-num">
             <a href="javascript:;" @click="handleBuyNumChanged('-')" class="oper-num down" :class="[buyNum < 2 && 'not-oper']"></a>
@@ -81,7 +81,7 @@
           </span>
             <a href="javascript:;" @click="handleBuyNumChanged('+')" class="oper-num up"></a>
           </div>
-          <span style="margin-left: 15px">仅剩 {{ goodsInfo.enable_quantity }} 件，抓紧时间购买哦！</span>
+          <span style="margin-left: 15px">Only {{ goodsInfo.enable_quantity }} available</span>
         </div>
       </div>
       <div class="buy-btns">
