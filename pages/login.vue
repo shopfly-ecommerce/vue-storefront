@@ -106,13 +106,17 @@
         // uuid
         uuid: Storage.getItem('uuid'),
         // Login type
-        login_type: 'quick',
+        login_type: 'account',
         // Image captcha
         val_code_url: '',
         // Quick Login form
-        quickForm: {},
+        quickForm: {
+        },
         // Normal Login form
-        accountForm: {},
+        accountForm: {
+          username: 'food',
+          password: '111111'
+        },
         // Whether the login is trusted
         isConnect: false
       }
