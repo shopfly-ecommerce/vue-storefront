@@ -242,7 +242,7 @@
     }
     dt {
       color: #888;
-      width: 23%;
+      width: 50%;
       float: left;
       display: inline;
     }
