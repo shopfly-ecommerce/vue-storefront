@@ -147,10 +147,9 @@
                   </a>
                 </div>
                 <div class="gl-commit">
-                  <strong>已有<a class="comment">{{ goods.comment_num }}</a>人评价</strong>
                   <span class="gl-grade">好评率：<i>{{ goods.grade }}%</i></span>
                 </div>
-                <div class="gl-buy-count">已销售：{{ goods.buy_count }}件</div>
+                <div class="gl-buy-count">已销售：{{ goods.buy_count }}</div>
               </div>
             </li>
           </ul>
