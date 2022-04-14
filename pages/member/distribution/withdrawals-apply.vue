@@ -2,7 +2,7 @@
   <div id="withdrawals-apply">
     <div class="member-nav">
       <ul class="member-nav-list">
-        <li><nuxt-link to="./withdrawals-apply">提现申请</nuxt-link></li>
+        <li><nuxt-link to="./withdrawals-apply">Withdrawal application</nuxt-link></li>
       </ul>
     </div>
     <div class="recommend-container">
@@ -13,19 +13,19 @@
         ref="applyWithdrawalsForm"
         label-width="100px"
         class="demo-ruleForm">
-        <el-form-item label="可提现金额：">
+        <el-form-item label="Withdrawal amount：">
           <span>{{ applyWithdrawalsForm.can_rebate | unitPrice('¥') }}</span>
         </el-form-item>
-        <el-form-item label="提现金额：" prop="apply_money">
-          <el-input placeholder="请输入金额" v-model="applyWithdrawalsForm.apply_money" auto-complete="off">
+        <el-form-item label="Withdrawal amount：" prop="apply_money">
+          <el-input placeholder="Please enter the amount" v-model="applyWithdrawalsForm.apply_money" auto-complete="off">
             <template slot="prepend">¥</template>
           </el-input>
         </el-form-item>
-        <el-form-item label="备注：">
+        <el-form-item label="note：">
           <el-input type="textarea" v-model="applyWithdrawalsForm.remark"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="danger" size="small" @click="handleApplyWithdrawals('applyWithdrawalsForm')">申请</el-button>
+          <el-button type="danger" size="small" @click="handleApplyWithdrawals('applyWithdrawalsForm')">To apply for</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -43,35 +43,35 @@
     data() {
       const checkApplyMoney = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('提现金额不能为空且不可为0'))
+          return callback(new Error('The withdrawal amount cannot be empty and cannot be0'))
         }
         setTimeout(() => {
           if (!RegExp.money.test(value)) {
-            callback(new Error('请输入正整数或者两位小数'))
+            callback(new Error('Please enter a positive integer or two decimal places'))
           } else if (parseFloat(value) > parseFloat(this.applyWithdrawalsForm.can_rebate) ) {
-            callback(new Error('提现金额超出限额'))
+            callback(new Error('The withdrawal amount exceeds the limit'))
           }else {
             callback()
           }
         }, 1000)
       }
       return {
-        /** 申请表单 */
+        /** Application form*/
         applyWithdrawalsForm: {
-          /** 可提现金额 */
+          /** Withdrawal amount*/
           can_rebate: 0,
 
-          /** 提现金额 */
+          /** Withdrawal amount*/
           apply_money: 0,
 
-          /** 备注 */
+          /** note*/
           remark: ''
         },
 
-        /** 申请规则校验 */
+        /** Application Rule Verification*/
         applyWithdrawalsRules: {
           apply_money: [
-            { required: true, message: '提现金额不能为空', trigger: 'blur' },
+            { required: true, message: 'The withdrawal amount cannot be empty', trigger: 'blur' },
             { validator: checkApplyMoney, trigger: 'blur' }
           ]
         }
@@ -81,14 +81,14 @@
       this.GET_canRebate()
     },
     methods: {
-      /** 获取可提现金额 */
+      /** Get the amount available for withdrawal*/
       GET_canRebate() {
         API_distribution.getWithdrawalsCanRebate().then(response => {
           this.applyWithdrawalsForm.can_rebate = response.message
         })
       },
 
-      /** 申请提现 */
+      /** To apply for cash withdrawals*/
       handleApplyWithdrawals(FormName) {
         this.$refs[FormName].validate((valid) => {
           if (valid) {
@@ -97,7 +97,7 @@
               remark: this.applyWithdrawalsForm.remark
             }
             API_distribution.applyWithdrawals(_params).then(response => {
-              this.$message.success('已提交申请，请耐心等待。。。')
+              this.$message.success('Application has been submitted, please be patient...')
               this.GET_canRebate()
             })
           }

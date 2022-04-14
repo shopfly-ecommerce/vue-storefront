@@ -3,49 +3,49 @@
     <div class="index-register w">
       <div class="welcome">
         <en-logo/>
-        <span>欢迎注册</span>
+        <span>Welcome to register</span>
       </div>
       <div class="have-account">
-        <span>已有账号？</span>
-        <nuxt-link :to="'/login' + MixinForward">请登录></nuxt-link>
+        <span>Existing account？</span>
+        <nuxt-link :to="'/login' + MixinForward">Sign in ></nuxt-link>
       </div>
     </div>
     <div class="content-register">
       <div class="inner-register">
         <div class="left-reg">
-          <h1>用户注册</h1>
+          <h1>User registration</h1>
           <el-form :model="registerForm" :rules="registerRules" ref="registerForm" label-width="100px" style="width: 400px">
-            <el-form-item label="用户名" prop="username">
+            <el-form-item label="username" prop="username">
               <el-input v-model="registerForm.username"></el-input>
             </el-form-item>
-            <el-form-item label="注册邮箱" prop="email">
+            <el-form-item label="Registered mail" prop="email">
               <el-input v-model="registerForm.email"></el-input>
             </el-form-item>
-            <el-form-item label="账号密码" prop="password">
+            <el-form-item label="The account password" prop="password">
               <el-input v-model="registerForm.password" type="password"></el-input>
             </el-form-item>
-            <el-form-item label="确认密码" prop="rep_password">
+            <el-form-item label="Confirm password" prop="rep_password">
               <el-input v-model="registerForm.rep_password" type="password"></el-input>
             </el-form-item>
-            <el-form-item label="验证码" prop="vali_code" class="vali-img">
+            <el-form-item label="captcha" prop="vali_code" class="vali-img">
               <el-input v-model="registerForm.vali_code">
                 <img src="http://data.andste.cc/developers/web/temp/images/validcode-img.png" slot="append">
               </el-input>
             </el-form-item>
             <el-form-item label="">
-              <el-button type="danger" size="small" class="sub-btn">注册新用户</el-button>
+              <el-button type="danger" size="small" class="sub-btn">Register a new user</el-button>
             </el-form-item>
           </el-form>
         </div>
         <div class="right-reg">
-          <h1>注册之后您可以</h1>
+          <h1>After registration you can</h1>
           <ul>
-            <li><i class="reg1"></i><span>购买商品支付订单</span></li>
-            <li><i class="reg2"></i><span>申请开店销售商品</span></li>
-            <li><i class="reg3"></i><span>空间好友推送分享</span></li>
-            <li><i class="reg4"></i><span>收藏商品关注店铺</span></li>
-            <li><i class="reg5"></i><span>商品咨询服务评价</span></li>
-            <li><i class="reg6"></i><span>安全交易诚信无忧</span></li>
+            <li><i class="reg1"></i><span>Purchase goods to pay for orders</span></li>
+            <li><i class="reg2"></i><span>Apply for a shop to sell goods</span></li>
+            <li><i class="reg3"></i><span>Space friends push sharing</span></li>
+            <li><i class="reg4"></i><span>Collect goods and pay attention to the store</span></li>
+            <li><i class="reg5"></i><span>Evaluation of commodity consulting services</span></li>
+            <li><i class="reg6"></i><span>Safe transaction integrity without worry</span></li>
           </ul>
         </div>
       </div>
@@ -79,15 +79,15 @@
         },
         registerRules: {
           username: [
-            { required: true, message: '请输入用户名', trigger: 'blur' },
-            { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+            { required: true, message: 'Please enter the user name', trigger: 'blur' },
+            { min: 2, max: 10, message: 'The length of2 to10 A character', trigger: 'blur' }
           ],
           email: [
-            { required: true, message: '请输入邮箱', trigger: 'blur' },
+            { required: true, message: 'Please enter email address', trigger: 'blur' },
             {
               validator: (rule, value, callback) => {
                 if (!RegExp.email.test(value)) {
-                  callback(new Error('邮箱格式不正确！'))
+                  callback(new Error('The mailbox format is incorrect！'))
                 } else {
                   callback()
                 }
@@ -96,11 +96,11 @@
             }
           ],
           password: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
+            { required: true, message: 'Please enter your password.', trigger: 'blur' },
             {
               validator: (rule, value, callback) => {
                 if (!RegExp.password.test(value)) {
-                  callback(new Error('密码应为6-20位数字、英文字母！'))
+                  callback(new Error('The password should be6-20A digital、The English alphabet！'))
                 } else {
                   callback()
                 }
@@ -109,12 +109,12 @@
             }
           ],
           rep_password: [
-            { required: true, message: '请确认密码', trigger: 'blur' },
+            { required: true, message: 'Please confirm password.', trigger: 'blur' },
             {
               validator: (rule, value, callback) => {
                 const { password, rep_password} = this.registerForm
                 if (password !== rep_password) {
-                  callback(new Error('两次输入不一致！'))
+                  callback(new Error('The two inputs are inconsistent！'))
                 } else {
                   callback()
                 }
@@ -122,7 +122,7 @@
               trigger: 'blur'
             }
           ],
-          vali_code: [{ required: true, message: '请输入图片验证码', trigger: 'blur' }]
+          vali_code: [{ required: true, message: 'Please enter the image verification code', trigger: 'blur' }]
         }
       }
     }

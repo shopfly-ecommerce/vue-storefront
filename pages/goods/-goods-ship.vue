@@ -1,6 +1,6 @@
 <template>
   <div class="pro-list">
-    <div class="pro-title">配&ensp;送&ensp;至</div>
+    <div class="pro-title">Delivery to the</div>
     <div class="pro-content">
       <en-region-picker
         :api="MixinRegionApi"
@@ -26,9 +26,9 @@
       stockMsg() {
         const { in_store } = this
         switch (in_store) {
-          case 0: return '该地区无货'
-          case 1: return '该地区有货'
-          default: return '配送地区'
+          case 0: return 'There is no stock in the area'
+          case 1: return 'It is available in the area'
+          default: return ' '
         }
       }
     },

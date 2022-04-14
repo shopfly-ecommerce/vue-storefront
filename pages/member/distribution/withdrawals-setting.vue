@@ -2,7 +2,7 @@
   <div id="withdrawals-setting">
     <div class="member-nav">
       <ul class="member-nav-list">
-        <li><nuxt-link to="./withdrawals-setting">提现设置</nuxt-link></li>
+        <li><nuxt-link to="./withdrawals-setting">Withdrawal is set</nuxt-link></li>
       </ul>
     </div>
     <div class="recommend-container">
@@ -13,20 +13,20 @@
         ref="ReserveWithdrawals"
         label-width="100px"
         class="demo-ruleForm">
-        <el-form-item label="户名：" prop="member_name">
+        <el-form-item label="Account name：" prop="member_name">
           <el-input v-model="setWithdrawalsForm.member_name" auto-complete="off" />
         </el-form-item>
-        <el-form-item label="所属银行：" prop="bank_name">
+        <el-form-item label="Belongs to the bank：" prop="bank_name">
           <el-input v-model="setWithdrawalsForm.bank_name" auto-complete="off"/>
         </el-form-item>
-        <el-form-item label="开户行号：" prop="opening_num">
+        <el-form-item label="Bank no.：" prop="opening_num">
           <el-input v-model="setWithdrawalsForm.opening_num"></el-input>
         </el-form-item>
-        <el-form-item label="银行卡号：" prop="bank_card">
+        <el-form-item label="Bank card number：" prop="bank_card">
           <el-input v-model="setWithdrawalsForm.bank_card"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="danger" size="small" @click="handleReserveWithdrawalsParams('ReserveWithdrawals')">保存设置</el-button>
+          <el-button type="danger" size="small" @click="handleReserveWithdrawalsParams('ReserveWithdrawals')">Save Settings</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -42,73 +42,73 @@
   export default {
     name: 'withdrawals-setting',
     data() {
-      /** 开户行号校验 */
+      /** Checking bank number*/
       const checkOpeningNum = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('开户行号不能为空'))
+          return callback(new Error('The opening bank number cannot be blank'))
         }
         setTimeout(() => {
           if (!/^[0-9]\d*$/.test(value)) {
-            callback(new Error('请输入0-9的整数'))
+            callback(new Error('Please enter the0-9The integer'))
           } else {
             callback()
           }
         }, 1000)
       }
-      /** 银行卡号校验 */
+      /** Check bank card number*/
       const checkBankCard = (rule, value, callback) => {
         if (!value) {
-          return callback(new Error('银行卡号不能为空'))
+          return callback(new Error('The bank card number cannot be empty'))
         }
         setTimeout(() => {
           if (!/^[0-9]\d*$/.test(value)) {
-            callback(new Error('请输入0-9的整数'))
+            callback(new Error('Please enter the0-9The integer'))
           } else {
             callback()
           }
         }, 1000)
       }
       return {
-        /** 申请表单 */
+        /** Application form*/
         setWithdrawalsForm: {
-          /** 户名 */
+          /** Account name*/
           member_name: '',
 
-          /** 银行名称 */
+          /** Bank name*/
           bank_name: '',
 
-          /** 开户行号 */
+          /** Bank no.*/
           opening_num: '',
 
-          /** 银行卡号 */
+          /** Bank card number*/
           bank_card: ''
         },
-        /** 校验规则 */
+        /** Validation rules*/
         setRules: {
-          /** 户名 */
+          /** Account name*/
           member_name: [
-            { required: true, message: '请填写户名', trigger: 'blur' },
-            { whitespace: true, message: '户名不可为纯空格', trigger: 'blur' },
-            { max: 20, message: '户名长度最多20个字符', trigger: 'blur' }
+            { required: true, message: 'Please fill in your account name', trigger: 'blur' },
+            { whitespace: true, message: 'The user name cannot be pure space', trigger: 'blur' },
+            { max: 20, message: 'Maximum account length20A character', trigger: 'blur' }
           ],
-          /** 所属银行 */
+          /** Belongs to the bank*/
           bank_name: [
-            { required: true, message: '请填写所属银行', trigger: 'blur' },
-            { whitespace: true, message: '所属银行不可为纯空格', trigger: 'blur' },
-            { max: 20, message: '所属银行长度最多20个字符', trigger: 'blur' }
+            { required: true, message: 'Please fill in your bank', trigger: 'blur' },
+            { whitespace: true, message: 'Owning bank cannot be pure space', trigger: 'blur' },
+            { max: 20, message: 'The length of the owning bank is maximum20A character', trigger: 'blur' }
           ],
-          /** 开户行号 */
+          /** Bank no.*/
           opening_num: [
-            { required: true, message: '请填写开户行号', trigger: 'blur' },
-            { whitespace: true, message: '开户行号不可为纯空格', trigger: 'blur' },
-            { max: 20, message: '开户行号长度最多20个字符', trigger: 'blur' },
+            { required: true, message: 'Please fill in the opening bank number', trigger: 'blur' },
+            { whitespace: true, message: 'The opening bank number cannot be blank', trigger: 'blur' },
+            { max: 20, message: 'Maximum length of bank number20A character', trigger: 'blur' },
             { validator: checkOpeningNum, trigger: 'blur' }
           ],
-          /** 银行卡号 */
+          /** Bank card number*/
           bank_card: [
-            { required: true, message: '请填写银行卡号', trigger: 'blur' },
-            { whitespace: true, message: '银行卡号不可为纯空格', trigger: 'blur' },
-            { max: 20, message: '银行卡号长度最多20个字符', trigger: 'blur' },
+            { required: true, message: 'Please fill in your bank card number', trigger: 'blur' },
+            { whitespace: true, message: 'The bank card number cannot be blank', trigger: 'blur' },
+            { max: 20, message: 'The bank card number is the longest20A character', trigger: 'blur' },
             { validator: checkBankCard, trigger: 'blur' }
           ]
         }
@@ -118,19 +118,19 @@
       this.GET_withdrawalsParams()
     },
     methods: {
-      /** 获取可提现金额 */
+      /** Get the amount available for withdrawal*/
       GET_withdrawalsParams() {
         API_distribution.getWithdrawalsParams().then(response => {
           this.setWithdrawalsForm = { ...response }
         })
       },
 
-      /** 保存设置 */
+      /** Save Settings*/
       handleReserveWithdrawalsParams(FormName) {
         this.$refs[FormName].validate((valid) => {
           if (valid) {
             API_distribution.reserveWithdrawalsParams(this.setWithdrawalsForm).then(response => {
-              this.$message.success('保存成功')
+              this.$message.success('Save success')
             })
           }
         })

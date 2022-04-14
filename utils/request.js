@@ -9,19 +9,19 @@ import md5 from 'js-md5'
 import checkToken from '@/utils/checkToken'
 const qs = require('qs')
 
-// 创建axios实例
+// createaxiosThe instance
 const service = axios.create({
-  timeout: 8000,     // 请求超时时间
-  baseURL: api.buyer, // 买家端API
+  timeout: 8000,     // Request timeout
+  baseURL: api.buyer, // Buyer sideAPI
   httpsAgent: new https.Agent({
     rejectUnauthorized: false
   })
 })
 
-// request拦截器
+// requestThe interceptor
 service.interceptors.request.use(config => {
   const { loading } = config
-  // 如果是put/post请求，用qs.stringify序列化参数
+  // For put/ Post requests, use Qs.Stringify to serialize the parameter
   const is_put_post = config.method === 'put' || config.method === 'post'
   const is_json = config.headers['Content-Type'] === 'application/json'
   const is_file = config.headers['Content-Type'] === 'multipart/form-data'
@@ -31,7 +31,7 @@ service.interceptors.request.use(config => {
   if (is_put_post && !is_file && !is_json) {
     config.data = qs.stringify(config.data, { arrayFormat: 'repeat' })
   }
-  /** 配置全屏加载 */
+  /** Configure full screen loading*/
   if (process.client && loading !== false) {
     config.loading = Loading.service({
       fullscreen: true,
@@ -47,7 +47,7 @@ service.interceptors.request.use(config => {
     config.headers['uuid'] = uuid
   }
 
-  // 获取访问Token
+  // Get access Token
   let accessToken = Storage.getItem('access_token')
   if (accessToken && config.needToken) {
     config.headers['Authorization'] = accessToken
@@ -57,7 +57,7 @@ service.interceptors.request.use(config => {
   Promise.reject(error)
 })
 
-// respone拦截器
+// responeThe interceptor
 service.interceptors.response.use(
   async response => {
     await closeLoading(response)
@@ -79,7 +79,7 @@ service.interceptors.response.use(
       return Promise.reject(error)
     }
     if (error.config.message !== false) {
-      let _message = error.code === 'ECONNABORTED' ? '连接超时，请稍候再试！' : '网络错误，请稍后再试！'
+      let _message = error.code === 'ECONNABORTED' ? 'Connection timeout, please try again later！' : 'Network error, please try again later！'
       Vue.prototype.$message.error(error_data.message || _message)
     }
     return Promise.reject(error)
@@ -87,7 +87,7 @@ service.interceptors.response.use(
 )
 
 /**
- * 关闭全局加载
+ * Turn off global loading
  * @param target
  */
 const closeLoading = (target) => {
@@ -108,7 +108,7 @@ export const Method = {
 }
 
 export default function request(options) {
-  // 如果是服务端或者是请求的刷新token，不需要检查token直接请求。
+  // If it is a server or a request for a refresh token, the request is made without checking the token.
   if (process.server || options.url.indexOf('passport/token') !== -1) {
     return service(options)
   }

@@ -4,49 +4,49 @@
     <div class="help-center-footer">
       <div class="w">
         <dl class="fore1">
-          <dt>购物指南</dt>
-          <dd><a target="_blank" href="/help/102">网站使用条款</a></dd>
-          <dd><a target="_blank" href="/help/103">购物流程</a></dd>
-          <dd><a target="_blank" href="/help/104">常见问题</a></dd>
+          <dt>Shopping guide</dt>
+          <dd><a target="_blank" href="/help/102">Terms of Use</a></dd>
+          <dd><a target="_blank" href="/help/103">Shopping process</a></dd>
+          <dd><a target="_blank" href="/help/104">Q&A</a></dd>
         </dl>
 
         <dl class="fore2">
-          <dt>配送方式</dt>
-          <dd><a target="_blank" href="/help/106">配送方式</a></dd>
-          <dd><a target="_blank" href="/help/105">验货</a></dd>
+          <dt>Shipping type</dt>
+          <dd><a target="_blank" href="/help/106">Shipping type</a></dd>
+          <dd><a target="_blank" href="/help/105">The inspection</a></dd>
         </dl>
 
         <dl class="fore3">
-          <dt>支付方式</dt>
-          <dd><a target="_blank" href="/help/108">在线支付</a></dd>
-          <dd><a target="_blank" href="/help/109">货到付款</a></dd>
+          <dt>Method of payment</dt>
+          <dd><a target="_blank" href="/help/108">Online payment</a></dd>
+          <dd><a target="_blank" href="/help/109">Cash on delivery</a></dd>
         </dl>
 
         <dl class="fore4">
-          <dt>售后服务</dt>
-          <dd><a target="_blank" href="/help/110">售后服务</a></dd>
-          <dd><a target="_blank" href="/help/111">免责条款</a></dd>
-          <dd><a target="_blank" href="/help/112">商品退换货保障</a></dd>
+          <dt>After-sales service</dt>
+          <dd><a target="_blank" href="/help/110">After-sales service</a></dd>
+          <dd><a target="_blank" href="/help/111">disclaimer</a></dd>
+          <dd><a target="_blank" href="/help/112">Guarantee of return and exchange of goods</a></dd>
         </dl>
 
         <dl class="fore5">
-          <dt>关于网站</dt>
-          <dd><a target="_blank" href="/help/98">关于我们</a></dd>
-          <dd><a target="_blank" href="/help/99">联系我们</a></dd>
-          <dd><a target="_blank" href="/help/101">业务合作</a></dd>
+          <dt>On the website</dt>
+          <dd><a target="_blank" href="/help/98">About us</a></dd>
+          <dd><a target="_blank" href="/help/99">Contact us</a></dd>
+          <dd><a target="_blank" href="/help/101">Business cooperation</a></dd>
         </dl>
         <span class="clr"></span>
       </div>
     </div>
     <div class="link-footer">
       <div class="w">
-        <a href="/">首页</a>
-        | <nuxt-link to="/member">会员中心</nuxt-link>
+        <a href="/">Home</a>
+        | <nuxt-link to="/member">Your Account</nuxt-link>
         | <a href="/shop/apply" target="_blank"></a>
-        | <a href="/help/100" target="_blank">关于网站</a>
-        | <a href="/help/98" target="_blank">关于我们</a>
-        | <a href="/help/99" target="_blank">联系我们</a>
-        | <a href="https://www.javamall.com.cn" title="JAVA B2B2C网店系统">网店系统</a>
+        | <a href="/help/100" target="_blank">On the website</a>
+        | <a href="/help/98" target="_blank">About us</a>
+        | <a href="/help/99" target="_blank">Contact us</a>
+        | <a href="https://www.javamall.com.cn" title="JAVA B2B2COnline system">Online system</a>
       </div>
     </div>
   </div>

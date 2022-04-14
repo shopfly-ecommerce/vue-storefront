@@ -2,7 +2,7 @@
   <div id="goods-list" style="background-color: #ededed;padding-bottom: 20px">
     <div class="gl-container w">
       <div v-if="selectorData.selected_cat && selectorData.selected_cat.length" class="gl-bar-title">
-        <span>全部</span>
+        <span>all</span>
         <template v-for="(cat, catIndex) in selectorData.selected_cat">
           <i :key="'i_' + catIndex" class="iconfont ea-icon-arrow-right"></i>
           <div :key="catIndex" class="gl-bar-item">
@@ -22,7 +22,7 @@
       </div>
       <div v-if="selectorData" class="gl-select-condition">
         <dl v-if="selectorData.brand && selectorData.brand.length" class="brand logo-brand">
-          <dt>品牌:</dt>
+          <dt>brand:</dt>
           <dd>
             <div class="brand-list">
               <transition-group
@@ -46,14 +46,14 @@
                 class="more-btn"
                 @click="brand_ex_status = brand_ex_status === 'close' ? 'open' : 'close'"
               >
-                {{ brand_ex_status === 'open' ? '收起' : '更多品牌' }}
+                {{ brand_ex_status === 'open' ? 'Pack up' : 'More brands' }}
                 <i :class="['iconfont', brand_ex_status === 'open' ? 'ea-icon-arrow-up' : 'ea-icon-arrow-down']"></i>
               </a>
             </div>
           </dd>
         </dl>
         <dl v-if="selectorData.cat && selectorData.cat.length">
-          <dt>分类:</dt>
+          <dt>Categories:</dt>
           <dd>
             <div class="small-list">
               <a
@@ -90,7 +90,7 @@
          v-if="selectorData.prop && selectorData.prop.length > 3"
          @click="selector_ex_status = selector_ex_status === 'open' ? 'close' : 'open'"
       >
-        {{ selector_ex_status === 'open' ? '收起' : '更多选项' }}
+        {{ selector_ex_status === 'open' ? 'Pack up' : 'More' }}
         <i
           :class="['iconfont',
           selector_ex_status === 'open'
@@ -118,14 +118,14 @@
               <div class="p-c-i-b"><em>￥</em><input type="text" v-model="prices[1]" @input="() => prices[1] = prices[1].replace(/[^\d|\.]/g, '')" class="custom-pro" maxlength="5"/></div>
             </div>
             <div class="p-c-b">
-              <a href="javascript:" class="empty-pro" @click="prices = []">清空</a>
-              <a href="javascript:" class="enter-pro" @click="GET_GoodsList">确定</a>
+              <a href="javascript:" class="empty-pro" @click="prices = []">empty</a>
+              <a href="javascript:" class="enter-pro" @click="GET_GoodsList">save</a>
             </div>
           </div>
         </div>
         <div class="gl-sku-list">
           <div class="empty-goods" v-if="!goodsListData || !goodsListData.data || goodsListData.data.length === 0">
-            暂无数据...
+            no data...
           </div>
           <ul v-else class="list-ul clearfix">
             <li v-for="goods in goodsListData.data" :key="goods.goods_id">
@@ -147,9 +147,9 @@
                   </a>
                 </div>
                 <div class="gl-commit">
-                  <span class="gl-grade">好评率：<i>{{ goods.grade }}%</i></span>
+                  <span class="gl-grade">rating：<i>{{ goods.grade }}%</i></span>
                 </div>
-                <div class="gl-buy-count">已销售：{{ goods.buy_count }}</div>
+                <div class="gl-buy-count">sales：{{ goods.buy_count }}</div>
               </div>
             </li>
           </ul>
@@ -194,7 +194,7 @@
         goodsListData = values[0];
         selectorData = values[1]
       } catch (e) {
-        error({ statusCode: 500, message: '服务器出错' })
+        error({ statusCode: 500, message: 'Server error' })
       }
       return {
         goodsListData,
@@ -204,7 +204,7 @@
     },
     head() {
       return {
-        title: `商品列表-${this.site.site_name}`
+        title: `Products-${this.site.site_name}`
       }
     },
     data() {
@@ -216,12 +216,12 @@
       }
       return {
         params: this.$route.query,
-        // 排序
+        // The sorting
         sorts: [
-          { title: '默认', name: 'def', type: 'asc' },
-          { title: '销量', name: 'buynum', type: 'asc' },
-          { title: '价格', name: 'price', type: 'asc' },
-          { title: '好评率', name: 'grade', type: 'asc' },
+          { title: 'default', name: 'def', type: 'asc' },
+          { title: 'sales', name: 'buynum', type: 'asc' },
+          { title: 'Price', name: 'price', type: 'asc' },
+          { title: 'rating', name: 'grade', type: 'asc' },
         ].map(item => {
           item.active = item.name === sort[0];
           if (item.name === sort[0]) {
@@ -229,11 +229,11 @@
           }
           return item
         }),
-        // 价格区间
+        // A price range
         prices: price ? price.split('_') : ['', ''],
-        // 更多是否为打开状态
+        // More whether the state is open
         selector_ex_status: 'close',
-        // 更多品牌
+        // More brands
         brand_ex_status: 'close'
       }
     },
@@ -244,12 +244,12 @@
       }
     },
     methods: {
-      /** 当前页数发生改变 */
+      /** The current page number changed*/
       handleCurrentPageChange(page_no) {
         this.params.page_no = page_no;
         this.GET_GoodsList()
       },
-      /** 排序 */
+      /** sort*/
       handleClickSort(sort) {
         if (sort.active) sort.type = sort.type === 'asc' ? 'desc' : 'asc';
         this.$set(this, 'sorts', this.sorts.map(item => {
@@ -260,7 +260,7 @@
         this.params.sort = `${sort.name}_${sort.type}`;
         this.GET_GoodsList()
       },
-      /** 计算url，多筛选叠加 */
+      /** To calculateurl, multi-filter overlay*/
       selector_url(type, value) {
         const { brand, category, prop } = this.$route.query;
         let url = `${type}=${value}`;
@@ -274,7 +274,7 @@
         if (prop) url += `&prop=${prop}`;
         return url
       },
-      /** 获取商品列表 */
+      /** Get a list of items*/
       GET_GoodsList() {
         const params = JSON.parse(JSON.stringify(this.params));
         Object.keys(params).forEach(key => {

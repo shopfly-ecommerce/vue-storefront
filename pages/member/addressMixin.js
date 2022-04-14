@@ -1,7 +1,7 @@
 /**
  * Created by Andste on 2018/6/13.
- * 地址相关mixin
- * 个人中心和结算页复用
+ * Address associatedmixin
+ * Personal center and settlement page reuse
  */
 
 import * as API_Address from '@/api/address'
@@ -9,33 +9,33 @@ import { RegExp } from '@/ui-utils'
 export default {
   data() {
     return {
-      // 地址列表
+      // Address list
       addressList: [],
-      // 添加、编辑地址 表单
+      // Add and edit address forms
       addressForm: {},
-      // 添加、编辑地址 表单规则
+      // Add and edit address form rules
       addressRules: {
         name: [
-          this.MixinRequired('请输入收货人姓名！'),
-          { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' }
+          this.MixinRequired('Please enter the name of consignee！'),
+          { min: 2, max: 20, message: 'The length of2 to20 A character', trigger: 'blur' }
         ],
         mobile: [
-          this.MixinRequired('请输入联系方式！'),
+          this.MixinRequired('Please enter contact information！'),
           { validator: (rule, value, callback) => {
               if (!RegExp.mobile.test(value)) {
-                callback(new Error('手机格式有误！'))
+                callback(new Error('Incorrect phone format！'))
               } else {
                 callback()
               }
             }, trigger: 'blur' }
         ],
-        region: [this.MixinRequired('请选择地址地区！')],
+        region: [this.MixinRequired('Please select the address region！')],
         addr: [
-          this.MixinRequired('请输入详细地址！'),
-          { min: 1, max: 50, message: '长度在 1 到 50 个字符', trigger: 'blur' }
+          this.MixinRequired('Please enter the detailed address！'),
+          { min: 1, max: 50, message: 'The length of1 to50 A character', trigger: 'blur' }
         ]
       },
-      // 编辑地址时，暂存操作的地址
+      // The address of the operation is temporarily saved while editing the address
       regions: null
     }
   },
@@ -46,7 +46,7 @@ export default {
     areaFormatter(row) {
       return row.province + row.city + row.county + row.town
     },
-    /** 添加地址 */
+    /** Add the address*/
     handleAddAddress(_refs) {
       if (!this.regions) {
         const $regionPicker = this.$refs['regionPicker']
@@ -58,7 +58,7 @@ export default {
       }
       this.regions = new Date().getTime()
       this.openLayer({
-        title: '添加地址',
+        title: 'Add the address',
         yes: index => {
           this.submitAddressForm('add', index)
         }
@@ -69,7 +69,7 @@ export default {
         }
       })
     },
-    /** 编辑地址 */
+    /** Edit the address*/
     handleEaitAddress(row) {
       this.addressForm = JSON.parse(JSON.stringify(row))
       this.regions = [row.province_id, row.city_id, row.county_id || -1, row.town_id || -1]
@@ -79,60 +79,60 @@ export default {
         }
       })
     },
-    /** 删除地址 */
+    /** Delete the address*/
     handleDeleteAddress(row) {
-      this.$confirm('确定要删除这个地址吗？', () => {
+      this.$confirm('Are you sure you want to delete this address？', () => {
         API_Address.deleteAddress(row.addr_id).then(() => {
-          this.$message.success('删除成功！')
+          this.$message.success('Delete the success！')
           this.GET_AddressList()
         })
       })
     },
-    /** 设置默认地址 */
+    /** Setting the Default address*/
     handleSetDefaultAddress(item) {
       API_Address.setDefaultAddress(item.addr_id).then(() => {
-        this.$message.success('设置成功！')
+        this.$message.success('Set up the success！')
         this.GET_AddressList()
       })
     },
-    /** 提交地址表单 */
+    /** Submit address form*/
     submitAddressForm(type, index) {
       this.$refs['addressForm'].validate((valid) => {
         if (valid) {
           const { addr_id } = this.addressForm
           if (!addr_id) {
             API_Address.addAddress(this.addressForm).then(() => {
-              this.$message.success('保存成功！')
+              this.$message.success('Save success！')
               this.$layer.close(index)
               this.GET_AddressList()
             })
           } else {
             API_Address.editAddress(addr_id, this.addressForm).then(response => {
-              this.$message.success('保存成功！')
+              this.$message.success('Save success！')
               this.$layer.close(index)
               this.GET_AddressList()
             })
           }
         } else {
-          this.$message.error('表单填写有误，请检查！')
+          this.$message.error('The form is filled incorrectly, please check！')
           return false
         }
       })
     },
-    /** 打开layer弹窗 */
+    /** Open thelayerPopup window*/
     openLayer(params) {
       this.$layer.open({
         type: 1,
-        title: '编辑地址',
+        title: 'Edit the address',
         zIndex: 200,
         area: '550px',
         scrollbar: false,
         content: $('#addressForm'),
-        btn: ['确认', '取消'],
+        btn: ['confirm', 'cancel'],
         ...params
       })
     },
-    /** 获取地址列表 */
+    /** Get address list*/
     GET_AddressList() {
       API_Address.getAddressList().then(response => {
         this.addressList = response

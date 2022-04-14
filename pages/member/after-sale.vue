@@ -7,7 +7,7 @@
     name: 'after-sale',
     head() {
       return {
-        title: `售后服务-${this.site.title}`
+        title: `After-sales service-${this.site.title}`
       }
     }
   }

@@ -9,7 +9,7 @@
       type="buyer"
     />
     <div v-else class="no-login">
-      请先<a :href="`/login?forward=${$route.fullPath}`" class="login-btn">登录</a>
+      Please first<a :href="`/login?forward=${$route.fullPath}`" class="login-btn">Sign in</a>
     </div>
   </no-ssr>
 </template>

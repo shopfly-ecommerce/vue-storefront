@@ -3,7 +3,7 @@
     <div class="member-nav">
       <ul class="member-nav-list">
         <li class="active">
-          <a href="./my-profile">个人资料</a>
+          <a href="./my-profile">The personal data</a>
         </li>
       </ul>
     </div>
@@ -18,30 +18,30 @@
           :on-success="(res) => { profileForm.face = res.url }"
         >
           <img v-if="profileForm.face" :src="profileForm.face" class="avatar">
-          <img v-else src="../../assets/images/icon-noface.jpg" title="求真相" class="avatar">
+          <img v-else src="../../assets/images/icon-noface.jpg" title="Seek the truth" class="avatar">
           <div class="eidt-mask">
             <i class="el-icon-edit-outline"></i>
-            <p>修改头像</p>
+            <p>Modify the picture</p>
           </div>
         </el-upload>
-        <p>头像修改在保存后生效</p>
+        <p>The avatar changes take effect after being saved</p>
       </div>
       <el-form :model="profileForm" :rules="profileRules" ref="profileForm" label-width="100px" style="width:350px">
-        <el-form-item label="用户名" prop="uname">
+        <el-form-item label="username" prop="uname">
           <span>{{ profileForm.uname }}</span>
         </el-form-item>
-        <el-form-item label="昵称" prop="nickname">
-          <el-input v-model="profileForm.nickname" placeholder="昵称为2-20个字符" minLength="2" maxlength="20" size="small" clearable></el-input>
+        <el-form-item label="nickname" prop="nickname">
+          <el-input v-model="profileForm.nickname" placeholder="nicknamed2-20A character" minLength="2" maxlength="20" size="small" clearable></el-input>
         </el-form-item>
-        <el-form-item label="性别" required>
-          <el-radio v-model="profileForm.sex" :label="1">男</el-radio>
-          <el-radio v-model="profileForm.sex" :label="0">女</el-radio>
+        <el-form-item label="gender" required>
+          <el-radio v-model="profileForm.sex" :label="1">male</el-radio>
+          <el-radio v-model="profileForm.sex" :label="0">female</el-radio>
         </el-form-item>
-        <el-form-item label="生日">
+        <el-form-item label="birthday">
           <el-date-picker
             v-model="profileForm.birthday"
             type="date"
-            placeholder="请选择生日"
+            placeholder="Please choose your birthday"
             :editable="false"
             :picker-options="{disabledDate(time) { return (time.getTime() > Date.now() || time.getTime() < -2208988800000) }}"
             size="small"
@@ -50,23 +50,23 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="地区">
+        <el-form-item label="region">
           <en-region-picker :api="MixinRegionApi" :default="defaultRegions" @changed="(object) => { profileForm.region = object.last_id }"/>
         </el-form-item>
-        <el-form-item label="详细地址" prop="address">
-          <el-input v-model="profileForm.address" placeholder="最多50个字符" maxlength="50" size="small" clearable></el-input>
+        <el-form-item label="Detailed address" prop="address">
+          <el-input v-model="profileForm.address" placeholder="most50A character" maxlength="50" size="small" clearable></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
+        <el-form-item label="email" prop="email">
           <el-input v-model="profileForm.email" size="small" clearable></el-input>
         </el-form-item>
         <el-form-item label="">
-          <el-button @click="submitProfile">保存资料</el-button>
+          <el-button @click="submitProfile">Save the data</el-button>
         </el-form-item>
       </el-form>
       <span class="clr"></span>
     </div>
     <el-dialog
-      title="修改头像"
+      title="Modify the picture"
       :visible.sync="dialogFaceVisible"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
@@ -85,8 +85,8 @@
         outputType="png"
       ></vueCropper>
       <span slot="footer" class="dialog-footer">
-        <el-button size="mini" @click="dialogFaceVisible = false">取 消</el-button>
-        <el-button size="mini" type="primary" @click="handleCropperCrop">确 定</el-button>
+        <el-button size="mini" @click="dialogFaceVisible = false">cancel</el-button>
+        <el-button size="mini" type="primary" @click="handleCropperCrop">save</el-button>
       </span>
     </el-dialog>
   </div>
@@ -104,26 +104,26 @@
     name: 'my-profile',
     head() {
       return {
-        title: `我的资料-${this.site.title}`
+        title: `My profile-${this.site.title}`
       }
     },
     components: { EnRegionPicker },
     data() {
       const user = this.$store.state.user.user
       return {
-        /** 地区 */
+        /** region*/
         regions: {},
-        /** 个人资料 表单 */
+        /** Personal Information Form*/
         profileForm: user ? JSON.parse(JSON.stringify(user)) : {},
-        /** 个人资料 表单规则 */
+        /** Profile form rules*/
         profileRules: {
           nickname: [
-            this.MixinRequired('请输入昵称！'),
-            { min: 2, max: 20, message: '请输入2～20位的昵称' },
+            this.MixinRequired('Please enter a nickname！'),
+            { min: 2, max: 20, message: 'Please enter the2～20A nickname' },
             {
               validator: (rule, value, callback) => {
                 if (!RegExp.userName.test(value)) {
-                  callback(new Error('只支持汉字、字母、数字、“-”、“_”的组合！'))
+                  callback(new Error('Support only Chinese characters、The letter、digital、“-”、“_The combination of"！'))
                 } else {
                   callback()
                 }
@@ -135,7 +135,7 @@
               if (value === undefined || value === null || value === '') {
                 callback()
               } else if (!RegExp.email.test(value)) {
-                callback(new Error('邮箱格式不正确！'))
+                callback(new Error('The mailbox format is incorrect！'))
               } else {
                 callback()
               } },
@@ -143,9 +143,9 @@
             }
           ]
         },
-        // 修改头像dialog
+        // Modify avatar dialog
         dialogFaceVisible: false,
-        // 裁剪图片地址
+        // Cropped picture address
         cropperImg: ''
       }
     },
@@ -155,7 +155,7 @@
       }
     },
     computed: {
-      /** 默认地址 */
+      /** The default address*/
       defaultRegions() {
         const { user } = this.$store.state.user
         if(!user || !user.province_id) return null
@@ -171,17 +171,17 @@
       })
     },
     methods: {
-      /** 头像文件发生改变 */
+      /** The profile picture file is changed. Procedure*/
       handleFaceChange(file) {
         const isImage = file.raw.type === 'image/jpeg' || file.raw.type === 'image/jpg' || file.raw.type === 'image/png'
         if (!isImage) {
-          this.$message.error('上传头像图片只能是 JPG、JPEG或PNG格式!')
+          this.$message.error('Profile pictures can only be uploadedJPG、JPEGorPNGFormat!')
           return
         }
         this.dialogFaceVisible = true
         this.cropperImg = file.url
       },
-      /** 裁剪头像 */
+      /** Cutting head*/
       handleCropperCrop() {
         this.$refs.cropper.getCropData(async data => {
           const formData = new FormData()
@@ -189,7 +189,7 @@
           this.handleUploadFace(formData)
         })
       },
-      /** 上传文件 */
+      /** Upload a file*/
       handleUploadFace(formData) {
         request({
           url: this.MixinUploadApi,
@@ -201,20 +201,20 @@
         }).then(response => {
           this.profileForm.face = response.url
           this.dialogFaceVisible = false
-          this.$message.success('上传成功，保存后生效！')
+          this.$message.success('The upload is successful and takes effect after being saved！')
         })
       },
-      /** 保存资料提交表单 */
+      /** Save the data submission form*/
       submitProfile() {
         this.$refs['profileForm'].validate((valid) => {
           if (valid) {
             const params = JSON.parse(JSON.stringify(this.profileForm))
             params.birthday /= 1000
             this.saveUserInfo(params).then(() => {
-              this.$message.success('修改成功！')
+              this.$message.success('Modify the success！')
             })
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })

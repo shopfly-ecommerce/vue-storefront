@@ -11,14 +11,14 @@
             </div>
           </a>
           <div class="comments-content">
-            <div class="comments-grade">评分：
+            <div class="comments-grade">score：
               <el-radio-group
                 v-model="comment.grade"
                 @change="(value) => { commentsRules.comments[index].content[0].required = value !== 'good' }"
               >
-                <el-radio label="good">好评</el-radio>
-                <el-radio label="neutral">中评</el-radio>
-                <el-radio label="bad">差评</el-radio>
+                <el-radio label="good">Praise</el-radio>
+                <el-radio label="neutral">In the evaluation of</el-radio>
+                <el-radio label="bad">Bad review</el-radio>
               </el-radio-group>
             </div>
             <div class="comments-input">
@@ -27,7 +27,7 @@
                   type="textarea"
                   :autosize="{ minRows: 3, maxRows: 10 }"
                   :maxlength="300"
-                  placeholder="请在此处输入您的评论"
+                  placeholder="Please enter your comments here"
                   v-model="comment.content">
                 </el-input>
               </el-form-item>
@@ -37,7 +37,7 @@
                 :action="MixinUploadApi"
                 list-type="picture-card"
                 multiple
-                :on-exceed="() => { $message.error('超过最大可上传数！') }"
+                :on-exceed="() => { $message.error('The maximum number of uploads exceeded！') }"
                 :limit="5"
                 :on-success="(res, file, fileList) => { comment.images = fileList }"
                 :on-remove="(file, fileList) => { comment.images = fileList }"
@@ -45,16 +45,16 @@
                 <i class="el-icon-plus"></i>
               </el-upload>
             </div>
-            <p>您收到的商品是什么样的呢？晒个照片吧（最多可上传5张照片）</p>
+            <p>What kind of goods did you receive？Post a picture（Maximum upload5photo）</p>
           </div>
         </div>
       </div>
       <div class="comments-btn-box">
-        <el-button type="danger" @click="submitForm">发表评论</el-button>
+        <el-button type="danger" @click="submitForm">comment</el-button>
       </div>
     </el-form>
     <div v-else class="cant-comments">
-      <h3><i class="el-icon-warning"></i>该订单不能评论！</h3>
+      <h3><i class="el-icon-warning"></i>This order cannot be commented on！</h3>
     </div>
   </div>
 </template>
@@ -69,7 +69,7 @@
     name: 'comments',
     head() {
       return {
-        title: `评价商品-${this.site.title}`
+        title: `Evaluation of goods-${this.site.title}`
       }
     },
     data() {
@@ -80,9 +80,9 @@
         commentsRules: {
           comments: []
         },
-        // 评分颜色
+        // Marking color
         rateColors: ['#99A9BF', '#F7BA2A', '#FF9900'],
-        // 不能评论【已评论过】
+        // Cant comment on
         cantComments: false
       }
     },
@@ -100,7 +100,7 @@
           service_score: 5,
           comments: response.order_sku_list.map((item, index) => {
             this.commentsRules.comments[index] = {}
-            this.commentsRules.comments[index].content = [{ required: false, message: '可以告诉我们您遇到了什么问题吗？', trigger: 'blur' }]
+            this.commentsRules.comments[index].content = [{ required: false, message: 'Can you tell us what the problem is？', trigger: 'blur' }]
             return {
               sku_id: item.sku_id,
               content: '',
@@ -121,11 +121,11 @@
               return item
             })
             API_Members.commentsOrder(params).then(() => {
-              this.$message.success('发表成功！')
+              this.$message.success('Published successfully！')
               this.$router.replace({ path: '/member/my-order' })
             })
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })

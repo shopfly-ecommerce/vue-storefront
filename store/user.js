@@ -16,7 +16,7 @@ export const state = () => {
 /** mutations */
 export const mutations = {
   /**
-   * 保存用户信息
+   * Save user information
    * @param state
    * @param data
    */
@@ -29,7 +29,7 @@ export const mutations = {
     }
   },
   /**
-   * 移除用户信息
+   * Remove user information
    * @param state
    * @param data
    */
@@ -37,11 +37,11 @@ export const mutations = {
     state.user = ''
     Storage.removeItem('user')
     Storage.removeItem('uid')
-    // 主要针对第三方登录留下的数据
+    // Data generated during third-party login
     Storage.removeItem('uuid_connect')
   },
   /**
-   * 设置访问令牌
+   * Set the access token
    * @param state
    * @param token
    */
@@ -52,7 +52,7 @@ export const mutations = {
     }
   },
   /**
-   * 移除访问令牌
+   * Remove the access token
    * @param state
    */
   [types.REMOVE_ACCESS_TOKEN](state) {
@@ -61,7 +61,7 @@ export const mutations = {
     }
   },
   /**
-   * 设置刷新令牌
+   * Sets the refresh token
    * @param state
    * @param token
    */
@@ -74,14 +74,14 @@ export const mutations = {
     }
   },
   /**
-   * 移除刷新令牌
+   * Removes the refresh token
    * @param state
    */
   [types.REMOVE_REFRESH_TOKEN](state) {
     Storage.removeItem('refresh_token')
   },
   /**
-   * 移除商家中心登录状态
+   * Removes the merchant center login status
    * @param state
    */
   [types.REMOVE_SELLER_AUTH](state) {
@@ -96,7 +96,7 @@ export const mutations = {
 /** actions */
 export const actions = {
   /**
-   * 获取用户数据
+   * Obtaining User data
    * @param commit
    * @param params
    */
@@ -110,7 +110,7 @@ export const actions = {
     })
   },
   /**
-   * 登录
+   * Sign in
    * @param commit
    * @param params
    * @returns {Promise<any>}
@@ -139,7 +139,7 @@ export const actions = {
     })
   },
   /**
-   * 登出
+   * logout
    * @param commit
    * @param dispatch
    * @returns {Promise<any>}
@@ -148,9 +148,9 @@ export const actions = {
     return new Promise((resolve, reject) => {
       API_Members.logout().then(() => {
         /**
-         * 如果是修改密码
-         * 那么判断当前用户id是否与商家中心已登录用户id一致
-         * 如果一致，那么连同商家中心登录状态一同移除
+         * Change the password
+         * So determine the current useridWhether the user is logged in with the merchant centeridconsistent
+         * If they are, remove them along with the merchant center login status
          */
         if (type === 'change-pwd') {
           const uid = Storage.getItem('uid')
@@ -162,7 +162,7 @@ export const actions = {
         commit(types.REMOVE_USER_INFO)
         commit(types.REMOVE_ACCESS_TOKEN)
         commit(types.REMOVE_REFRESH_TOKEN)
-        // 移除不要的参数 - 分销
+        // Remove unwanted arguments - distribution
         Storage.removeItem('bill_id')
         Storage.removeItem('memeber_id')
         resolve()
@@ -170,7 +170,7 @@ export const actions = {
     })
   },
   /**
-   * 保存用户信息【修改资料】
+   * Save user information【Modify the data】
    * @param commit
    * @param params
    * @returns {Promise<any>}
@@ -185,14 +185,14 @@ export const actions = {
     })
   },
   /**
-   * 移除用户信息
+   * Remove user information
    * @param commit
    */
   removeUserAction: ({ commit }) => {
     commit(types.REMOVE_USER_INFO)
   },
   /**
-   * 注册【通过手机号】
+   * Register【By phone number】
    * @param commit
    * @param params
    * @returns {Promise<any>}
@@ -210,7 +210,7 @@ export const actions = {
     })
   },
   /**
-   * 设置accessToken
+   * Set up theaccessToken
    * @param commit
    * @param accessToken
    */
@@ -218,14 +218,14 @@ export const actions = {
     commit(types.SET_ACCESS_TOKEN, accessToken)
   },
   /**
-   * 移除accessToken
+   * removeaccessToken
    * @param commit
    */
   removeAccessTokenAction: ({ commit }) => {
     commit(types.REMOVE_ACCESS_TOKEN)
   },
   /**
-   * 设置refreshToken
+   * Set up therefreshToken
    * @param commit
    * @param refreshToken
    */
@@ -233,7 +233,7 @@ export const actions = {
     commit(types.SET_REFRESH_TOKEN, refreshToken)
   },
   /**
-   * 移除refreshToken
+   * removerefreshToken
    * @param commit
    */
   removeRefreshTokenAction: ({ commit }) => {

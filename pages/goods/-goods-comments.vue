@@ -1,7 +1,7 @@
 <template>
   <div id="goods-comments" class="goods-comments">
     <div class="inner-comments">
-      好评率：<em>{{ grade }}%</em>
+      rating：<em>{{ grade }}%</em>
     </div>
     <div v-if="comments" class="content-comments">
       <div v-for="comment in comments.data" :key="comment.ask_id" class="item-comments">
@@ -11,7 +11,7 @@
         </div>
         <div class="cons-right">
           <div class="time-cons">
-            <span class="grade">评价：<em>{{ comment.grade | filterGrade }}</em></span>
+            <span class="grade">evaluation：<em>{{ comment.grade | filterGrade }}</em></span>
             {{ comment.create_time | unixToDate }}
           </div>
           <div class="box-cons">
@@ -29,7 +29,7 @@
               <span class="clear"></span>
             </div>
             <template v-if="comment.reply_status === 1 && comment.reply">
-              <p class="reply-p">掌柜回复：</p>
+              <p class="reply-p">The shopkeeper replies：</p>
               <p class="reply-cons" style="overflow:hidden;word-break: break-word;">{{ comment.reply.content }}</p>
             </template>
           </div>
@@ -49,8 +49,8 @@
 
 <script>
   /**
-   * 商品评论模块
-   * 这里只负责展示商品的评论
+   * Product review module
+   * It is only responsible for displaying product reviews
    */
   import * as API_Members from '@/api/members'
   export default {
@@ -69,25 +69,25 @@
       this.GET_GoodsComments()
     },
     filters: {
-      /** 评分 */
+      /** score*/
       filterGrade(val) {
         switch (val) {
           case 'bad':
-            return '差评'
+            return 'Bad review'
           case 'neutral':
-            return '中评'
+            return 'In the evaluation of'
           default:
-            return '好评'
+            return 'Praise'
         }
       }
     },
     methods: {
-      /** 当页数发生改变时 */
+      /** When the page count changes*/
       handleCurrentPageChange(page_no) {
         this.params.page_no = page_no
         this.GET_GoodsComments()
       },
-      /** 获取商品评论 */
+      /** Get product reviews*/
       GET_GoodsComments(){
         API_Members.getGoodsComments(this.goodsId, this.params).then(response => {
           this.comments = response

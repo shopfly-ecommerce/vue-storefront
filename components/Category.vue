@@ -4,7 +4,7 @@
     @mouseover="handleCategoryMouseover"
     @mouseout="handleCategoryMouseout"
   >
-    <a href="/goods" class="category-title">全部商品分类</a>
+    <a href="/goods" class="category-title">Categories</a>
     <div v-show="unfold" class="category-layer">
       <template v-for="(item, index) in $store.getters.categories">
         <div v-if="index < 7" :key="item.category_id" class="category-item">
@@ -29,9 +29,9 @@
             <div class="item-layer-con">
               <div class="item-layer-left">
                 <!--<div class="item-layer-channel">-->
-                <!--<a href="#">品牌日</a>-->
-                <!--<a href="#">家电城</a>-->
-                <!--<a href="#">智能家居</a>-->
+                <!--<a href="#">The brand,</a>-->
+                <!--<a href="#">Electronics store</a>-->
+                <!--<a href="#">Smart home</a>-->
                 <!--</div>-->
                 <div class="item-layer-detail">
                 <span>
@@ -89,19 +89,19 @@
       }
     },
     computed: {
-      /** 如果为首页，总是展开 */
+      /** If it is the home page, always expand*/
       always_unfold() {
         return this.$route.path === '/'
       }
     },
     methods: {
-      /** 鼠标移入 */
+      /** The mouse moving*/
       handleCategoryMouseover() {
         this.$Lazyload.lazyLoadHandler()
         if (this.always_unfold && this.initUnfold !== false) return
         this.unfold = true
       },
-      /** 鼠标移出 */
+      /** The mouse moved out*/
       handleCategoryMouseout() {
         if (this.always_unfold && this.initUnfold !== false) return
         this.unfold = false

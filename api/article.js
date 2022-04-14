@@ -1,13 +1,13 @@
 /**
  * Created by Andste on 2018/7/3.
- * 文章相关API
+ * The article relatedAPI
  */
 
 import request, { Method } from '@/utils/request'
 import { api } from '@/ui-domain'
 
 /**
- * 获取某个分类的文章列表
+ * Gets a list of articles for a category
  * @param category_type
  */
 export function getArticleCategory(category_type) {
@@ -19,7 +19,7 @@ export function getArticleCategory(category_type) {
 }
 
 /**
- * 获取文章详情
+ * Get article details
  * @param id
  */
 export function getArticleDetail(id) {
@@ -30,7 +30,7 @@ export function getArticleDetail(id) {
 }
 
 /**
- * 获取某个位置的文章列表
+ * Gets a list of articles at a location
  * @param position
  */
 export function getArticlesByPosition(position) {
@@ -41,7 +41,7 @@ export function getArticlesByPosition(position) {
 }
 
 /**
- * 获取某个位置的文章
+ * Gets the article at a location
  * @param position
  */
 export function getArticleByPosition(position) {
@@ -52,7 +52,7 @@ export function getArticleByPosition(position) {
 }
 
 /**
- * 获取某个分类下的文章列表
+ * Gets a list of articles under a category
  * @param category_type
  */
 export function getArticlesByCategory(category_type) {

@@ -9,7 +9,7 @@ export const state = () => ({
 /** mutations */
 export const mutations = {
   /**
-   * 设置购物车数据
+   * Set shopping cart data
    * @param state
    * @param data
    */
@@ -17,7 +17,7 @@ export const mutations = {
     state.shopList = data
   },
   /**
-   * 更新货品数量
+   * Update quantity of goods
    * @param state
    * @param params
    */
@@ -35,7 +35,7 @@ export const mutations = {
     })
   },
   /**
-   * 选择、取消选择货品
+   * choose、取消choose货品
    * @param state
    * @param params
    */
@@ -55,7 +55,7 @@ export const mutations = {
     })
   },
   /**
-   * 选择、取消选择店铺内所有货品
+   * choose、取消choose店铺内所有货品
    * @param state
    * @param params
    */
@@ -73,7 +73,7 @@ export const mutations = {
     })
   },
   /**
-   * 全选、取消全选
+   * Select all、取消Select all
    * @param state
    * @param checked
    */
@@ -88,7 +88,7 @@ export const mutations = {
     })
   },
   /**
-   * 删除货品【可能是多个】
+   * Delete the item【It could be multiple】
    * @param state
    * @param sku_ids
    */
@@ -108,14 +108,14 @@ export const mutations = {
     state.shopList = _shopList
   },
   /**
-   * 清空购物车
+   * Empty shopping cart
    * @param state
    */
   [types.CLEAN_CART](state) {
     state.shopList = []
   },
   /**
-   * 设置购物车总价
+   * Set the total shopping cart price
    * @param state
    * @param total
    */
@@ -127,7 +127,7 @@ export const mutations = {
 /** actions */
 export const actions = {
   /**
-   * 获取购物车数据
+   * Get shopping cart data
    * @param commit
    * @param params
    */
@@ -141,7 +141,7 @@ export const actions = {
     })
   },
   /**
-   * 更新购物车货品数量
+   * Update shopping cart quantity
    * @param commit
    * @param params
    * @returns {Promise<any>}
@@ -156,7 +156,7 @@ export const actions = {
     })
   },
   /**
-   * 选择、取消选择货品
+   * choose、取消choose货品
    * @param commit
    * @param params
    * @returns {Promise<any>}
@@ -171,7 +171,7 @@ export const actions = {
     })
   },
   /**
-   * 选择、取消选择店铺内所有货品
+   * choose、取消choose店铺内所有货品
    * @param commit
    * @param params
    * @returns {Promise<any>}
@@ -186,7 +186,7 @@ export const actions = {
     })
   },
   /**
-   * 全选、取消全选
+   * Select all、取消Select all
    * @param commit
    * @param checked
    * @returns {Promise<any>}
@@ -201,7 +201,7 @@ export const actions = {
     })
   },
   /**
-   * 删除购物车货品项
+   * Delete the cart item
    * @param commit
    * @param dispatch
    * @param sku_ids
@@ -217,7 +217,7 @@ export const actions = {
     })
   },
   /**
-   * 清空购物车
+   * Empty shopping cart
    * @param commit
    * @returns {Promise<any>}
    */
@@ -231,7 +231,7 @@ export const actions = {
     })
   },
   /**
-   * 获取购物车总价
+   * Get the total cart price
    * @param commit
    * @param dispatch
    * @returns {Promise<any>}
@@ -245,14 +245,14 @@ export const actions = {
     })
   },
   /**
-   * 清空vuex中的购物车
+   * emptyvuexShopping cart in
    * @param commit
    */
   cleanCartStoreAction: ({ commit }) => {
     commit(types.CLEAN_CART)
   },
   /**
-   * 更换促销活动
+   * Change promotions
    * @param dispatch
    * @param params
    * @returns {Promise<any>}
@@ -266,7 +266,7 @@ export const actions = {
     })
   },
   /**
-   * 不参与促销活动
+   * Do not participate in promotional activities
    * @param dispatch
    * @param params
    * @returns {Promise<any>}
@@ -284,7 +284,7 @@ export const actions = {
 /** getters */
 export const getters = {
   /**
-   * 获取skuList
+   * To obtainskuList
    * @param state
    * @returns {Array}
    */
@@ -294,12 +294,12 @@ export const getters = {
     return _skuList
   },
   /**
-   * 获取shopList
+   * To obtainshopList
    * @param state
    */
   shopList: state => state.shopList,
   /**
-   * 购物车所有货品总数
+   * Total number of items in shopping cart
    * @param state
    * @returns {number}
    */
@@ -315,7 +315,7 @@ export const getters = {
     return _allCount
   },
   /**
-   * 购物车已选货品总数
+   * Total number of items selected in cart
    * @param state
    * @returns {number}
    */
@@ -329,7 +329,7 @@ export const getters = {
     return _checkedCount
   },
   /**
-   * 购物车总价
+   * Shopping cart total price
    * @param state
    * @returns {*}
    */

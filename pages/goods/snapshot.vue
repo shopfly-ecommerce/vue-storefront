@@ -3,17 +3,17 @@
     <bread-nav :goods="goods"/>
     <div class="content">
       <div class="inner-content">
-        <!--商品相册-->
+        <!--Photo album-->
         <goods-zoom :images="goods.gallery_list" :spec-img="specImage"/>
-        <!--商品信息【包括规格】-->
+        <!--Product information【Including specifications】-->
         <goods-info :goods="goods" :orderprice="goodsPrice" :promotions="promotions" @spec-img-change="(img) => { this.specImage = img }"/>
-        <!--店铺卡片-->
+        <!--The store card-->
         <shop-card :shop-id="goods.seller_id"/>
       </div>
     </div>
     <div class="details">
       <div class="inner w">
-        <!--店铺标签商品推荐-->
+        <!--Store label product recommendation-->
         <goods-tags :shop-id="goods.seller_id"/>
         <div class="detail-container">
           <div class="detail-tabs">
@@ -25,9 +25,9 @@
             >{{ tab.title }}</div>
           </div>
           <div class="detail-content">
-            <div v-show="curTab === '商品详情'" class="intro-detail" v-html="goods.intro"></div>
-            <!--商品参数-->
-            <goods-params v-show="curTab === '规格参数'" :goods-params="goods.param_list"/>
+            <div v-show="curTab === 'Product details'" class="intro-detail" v-html="goods.intro"></div>
+            <!--Product parameters-->
+            <goods-params v-show="curTab === 'Specification'" :goods-params="goods.param_list"/>
           </div>
         </div>
       </div>
@@ -55,20 +55,20 @@
     head() {
       const { goods, site } = this
       return {
-        title: `${goods.goods_name || '商品详情'}-${site.site_name}`,
+        title: `${goods.goods_name || 'Product details'}-${site.site_name}`,
       }
     },
     components: GoodsComponents,
     data() {
       return {
         goods: '',
-        /** 实付金额 */ 
+        /** Amount of real pay*/ 
         orderprice:this.$route.query.orderData,
         goodsPrice: '',
-        /** 规格图片 */       
+        /** Sku pictures*/       
         specImage: '',
-        tabs: ['商品详情', '规格参数'].map((item, index) => ({ title: item, active: index === 0 })),
-        curTab: '商品详情'
+        tabs: ['Product details', 'Specification'].map((item, index) => ({ title: item, active: index === 0 })),
+        curTab: 'Product details'
       }
     },
     mounted() {
@@ -81,7 +81,7 @@
       })
     },
     methods: {
-      /** 商品详情tab点击事件 */
+      /** Product detailstabClick on the event*/
       handleClickTabItem(tab) {
         this.curTab = tab.title
         this.tabs.map(item => {

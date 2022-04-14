@@ -1,14 +1,14 @@
 /**
  * Created by Andste on 2018/6/7.
- * 交♂易相关API
+ * Hand in♂Easy to relatedAPI
  */
 
 import request, { Method } from '@/utils/request'
 import { api } from '@/ui-domain'
 
 /**
- * 获取购物车列表
- * @param show_type 要显示的类型 all：全部 checked：已选中的
+ * Get shopping cart list
+ * @param show_type The type to displayall：allchecked：Has been selected
  */
 export function getCarts(show_type = 'all') {
   return request({
@@ -20,10 +20,10 @@ export function getCarts(show_type = 'all') {
 }
 
 /**
- * 添加货品到购物车
- * @param sku_id      产品ID
- * @param num         产品的购买数量
- * @param activity_id 默认参与的活动id
+ * Add items to cart
+ * @param sku_id      productID
+ * @param num         The number of products purchased
+ * @param activity_id Default participation activitiesid
  */
 export function addToCart(sku_id, num = 1, activity_id) {
   return request({
@@ -39,7 +39,7 @@ export function addToCart(sku_id, num = 1, activity_id) {
 }
 
 /**
- * 立即购买
+ * Buy now
  * @param sku_id
  * @param num
  * @param activity_id
@@ -58,7 +58,7 @@ export function buyNow(sku_id, num = 1, activity_id) {
 }
 
 /**
- * 更新购物车商品数量
+ * Update the number of items in cart
  * @param sku_id
  * @param num
  */
@@ -72,7 +72,7 @@ export function updateSkuNum(sku_id, num = 1) {
 }
 
 /**
- * 更新购物车货品选中状态
+ * Update shopping cart item selection status
  * @param sku_id
  * @param checked
  */
@@ -86,7 +86,7 @@ export function updateSkuChecked(sku_id, checked = true) {
 }
 
 /**
- * 删除多个货品项
+ * Delete multiple items
  * @param sku_ids
  */
 export function deleteSkuItem(sku_ids) {
@@ -98,7 +98,7 @@ export function deleteSkuItem(sku_ids) {
 }
 
 /**
- * 清空购物车
+ * Empty shopping cart
  */
 export function cleanCarts() {
   return request({
@@ -109,7 +109,7 @@ export function cleanCarts() {
 }
 
 /**
- * 设置全部货品为选中或不选中
+ * Sets all items to selected or unselected
  * @param checked
  */
 export function checkAll(checked) {
@@ -122,7 +122,7 @@ export function checkAll(checked) {
 }
 
 /**
- * 设置店铺内全部货品选中状态
+ * Set the selected state of all goods in the store
  * @param shop_id
  * @param checked
  */
@@ -136,7 +136,7 @@ export function checkShop(shop_id, checked) {
 }
 
 /**
- * 获取购物车总价
+ * Get the total cart price
  */
 export function getCartTotal() {
   return request({
@@ -148,7 +148,7 @@ export function getCartTotal() {
 }
 
 /**
- * 获取结算参数
+ * Get settlement parameters
  */
 export function getCheckoutParams() {
   return request({
@@ -159,7 +159,7 @@ export function getCheckoutParams() {
 }
 
 /**
- * 设置收货地址ID
+ * Set the shipping addressID
  * @param address_id
  */
 export function setAddressId(address_id) {
@@ -171,7 +171,7 @@ export function setAddressId(address_id) {
 }
 
 /**
- * 设置支付类型
+ * Setting the payment Type
  * @param payment_type
  */
 export function setPaymentType(payment_type = 'ONLINE') {
@@ -184,7 +184,7 @@ export function setPaymentType(payment_type = 'ONLINE') {
 }
 
 /**
- * 设置发票信息
+ * Setting invoice Information
  * @param params
  */
 export function setRecepit(params) {
@@ -197,7 +197,7 @@ export function setRecepit(params) {
 }
 
 /**
- * 取消使用发票
+ * Cancellation of invoice
  */
 export function cancelReceipt() {
   return request({
@@ -208,7 +208,7 @@ export function cancelReceipt() {
 }
 
 /**
- * 设置送货时间
+ * Set delivery time
  * @param receive_time
  */
 export function setReceiveTime(receive_time) {
@@ -221,7 +221,7 @@ export function setReceiveTime(receive_time) {
 }
 
 /**
- * 设置订单备注
+ * Set order remarks
  * @param remark
  */
 export function setRemark(remark) {
@@ -234,7 +234,7 @@ export function setRemark(remark) {
 }
 
 /**
- * 获取订单总价
+ * Get the total order price
  */
 export function getOrderTotal() {
   return request({
@@ -245,7 +245,7 @@ export function getOrderTotal() {
 }
 
 /**
- * 创建订单
+ * Create the order
  */
 export function createTrade() {
   return request({
@@ -257,7 +257,7 @@ export function createTrade() {
 }
 
 /**
- * 获取支付方式列表
+ * Gets a list of payment methods
  * @param client_type
  */
 export function getPaymentList(client_type = 'PC') {
@@ -269,7 +269,7 @@ export function getPaymentList(client_type = 'PC') {
 }
 
 /**
- * 根据交易编号或订单编号查询收银台数据
+ * Query cash register data by transaction number or order number
  * @param params
  */
 export function getCashierData(params) {
@@ -282,7 +282,7 @@ export function getCashierData(params) {
 }
 
 /**
- * 主动查询支付结果
+ * Proactively query payment results
  * @param trade_type
  * @param sn
  * @param params
@@ -297,7 +297,7 @@ export function getPayStatus(trade_type, sn, params) {
 }
 
 /**
- * 获取微信扫描支付的状态
+ * Get the status of wechat scanning payment
  * @param sn
  */
 export function getWeChatQrStatus(sn) {
@@ -309,7 +309,7 @@ export function getWeChatQrStatus(sn) {
 }
 
 /**
- * 对一个交易发起支付
+ * Initiate payment for a transaction
  * @param trade_type
  * @param sn
  * @param params
@@ -324,7 +324,7 @@ export function initiatePay(trade_type, sn, params) {
 }
 
 /**
- * 查询物流
+ * Query the logistics
  * @param id
  * @param num
  */
@@ -341,7 +341,7 @@ export function getExpress(id, num) {
 }
 
 /**
- * 使用优惠券
+ * Use coupons
  * @param shop_id
  * @param coupon_id
  */
@@ -354,7 +354,7 @@ export function useCoupon(coupon_id) {
 }
 
 /**
- * 获取订单流程图
+ * Get order flow chart
  * @param order_sn
  */
 export function getOrderFlow(order_sn) {
@@ -366,7 +366,7 @@ export function getOrderFlow(order_sn) {
 }
 
 /**
- * 获取订单交易快照数据
+ * Get order trade snapshot data
  * @param id
  */
 export function getSnapshot(id) {
@@ -378,7 +378,7 @@ export function getSnapshot(id) {
 }
 
 /**
- * 获取商品销售记录
+ * Obtain merchandise sales records
  * @param goods_id
  * @param params
  */
@@ -392,7 +392,7 @@ export function getGoodsSales(goods_id, params) {
 }
 
 /**
- * 更换参与活动
+ * Change of participating Activities
  * @param params
  */
 export function changeActivity(params) {
@@ -405,7 +405,7 @@ export function changeActivity(params) {
 }
 
 /**
- * 不参加促销活动
+ * Do not participate in promotional activities
  */
 export function cleanPromotion(params) {
   return request({

@@ -6,7 +6,7 @@ import request, { Method } from '@/utils/request'
 import Storage from '@/utils/storage'
 
 /**
- * 获取优惠券列表
+ * Get a coupon list
  * @param params
  */
 export function getCoupons(params) {
@@ -19,7 +19,7 @@ export function getCoupons(params) {
 }
 
 /**
- * 领取优惠券
+ * Get a coupon
  * @param coupon_id
  */
 export function receiveCoupons(coupon_id) {
@@ -31,7 +31,7 @@ export function receiveCoupons(coupon_id) {
 }
 
 /**
- * 获取当前会员积分
+ * Get current membership points
  * @returns {*}
  */
 
@@ -44,7 +44,7 @@ export function getPoints() {
 }
 
 /**
- * 获取积分明细数据
+ * Obtain integral detail data
  * @param params
  * @returns {AxiosPromise}
  */
@@ -58,7 +58,7 @@ export function getPointsData(params) {
 }
 
 /**
- * 获取我的评论列表
+ * Get my list of comments
  * @param params
  * @returns {AxiosPromise}
  */
@@ -72,7 +72,7 @@ export function getComments(params) {
 }
 
 /**
- * 订单评论
+ * Order review
  * @param params
  */
 export function commentsOrder(params) {
@@ -86,7 +86,7 @@ export function commentsOrder(params) {
 }
 
 /**
- * 追加评论
+ * Additional comments
  * @param params
  */
 // export function AppendCommentsOrder(params) {
@@ -100,7 +100,7 @@ export function commentsOrder(params) {
 // }
 
 /**
- * 获取我的咨询列表
+ * Get my list of inquiries
  * @param params
  * @returns {AxiosPromise}
  */
@@ -114,7 +114,7 @@ export function getConsultations(params) {
 }
 
 /**
- * 商品咨询
+ * Product consulting
  * @param goods_id
  * @param ask_content
  */
@@ -131,7 +131,7 @@ export function consultating(goods_id, ask_content) {
 }
 
 /**
- * 获取商品收藏
+ * Get merchandise collection
  * @param params
  * @returns {AxiosPromise}
  */
@@ -147,8 +147,8 @@ export function getGoodsCollection(params) {
 }
 
 /**
- * 收藏商品
- * @param goods_id 商品ID
+ * Collection product
+ * @param goods_id productID
  * @returns {AxiosPromise}
  */
 export function collectionGoods(goods_id) {
@@ -161,8 +161,8 @@ export function collectionGoods(goods_id) {
 }
 
 /**
- * 删除商品收藏
- * @param ids 收藏ID【集合或单个商品ID】
+ * Delete merchandise collection
+ * @param ids collectionID【A collection or a single commodityID】
  * @returns {AxiosPromise}
  */
 export function deleteGoodsCollection(ids) {
@@ -175,7 +175,7 @@ export function deleteGoodsCollection(ids) {
 }
 
 /**
- * 获取商品是否被收藏
+ * Gets whether the item is collectable
  * @param good_id
  */
 export function getGoodsIsCollect(good_id) {
@@ -188,7 +188,7 @@ export function getGoodsIsCollect(good_id) {
 }
 
 /**
- * 获取当前登录的用户信息
+ * Get the information about the currently logged in user
  * @returns {AxiosPromise}
  */
 export function getUserInfo() {
@@ -201,7 +201,7 @@ export function getUserInfo() {
 }
 
 /**
- * 保存用户信息
+ * Save user information
  * @param params
  * @returns {AxiosPromise}
  */
@@ -215,7 +215,7 @@ export function saveUserInfo(params) {
 }
 
 /**
- * 登出
+ * logout
  * @returns {AxiosPromise}
  */
 export function logout() {
@@ -231,7 +231,7 @@ export function logout() {
 }
 
 /**
- * 获取发票列表
+ * Get invoice list
  */
 export function getReceipts() {
   return request({
@@ -242,7 +242,7 @@ export function getReceipts() {
 }
 
 /**
- * 添加发票
+ * Add the invoice
  * @param params
  */
 export function addReceipt(params) {
@@ -255,7 +255,7 @@ export function addReceipt(params) {
 }
 
 /**
- * 修改发票
+ * Modify the invoice
  * @param id
  * @param params
  */
@@ -269,7 +269,7 @@ export function editReceipt(id, params) {
 }
 
 /**
- * 删除发票
+ * Delete the invoice
  * @param id
  */
 export function deleteReceipt(id) {
@@ -281,7 +281,7 @@ export function deleteReceipt(id) {
 }
 
 /**
- * 设置发票为默认
+ * Set invoice to default
  * @param id
  */
 export function setDefaultReceipt(id) {
@@ -293,8 +293,8 @@ export function setDefaultReceipt(id) {
 }
 
 /**
- * 获取统计数量
- * 包括但不限于【订单数量、收藏的商品数量、收藏的店铺数量】
+ * Obtain statistical quantity
+ * Including but not limited to【The order number、The number of items in the collection、Number of stores collected】
  */
 export function getStatisticsNum() {
   return request({
@@ -305,7 +305,7 @@ export function getStatisticsNum() {
 }
 
 /**
- * 获取第三方绑定列表
+ * Gets a list of third-party bindings
  */
 export function getAccountBinder() {
   return request({
@@ -316,7 +316,7 @@ export function getAccountBinder() {
 }
 
 /**
- * 发起账号绑定
+ * Initiating account binding
  * @param type
  */
 export function bindAccount(type) {
@@ -328,7 +328,7 @@ export function bindAccount(type) {
 }
 
 /**
- * 发起账号解绑
+ * Initiate account unbinding
  * @param type
  */
 export function unbundAccount(type) {
@@ -340,7 +340,7 @@ export function unbundAccount(type) {
 }
 
 /**
- * 登录绑定
+ * Log on to the binding
  * @param uuid
  */
 export function loginBindAccount(uuid) {
@@ -352,7 +352,7 @@ export function loginBindAccount(uuid) {
 }
 
 /**
- * 注册绑定
+ * Registered binding
  * @param uuid
  */
 export function registerBindAccount(uuid) {
@@ -364,7 +364,7 @@ export function registerBindAccount(uuid) {
 }
 
 /**
- * 获取商家可用优惠券列表
+ * Get a list of coupons available to merchants
  * @param seller_ids
  */
 export function getShopsCoupons(seller_ids) {
@@ -376,7 +376,7 @@ export function getShopsCoupons(seller_ids) {
 }
 
 /**
- * 获取商品咨询列表
+ * Get a list of product inquiries
  * @param goods_id
  * @param params
  */
@@ -390,7 +390,7 @@ export function getGoodsConsultations(goods_id, params) {
 }
 
 /**
- * 获取商品评论列表
+ * Get a list of product reviews
  * @param goods_id
  * @param params
  */

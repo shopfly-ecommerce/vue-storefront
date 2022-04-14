@@ -1,9 +1,9 @@
 <template>
   <div id="payment-complete" class="w" style="text-align: center">
-    <h1 style="line-height: 150px"><i class="el-icon-success"></i>支付完成</h1>
+    <h1 style="line-height: 150px"><i class="el-icon-success"></i>Pay to complete</h1>
     <div class="cp-btns">
-      <nuxt-link to="/member/my-order"><el-button type="danger">查看订单</el-button></nuxt-link>
-      <a href="/"><el-button type="danger">返回首页</el-button></a>
+      <nuxt-link to="/member/my-order"><el-button type="danger">To view the order</el-button></nuxt-link>
+      <a href="/"><el-button type="danger">Return to the home page</el-button></a>
     </div>
   </div>
 </template>

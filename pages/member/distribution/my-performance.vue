@@ -2,30 +2,30 @@
   <div id="my-performance">
 	<div class="member-nav">
 	    <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
-		    <el-tab-pane label="与我相关的订单" name="order">
+		    <el-tab-pane label="Orders related to me" name="order">
 			    <div class="recommend-container">
 				    <div class="achievement-summary">
 					    <div>
-						    <span class="current-money performance-money">本期佣金：</span>
+						    <span class="current-money performance-money">This commission：</span>
 						    <span> {{ settlementTotal.start_time | unixToDate('yyyy-MM-dd') }} ～ {{ settlementTotal.end_time | unixToDate('yyyy-MM-dd') }} </span>
 					    </div>
 					    <div>
 						    <span class="finally-money performance-money">{{ settlementTotal.final_money | unitPrice('¥') }}</span>
-						    <span>最终佣金</span>
+						    <span>The final commission</span>
 					    </div>
 					    <div>
 						    <span class="performance-symbol">=</span>
 					    </div>
 					    <div>
 						    <span class="summary-money performance-money">{{ settlementTotal.push_money | unitPrice('¥') }}</span>
-						    <span>订单佣金</span>
+						    <span>The order of commission</span>
 					    </div>
 					    <div>
 						    <span class="performance-symbol">-</span>
 					    </div>
 					    <div>
 						    <span class="refund-money performance-money">{{ settlementTotal.return_push_money | unitPrice('¥') }}</span>
-						    <span>退单佣金返还</span>
+						    <span>Return order commission refund</span>
 					    </div>
 				    </div>
 				    <performanceOrder :performanceList="relevantList"/>
@@ -40,30 +40,30 @@
 				    </div>
 			    </div>
 		    </el-tab-pane>
-		    <el-tab-pane label="与我相关的退货单" name="refund">
+		    <el-tab-pane label="A return receipt associated with me" name="refund">
 			    <div class="recommend-container">
 				    <div class="achievement-summary">
 					    <div>
-						    <span class="current-money performance-money">本期佣金：</span>
+						    <span class="current-money performance-money">This commission：</span>
 						    <span> {{ settlementTotal.start_time | unixToDate('yyyy-MM-dd') }} ～ {{ settlementTotal.end_time | unixToDate('yyyy-MM-dd') }} </span>
 					    </div>
 					    <div>
 						    <span class="finally-money performance-money">{{ settlementTotal.final_money | unitPrice('¥') }}</span>
-						    <span>最终佣金</span>
+						    <span>The final commission</span>
 					    </div>
 					    <div>
 						    <span class="performance-symbol">=</span>
 					    </div>
 					    <div>
 						    <span class="summary-money performance-money">{{ settlementTotal.push_money | unitPrice('¥') }}</span>
-						    <span>订单佣金</span>
+						    <span>The order of commission</span>
 					    </div>
 					    <div>
 						    <span class="performance-symbol">-</span>
 					    </div>
 					    <div>
 						    <span class="refund-money performance-money">{{ settlementTotal.return_push_money | unitPrice('¥') }}</span>
-						    <span>退单佣金返还</span>
+						    <span>Return order commission refund</span>
 					    </div>
 				    </div>
 				    <performanceRefund :performanceList="relevantRefundList"/>
@@ -78,30 +78,30 @@
 				    </div>
 			    </div>
 		    </el-tab-pane>
-		    <el-tab-pane label="我的历史业绩" name="history">
+		    <el-tab-pane label="My track record" name="history">
 			    <div class="recommend-container">
 				    <div class="achievement-summary">
 					    <div>
-						    <span class="current-money performance-money">本期佣金：</span>
+						    <span class="current-money performance-money">This commission：</span>
 						    <span> {{ settlementTotal.start_time | unixToDate('yyyy-MM-dd') }} ～ {{ settlementTotal.end_time | unixToDate('yyyy-MM-dd') }} </span>
 					    </div>
 					    <div>
 						    <span class="finally-money performance-money">{{ settlementTotal.final_money | unitPrice('¥') }}</span>
-						    <span>最终佣金</span>
+						    <span>The final commission</span>
 					    </div>
 					    <div>
 						    <span class="performance-symbol">=</span>
 					    </div>
 					    <div>
 						    <span class="summary-money performance-money">{{ settlementTotal.push_money | unitPrice('¥') }}</span>
-						    <span>订单佣金</span>
+						    <span>The order of commission</span>
 					    </div>
 					    <div>
 						    <span class="performance-symbol">-</span>
 					    </div>
 					    <div>
 						    <span class="refund-money performance-money">{{ settlementTotal.return_push_money | unitPrice('¥') }}</span>
-						    <span>退单佣金返还</span>
+						    <span>Return order commission refund</span>
 					    </div>
 				    </div>
 				    <performanceHistory :performanceList="myHistoryList" @newBill="handleNewBill"/>
@@ -138,32 +138,32 @@
 	  },
     data() {
       return {
-        /** 分页请求参数 */
+        /** Paging request parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 分页信息 */
+        /** The paging information*/
         pageData: {
           page_no: 1,
           page_size: 10,
           data_total: 0
         },
 
-	      /** 当前所操作的tab */
+	      /** The current operationtab */
         activeName: 'order',
 
-        /** 与某个会员相关的订单 */
+        /** An order associated with a member*/
         relevantList: [],
 
-	      /** 与某个会员相关的退货单 */
+	      /** A return receipt associated with a member*/
         relevantRefundList: [],
 
-	      /** 与某个会员相关的历史业绩 */
+	      /** Historical performance relevant to a member*/
         myHistoryList: [],
 
-        /** 我的结算单 */
+        /** My statement*/
         settlementTotal: {
           start_time: 0,
 
@@ -178,11 +178,11 @@
           return_push_money: 0
         },
 
-	      /** 结算单相关请求参数 */
+	      /** Statement related request parameters*/
         perParmas: {
-          // 当前操作会员id
+          // Active member ID
           member_id: 0,
-          // 当前操作的结算单id
+          // The statement ID of the current operation
           bill_id: ''
         }
       }
@@ -192,7 +192,7 @@
     },
     methods: {
       async init() {
-        // 获取结算单信息
+        // Obtain statement information
         const response = await API_distribution.getSettlementTotal(this.perParmas);
         this.settlementTotal = response;
         const { member_id, id } = response;
@@ -201,10 +201,10 @@
           member_id: member_id,
           bill_id: id
         };
-        // 根据当前点击的状态 获取相应的数据 默认获取当前会员 当前结算单的订单信息
+        // Obtain the corresponding data according to the current click status by default to obtain the order information of the current members current statement
         this.GET_RelevantList()
       },
-      /** 当前页数发生改变 */
+      /** The current page number changed*/
       handleCurrentPageChange(cur) {
         this.params.page_no = cur;
         switch (this.activeName) {
@@ -218,7 +218,7 @@
         }
       },
 
-	    /** 切换tab */
+	    /** switchtab */
       handleClick(tab) {
         this.activeName = tab.name;
 		    switch (this.activeName) {
@@ -232,7 +232,7 @@
 		    }
       },
 
-      /** 获取与我相关的订单记录 */
+      /** Get the order record associated with me*/
       GET_RelevantList() {
         API_distribution.getRelevantList(this.params).then(response => {
           this.pageData = {
@@ -244,7 +244,7 @@
         })
       },
 
-      /** 获取与我相关的退款单记录 */
+      /** Get the record of refund receipt associated with me*/
       GET_RelevantRefundList() {
         API_distribution.getRelevantRefundList(this.params).then(response => {
           this.pageData = {
@@ -256,7 +256,7 @@
         })
       },
 
-      /** 获取我的历史业绩记录 */
+      /** Get my track record*/
       GET_MyhistoryList() {
         API_distribution.getMyHistoryList(this.params).then(response => {
           this.pageData = {
@@ -281,7 +281,7 @@
 </script>
 
 <style type="text/scss" lang="scss" scoped>
-  /*业绩总结*/
+  /*Performance reviews*/
   .achievement-summary {
     width: 100%;
     display: flex;

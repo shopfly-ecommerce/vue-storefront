@@ -1,12 +1,12 @@
 /**
- * 商品相关API
+ * commodity-relatedAPI
  */
 
 import request, { Method } from '@/utils/request'
 
 /**
- * 获取商品详情
- * @param goods_id 商品ID
+ * Obtain product details
+ * @param goods_id productID
  * @returns {AxiosPromise}
  */
 export function getGoods(goods_id) {
@@ -17,7 +17,7 @@ export function getGoods(goods_id) {
 }
 
 /**
- * 获取商品列表
+ * Get a list of items
  * @param params
  * @returns {AxiosPromise}
  */
@@ -31,7 +31,7 @@ export function getGoodsList(params) {
 }
 
 /**
- * 获取商品选择器
+ * Gets the item selector
  * @param params
  */
 export function getGoodsSelector(params) {
@@ -44,7 +44,7 @@ export function getGoodsSelector(params) {
 }
 
 /**
- * 获取商品关键字对应商品数量
+ * Gets the number of items corresponding to the item keyword
  * @param keyword
  */
 export function getKeywordNum(keyword) {
@@ -57,7 +57,7 @@ export function getKeywordNum(keyword) {
 }
 
 /**
- * 获取商品sku列表
+ * Access to goodsskuThe list of
  * @param goods_id
  */
 export function getGoodsSkus(goods_id) {
@@ -69,10 +69,10 @@ export function getGoodsSkus(goods_id) {
 }
 
 /**
- * 获取标签商品
- * @param seller_id 卖家id
- * @param mark      标签 hot：热卖 new：新品 recommend：推荐
- * @param num       获取个数
+ * Get tagged goods
+ * @param seller_id The sellerid
+ * @param mark      The labelhot：sellingnew：New productrecommend：recommended
+ * @param num       Get the number
  */
 export function getTagGoods(seller_id, mark = 'hot', num = 5) {
   return request({
@@ -88,7 +88,7 @@ export function getTagGoods(seller_id, mark = 'hot', num = 5) {
 }
 
 /**
- * 获取商品分类
+ * Get product categories
  * @param parent_id
  */
 export function getCategory(parent_id = 0) {
@@ -100,7 +100,7 @@ export function getCategory(parent_id = 0) {
 }
 
 /**
- * 查看商品是否在配送区域 1 有货 0 无货
+ * Check if the goods are in the distribution area1 In stock0 Is not available
  * @param goods_id
  * @param area_id
  */

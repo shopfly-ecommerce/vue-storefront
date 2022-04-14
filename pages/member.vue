@@ -21,7 +21,7 @@
     middleware: 'auth-user',
     head() {
       const { $store, site } = this
-      const name = $store.getters.user.nickname || '个人中心'
+      const name = $store.getters.user.nickname || 'Personal center'
       return {
         title: `${name}-${site.title}`
       }

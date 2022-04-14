@@ -3,40 +3,40 @@
     <div class="member-nav">
       <ul class="member-nav-list">
         <li>
-          <nuxt-link to="./website-message">未读消息</nuxt-link>
+          <nuxt-link to="./website-message">Unread messages</nuxt-link>
         </li>
         <li>
-          <nuxt-link to="./website-message?type=all">全部消息</nuxt-link>
+          <nuxt-link to="./website-message?type=all">All the news</nuxt-link>
         </li>
       </ul>
     </div>
     <div class="message-container">
-      <empty-member v-if="tableData && !tableData.data.length">暂无站内消息</empty-member>
+      <empty-member v-if="tableData && !tableData.data.length">There is no intra-site message</empty-member>
       <ul v-else>
         <li v-for="message in tableData.data" :key="message.id" class="message-item">
           <div class="msg-time">{{ message.send_time | unixToDate }}</div>
           <div class="msg-box">
             <div class="msg-title">
-              <h4>{{ message.title || '站内消息' }}</h4>
+              <h4>{{ message.title || 'Messages' }}</h4>
               <div class="message-tools">
                 <i v-if="message.is_read === 0"
                    class="el-icon-check"
-                   title="标记为已读"
+                   title="Mark as read"
                    @click="handleReadMessage(message)"
                 ></i>
-                <i class="el-icon-close" title="删除消息" @click="handleDeleteMessage(message)"></i>
+                <i class="el-icon-close" title="Delete the message" @click="handleDeleteMessage(message)"></i>
               </div>
             </div>
             <div class="msg-content clearfix">
               <div>{{ message.content }}</div>
-              <!--<nuxt-link to="#">查看详情 > </nuxt-link>-->
+              <!--<nuxt-link to="#">Check the details> </nuxt-link>-->
             </div>
           </div>
         </li>
       </ul>
     </div>
     <div class="member-pagination" v-if="tableData && tableData.data.length">
-      <a v-if="params.type !== 'all'" href="javascript:;" class="read-all" @click="handleReadPageMessages">标记当前页为已读</a>
+      <a v-if="params.type !== 'all'" href="javascript:;" class="read-all" @click="handleReadPageMessages">Marks the current page as read</a>
       <el-pagination
         @current-change="handleCurrentPageChange"
         :current-page.sync="params.page_no"
@@ -55,7 +55,7 @@
     name: 'website-message',
     head() {
       return {
-        title: `站内消息-${this.site.title}`
+        title: `Messages-${this.site.title}`
       }
     },
     data() {
@@ -79,29 +79,29 @@
       },
     },
     methods: {
-      /** 当前页数发生改变 */
+      /** The current page number changed*/
       handleCurrentPageChange(page) {
         this.params.page_no = page
         this.GET_MessageList()
       },
-      /** 删除消息 */
+      /** Delete the message*/
       handleDeleteMessage(message) {
-        this.$confirm('确定要删除这条消息吗？', () => {
+        this.$confirm('Are you sure you want to delete this message？', () => {
           API_Message.deleteMessage(message.id).then(async () => {
             await this.getUnreadMessageNumAction()
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.GET_MessageList()
           })
         })
       },
-      /** 标记消息为已读 */
+      /** Mark the message as read*/
       handleReadMessage(message) {
         API_Message.messageMarkAsRead(message.id).then(async () => {
           await this.getUnreadMessageNumAction()
           this.GET_MessageList()
         })
       },
-      /** 标记当前页消息为已读 */
+      /** Marks the current page message as read*/
       handleReadPageMessages() {
         const ids = this.tableData.data.map(item => item.id).join(',')
         API_Message.messageMarkAsRead(ids).then(async () => {
@@ -109,7 +109,7 @@
           this.GET_MessageList()
         })
       },
-      /** 获取站内消息 */
+      /** Get the intra-site message*/
       GET_MessageList(){
         const params = JSON.parse(JSON.stringify(this.params))
         if (params.type !== 'all') {

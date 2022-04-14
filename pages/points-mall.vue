@@ -9,7 +9,7 @@
     </div>
     <div class="points-goods">
       <div v-if="tableData && !tableData.data.length" class="no-goods w">
-        暂无商品...
+        Your cart is empty...
       </div>
       <div v-else class="w">
         <ul class="goods-list">
@@ -22,11 +22,11 @@
                   </a>
                 </div>
                 <div class="gl-price">
-                  <strong v-if="goods.exchange_money"><em>¥</em><i>{{ goods.exchange_money | unitPrice }}</i> + {{ goods.exchange_point }}积分</strong>
-	                <strong v-else>{{ goods.exchange_point }}积分</strong>
+                  <strong v-if="goods.exchange_money"><em>¥</em><i>{{ goods.exchange_money | unitPrice }}</i> + {{ goods.exchange_point }}point</strong>
+	                <strong v-else>{{ goods.exchange_point }}point</strong>
                 </div>
                 <p>
-                  原价：<span class="gl-original-price">￥{{ goods.goods_price | unitPrice }}</span>
+                  The original price：<span class="gl-original-price">￥{{ goods.goods_price | unitPrice }}</span>
                 </p>
                 <div class="gl-name">
                   <a :href="'/goods/' + goods.goods_id" :title="goods.goods_name" target="_blank">
@@ -58,7 +58,7 @@
     name: 'points-mall',
     head() {
       return {
-        title: `积分商城-${this.site.title}`
+        title: `Integral mall-${this.site.title}`
       }
     },
     data() {
@@ -77,12 +77,12 @@
       this.GET_PointsGoods()
     },
     methods: {
-      /** 当前分页发生改变 */
+      /** The current page has changed*/
       handleCurrentPageChange(page_no) {
         this.params.page_no = page_no
         this.GET_PointsGoods()
       },
-      /** 选择积分分类 */
+      /** Selective integral classification*/
       handleClickCat(cat) {
         this.$set(this, 'categorys', this.categorys.map(item => {
           item.active = item.cat_id === cat.cat_id
@@ -91,11 +91,11 @@
         this.params.cat_id = cat.cat_id
         this.GET_PointsGoods()
       },
-      /** 获取积分分类 */
+      /** Get integral classification*/
       GET_PointsCategory() {
         API_Promotions.getPointsCategory().then(response => {
           this.categorys = [
-            { name: '全部', cat_id: 0, active: true },
+            { name: 'all', cat_id: 0, active: true },
             ...response.map(item => ({
               active: false,
               name: item.name,
@@ -104,7 +104,7 @@
           ]
         })
       },
-      /** 获取积分商品 */
+      /** Get bonus items*/
       GET_PointsGoods() {
         const params = JSON.parse(JSON.stringify(this.params))
         if (params.cat_id === 0) delete params.cat_id

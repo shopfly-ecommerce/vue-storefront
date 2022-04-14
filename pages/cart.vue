@@ -235,16 +235,16 @@
       }
     },
     methods: {
-      /** Check the、取消Check the商品*/
+      /** Check the、cancelCheck theproduct*/
       handleCheckSku(sku) {
         console.log(11, sku)
         this.checkSkuItem({ sku_id: sku.sku_id, checked: sku.checked ? 0 : 1 })
       },
-      /** Check the、取消Check the店铺*/
+      /** Check the、cancelCheck theThe store*/
       handleCheckShop(shop) {
         this.checkShopSku({ shop_id: shop.seller_id, checked: shop.checked ? 0 : 1 })
       },
-      /** Select all、取消Select all*/
+      /** Select all、cancelSelect all*/
       handleCheckAll() {
         this.checkAll(this.all_checked ? 0 : 1)
       },

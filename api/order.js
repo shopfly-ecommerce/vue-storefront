@@ -1,11 +1,11 @@
 /**
- * 订单相关API
+ * Order relatedAPI
  */
 
 import request, { Method } from '@/utils/request'
 
 /**
- * 获取订单列表
+ * Get order list
  * @param params
  */
 export function getOrderList(params) {
@@ -18,8 +18,8 @@ export function getOrderList(params) {
 }
 
 /**
- * 获取订单详情
- * @param order_sn 订单编号
+ * Obtain order details
+ * @param order_sn Order no.
  */
 export function getOrderDetail(order_sn) {
   return request({
@@ -30,9 +30,9 @@ export function getOrderDetail(order_sn) {
 }
 
 /**
- * 取消订单
- * @param order_sn 订单编号
- * @param reason   取消原因
+ * Cancel the order
+ * @param order_sn Order no.
+ * @param reason   Cancel the reason
  */
 export function cancelOrder(order_sn, reason) {
   return request({
@@ -44,8 +44,8 @@ export function cancelOrder(order_sn, reason) {
 }
 
 /**
- * 确认收货
- * @param order_sn 订单编号
+ * Confirm the goods
+ * @param order_sn Order no.
  */
 export function confirmReceipt(order_sn) {
   return request({
@@ -56,7 +56,7 @@ export function confirmReceipt(order_sn) {
 }
 
 /**
- * 获取订单状态数量
+ * Gets the order status quantity
  */
 export function getOrderStatusNum() {
   return request({
@@ -67,7 +67,7 @@ export function getOrderStatusNum() {
 }
 
 /**
- * 根据交易单号查询订单列表
+ * Query the order list based on the order number
  * @param trade_sn
  */
 export function getOrderListByTradeSn(trade_sn) {
@@ -79,7 +79,7 @@ export function getOrderListByTradeSn(trade_sn) {
 }
 
 /**
- * 获取订单日志
+ * Get order log
  * @param order_sn
  */
 export function getOrderLog(order_sn) {

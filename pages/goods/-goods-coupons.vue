@@ -1,7 +1,7 @@
 <template>
   <div v-if="coupons && coupons.length" id="goods-coupons">
     <div class="pro-list">
-      <div class="pro-title">优&ensp;惠&ensp;券</div>
+      <div class="pro-title">coupons</div>
       <div class="pro-content">
         <template v-for="(coupon, index) in coupons">
           <div
@@ -12,24 +12,24 @@
           >
             <i class="coupons-border-l"></i>
             <i class="coupons-border-r"></i>
-            <span class="tj">满{{ coupon.coupon_threshold_price }}减{{ coupon.coupon_price }}</span>
+            <span class="tj">full{{ coupon.coupon_threshold_price }}Reduction of{{ coupon.coupon_price }}</span>
           </div>
         </template>
-        <a v-if="coupons.length > 2" href="javascript:;" @click.stop="sidebarOpen = true">查看更多>></a>
+        <a v-if="coupons.length > 2" href="javascript:;" @click.stop="sidebarOpen = true">To view more>></a>
       </div>
     </div>
     <div :class="['coupons-sidebar', sidebarOpen && 'open']">
       <div class="title-sidebar">
         <i class="icon-title-sidebar icon-coupons"></i>
-        <span class="title-title-sidebar">优惠券</span>
+        <span class="title-title-sidebar">coupons</span>
         <i class="icon-title-sidebar icon-close" @click.stop="sidebarOpen = false"></i>
       </div>
       <div class="content-sidebar" @click.stop="() => {}">
-        <!--可领优惠券-->
+        <!--Coupon payable-->
         <div class="items-coupons">
           <div class="title-items-coupons">
             <i class="line line-l"></i>
-            <span class="title-span">可领优惠券</span>
+            <span class="title-span">Coupon payable</span>
             <i class="line line-r"></i>
           </div>
           <div class="content-items-coupons">
@@ -42,14 +42,14 @@
                 </div>
                 <div class="other-b">
                   <p>{{ coupon.title }}</p>
-                  <p class="color-gary">满{{ coupon.coupon_threshold_price }}减{{ coupon.coupon_price }}</p>
+                  <p class="color-gary">full{{ coupon.coupon_threshold_price }}Reduction of{{ coupon.coupon_price }}</p>
                   <p class="color-gary">
-                    有效期{{ coupon.start_time | unixToDate('yyyy-MM-dd') }} 至 {{ coupon.end_time | unixToDate('yyyy-MM-dd') }}
+                    The period of validity{{ coupon.start_time | unixToDate('yyyy-MM-dd') }} to{{ coupon.end_time | unixToDate('yyyy-MM-dd') }}
                   </p>
                 </div>
               </div>
               <div class="btn-b">
-                <a href="javascript:;" @click.stop="handleReceiveCoupon(coupon)" class="get-b is-get">立即领取</a>
+                <a href="javascript:;" @click.stop="handleReceiveCoupon(coupon)" class="get-b is-get">Immediately to receive</a>
                 <i class="is-get-b"></i>
               </div>
             </div>
@@ -62,8 +62,8 @@
 
 <script>
   /**
-   * 商品优惠券模块
-   * 查看店铺优惠券列表、领取优惠券
+   * Commodity coupon module
+   * Check the store coupon list、Get a coupon
    */
   import * as API_Members from '@/api/members'
   import * as API_Promotions from '@/api/promotions'
@@ -88,31 +88,31 @@
       })
     },
     methods: {
-      /** 获取优惠券列表 */
+      /** Get a coupon list*/
       GET_CouponsList() {
         const { seller_id } = this.goods
         API_Promotions.getShopCoupons(seller_id).then(response => {
           this.coupons = response
         })
       },
-      /** 关闭优惠券侧边栏 */
+      /** Close the coupons sidebar*/
       handleClsoeSide() {
         this.sidebarOpen = false
       },
-      /** 领取优惠券 */
+      /** Get a coupon*/
       handleReceiveCoupon(coupon) {
         if (this.isSnapshot) {
-          this.$message.error('此优惠券为此商品的快照信息，不能领取！')
+          this.$message.error('This coupon is a snapshot of this product and cannot be claimed！')
           return false
         }
         if (!Storage.getItem('refresh_token')) {
-          this.$confirm('您还未登录，要现在去登录吗？', () => {
+          this.$confirm('You havent logged in yet. Do you want to log in now？', () => {
             this.$router.push({ path: '/login', query: { forward: this.$route.path } })
           })
           return false
         }
         API_Members.receiveCoupons(coupon.coupon_id).then(response => {
-          this.$message.success('领取成功！')
+          this.$message.success('Get the success！')
         })
       }
     },

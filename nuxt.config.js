@@ -1,14 +1,14 @@
 module.exports = {
   env: {
     /**
-     * 分销功能开关
-     * 如果您需要开启分销相关功能，请设置为true
+     * Distribution function switch
+     * Set this parameter to enable distribution functionstrue
      */
     distribution: true,
     /**
-     * IM功能开关
-     * 如果有IM使用权限，请设置为true
-     * 如果没有启用IM，则会使用环信服务
+     * IMFunction of the switch
+     * If you haveIMPermission, please set totrue
+     * If not enabledIM, the ring service will be used
      */
     im: false
   },

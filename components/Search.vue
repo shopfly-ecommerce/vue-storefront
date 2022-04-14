@@ -10,7 +10,7 @@
         @keyup.enter="handleSearchGoods"
         class="search-input"
       >
-      <button type="button" class="search-btn goods" @click="handleSearchGoods">搜商品</button>
+      <button type="button" class="search-btn goods" @click="handleSearchGoods">Search</button>
     </div>
     <ul v-if="!hideKeywords" class="search-hot-keywords">
       <li v-for="item in $store.getters.hotKeywords" :key="item.id">
@@ -25,7 +25,7 @@
             <!--<span>{{ item.words.substr(autoCompleteStr.length, item.words.length) }}</span>-->
             <span>{{ item.words }}</span>
           </div>
-          <div class="autocomplete-span">约{{ item.goods_num }}个商品</div>
+          <div class="autocomplete-span">about{{ item.goods_num }}A commodity</div>
         </li>
       </ul>
     </div>
@@ -54,20 +54,20 @@
       $route: 'handleQueryKeywordChange'
     },
     methods: {
-      /** 关键字发生改变 */
+      /** The keyword changed. Procedure*/
       handleKeywordChnaged(event) {
         let _str = event.target.value || '';
         _str = _str.replace('\'', '');
         // this.keyword = _str
         this.GET_AutoCompleteWords(_str)
       },
-      /** 搜索框失去焦点 */
+      /** The search box loses focus*/
       handleSearchInputBlur() {
         setTimeout(() => {
           this.show_autocomplete = false
         }, 200)
       },
-      /** 搜索商品 */
+      /** Search for goods*/
       handleSearchGoods(keyword) {
         keyword = typeof (keyword) === 'string' ? keyword : this.keyword;
         this.keyword = keyword;
@@ -75,11 +75,11 @@
         this.$refs['searchInput'].blur();
         window.location.href = `/goods${keyword ? `?keyword=${encodeURIComponent(keyword)}` : ''}`
       },
-      /** 搜索店铺 */
+      /** Search the store*/
       handleSearchShop() {
         window.location.href = `/shop${this.keyword ? '?keyword=' + encodeURIComponent(this.keyword) : ''}`
       },
-      /** URL中keyword发生改变 */
+      /** URLIn thekeywordchange*/
       handleQueryKeywordChange() {
         const { keyword } = this.$route.query;
         if (keyword) {
@@ -87,7 +87,7 @@
           this.GET_AutoCompleteWords(keyword)
         }
       },
-      /** 获取自动补全数据 */
+      /** Get auto-complete data*/
       GET_AutoCompleteWords(keyword) {
         let _str = keyword || this.keyword;
         if (_str === this.autoCompleteStr) return;

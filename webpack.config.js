@@ -1,4 +1,4 @@
-// 为webstorm配置，与nuxt无关。
+// forwebstormConfiguration, andnuxtHas nothing to do.
 
 const path = require('path')
 

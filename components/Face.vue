@@ -4,8 +4,8 @@
 
 <script>
   /**
-   * 头像组件
-   * 如果传入url为空，使用默认图片
+   * Head component
+   * If the incomingurlEmpty, use the default image
    */
   const noFace = require('../assets/images/icon-noface.jpg')
   export default {

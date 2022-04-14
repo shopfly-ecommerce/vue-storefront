@@ -54,7 +54,7 @@
       border-bottom: 1px solid #d2d2d2;
       color: #9a9a9a;
       font-weight: normal;
-      font: 12px/20px Arial, Verdana, "宋体", "Lucida Grande", "Lucida Sans Unicode", Helvetica, sans-serif;
+      font: 12px/20px Arial, Verdana, "Song typeface", "Lucida Grande", "Lucida Sans Unicode", Helvetica, sans-serif;
       padding: 5px 0 10px;
     }
   }

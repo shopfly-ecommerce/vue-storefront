@@ -2,25 +2,25 @@
   <div id="withdrawals-history">
     <div class="member-nav">
       <ul class="member-nav-list">
-        <li><nuxt-link to="./withdrawals-history">提现记录</nuxt-link></li>
+        <li><nuxt-link to="./withdrawals-history">Withdrawal record</nuxt-link></li>
       </ul>
     </div>
     <div class="recommend-container">
       <el-table :data="withdrawalsList" style="width: 100%">
-        <el-table-column label="提现时间" align="center">
+        <el-table-column label="Withdrawal time" align="center">
           <template slot-scope="scope">
             <span class="time">{{ scope.row.apply_time | unixToDate }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="提现金额" align="center">
+        <el-table-column label="Withdrawal amount" align="center">
           <template slot-scope="scope">
             <span class="price">{{ scope.row.apply_money | unitPrice('¥') }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="提现状态" :formatter="withdraealsStatus" align="center"/>
-        <el-table-column label="操作" align="center">
+        <el-table-column prop="status" label="Withdrawal state" :formatter="withdraealsStatus" align="center"/>
+        <el-table-column label="Operation" align="center">
           <template slot-scope="scope">
-            <el-button size="small" @click="lookDetails(scope.row)">查看详情</el-button>
+            <el-button size="small" @click="lookDetails(scope.row)">Check the details</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -35,25 +35,25 @@
       </div>
     </div>
     <el-dialog
-      title="提现详情"
+      title="Show details"
       :visible.sync="isShowDialog"
       class="dialog-show"
       align="center"
       width="25%">
       <div>
-        <span>提现金额：</span> <span class="price"> {{ currentRow.apply_money | unitPrice('¥') }}</span>
+        <span>Withdrawal amount：</span> <span class="price"> {{ currentRow.apply_money | unitPrice('¥') }}</span>
       </div>
       <div>
-        <span>当前状态：</span> <span> {{ withdraealsStatus(currentRow) }}</span>
+        <span>The current state：</span> <span> {{ withdraealsStatus(currentRow) }}</span>
       </div>
       <div>
-        <span>备注信息：</span> <span> {{currentRow.apply_remark }}</span>
+        <span>Note information：</span> <span> {{currentRow.apply_remark }}</span>
       </div>
       <div>
-        <span>转账备注：</span> <span> {{currentRow.transfer_remark }}</span>
+        <span>Transfer note：</span> <span> {{currentRow.transfer_remark }}</span>
       </div>
       <div>
-        <span>审核备注：</span> <span> {{currentRow.inspect_remark }}</span>
+        <span>Review the note：</span> <span> {{currentRow.inspect_remark }}</span>
       </div>
     </el-dialog>
   </div>
@@ -68,26 +68,26 @@
     name: 'withdrawals-history',
     data() {
       return {
-        /** 分页请求参数 */
+        /** Paging request parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 分页信息 */
+        /** The paging information*/
         pageData: {
           page_no: 1,
           page_size: 10,
           data_total: 0
         },
 
-        /** 提现记录列表 */
+        /** Withdrawal record list*/
         withdrawalsList: [],
 
-        /** 是否显示详情 */
+        /** Whether to display details*/
         isShowDialog: false,
 
-        /** 当前行的对象 */
+        /** Object of current row*/
         currentRow: {}
       }
     },
@@ -95,7 +95,7 @@
       this.GET_WithdrawalsList()
     },
     methods: {
-      /** 当前页数发生改变 */
+      /** The current page number changed*/
       handleCurrentPageChange(cur) {
         this.params.page_no = cur
         this.GET_WithdrawalsList()
@@ -103,18 +103,18 @@
 
       withdraealsStatus(row, column, cellValue) {
         switch (row.status) {
-          case 'APPLY': return '申请中'
+          case 'APPLY': return 'In the application'
             break
-          case 'TRANSFER_ACCOUNTS': return '已转账'
+          case 'TRANSFER_ACCOUNTS': return 'Have transfer'
             break
-          case 'VIA_AUDITING': return '审核通过'
+          case 'VIA_AUDITING': return 'approved'
             break
-          case 'FAIL_AUDITING': return '审核失败'
+          case 'FAIL_AUDITING': return 'Audit failure'
             break
         }
       },
 
-      /** 获取提现记录 */
+      /** Get withdrawal records*/
       GET_WithdrawalsList() {
         API_distribution.getWithdrawalsList(this.params).then(response => {
           this.pageData = {
@@ -126,7 +126,7 @@
         })
       },
 
-      /** 查看详情 */
+      /** Check the details*/
       lookDetails(row) {
         this.isShowDialog = true
         this.currentRow = row

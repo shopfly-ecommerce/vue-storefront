@@ -9,7 +9,7 @@
       </div>
       <div class="suspend-login">
         <template v-if="!user">
-          <a href="/login">登录</a> | <a href="/register">注册</a>
+          <a href="/login">Sign in</a> | <a href="/register">Register</a>
         </template>
         <nuxt-link v-else to="/member" :title="user.nickname || user.uname">{{ user.nickname || user.uname }}</nuxt-link>
       </div>
@@ -50,11 +50,11 @@
       })
     },
     methods: {
-      /** 计算搜索bar是否显示 */
+      /** Calculation of the searchbarWhether or not shown*/
       searchBarFixedStatus() {
-        // 获取滚动条当前位置
+        // Gets the current position of the scroll bar
         const bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop
-        // 是否固定到顶部
+        // Whether fixed to the top
         this.show_bar = bodyScrollTop >= 31 + 140 + 500
       }
     },

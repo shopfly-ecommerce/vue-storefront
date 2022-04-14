@@ -24,8 +24,8 @@
 
 <script>
   /**
-   * 标签商品模块
-   * 例如热销商品、新品上架等等
+   * Label commodity module
+   * For example, hot products、New product launch and so on
    */
   import * as API_Goods from '@/api/goods'
   export default {
@@ -34,9 +34,9 @@
     data() {
       return {
         tagGoods: [
-          { title: '热卖排行', key: 'hot', data: null },
-          { title: '新品推荐', key: 'new', data: null },
-          { title: '推荐商品', key: 'recommend', data: null }
+          { title: 'Hot product', key: 'hot', data: null },
+          { title: 'New product', key: 'new', data: null },
+          { title: 'Recommend', key: 'recommend', data: null }
         ],
         hotGoods: null,
         newGoods: null,

@@ -8,7 +8,7 @@
     <div class="header-cart-con header-cart-cm">
       <nuxt-link to="/cart">
         <i class="iconfont ea-icon-cart"></i>
-        <span>我的购物车</span>
+        <span>Cart</span>
         <em class="count cart_num cart-num" id="cart-num">{{ allCount > 99 ? '99+' : allCount }}</em>
       </nuxt-link>
     </div>
@@ -33,7 +33,7 @@
                 </a>
               </div>
               <div class="p-number">
-                <div v-if="sku.invalid === 1" style="line-height: 36px">已失效</div>
+                <div v-if="sku.invalid === 1" style="line-height: 36px">Has the failure</div>
                 <template v-else>
                   <span class="num">{{ sku.num }}</span>
                   <div class="count">
@@ -44,15 +44,15 @@
               </div>
               <div class="p-oper">
                 <div class="price"><em>¥</em><span class="item-total">{{ sku.subtotal | unitPrice }}</span></div>
-                <a @click="handleRemoveSkuItem(sku)" href="javascript:void(0);" class="remove">删除</a>
+                <a @click="handleRemoveSkuItem(sku)" href="javascript:void(0);" class="remove">delete</a>
               </div>
             </li>
           </ul>
-          <p v-else class="no-sku" @click="handleClick">暂无商品</p>
+          <p v-else class="no-sku" @click="handleClick">Your cart is empty</p>
         </div>
         <div class="mb">
-          <div class="p-total">共计:<span class="cart-total">{{(cartTotal.goods_price || 0) | unitPrice }}</span></div>
-          <nuxt-link to="/cart" class="btn-cart">去购物车</nuxt-link>
+          <div class="p-total">total:<span class="cart-total">{{(cartTotal.goods_price || 0) | unitPrice }}</span></div>
+          <nuxt-link to="/cart" class="btn-cart">Checkout</nuxt-link>
         </div>
       </div>
     </div>
@@ -86,15 +86,15 @@ export default {
       updateSkuNum: 'cart/updateSkuNumAction',
       removeSkuItem: 'cart/deleteSkuItemAction',
     }),
-    /** 更新购物车货品数量 */
+    /** Update shopping cart quantity*/
     handleUpdateCartSkuNum(sku, symbol) {
       if (symbol === '-' && sku.num < 2) return
       const num = symbol === '+' ? sku.num + 1 : sku.num - 1
       this.updateSkuNum({sku_id: sku.sku_id, num})
     },
-    /** 移除购物车货品 */
+    /** Remove cart items*/
     handleRemoveSkuItem(sku) {
-      this.removeSkuItem(sku.sku_id).then(this.$message.success('删除成功！'))
+      this.removeSkuItem(sku.sku_id).then(this.$message.success('Delete the success！'))
     },
     handleClick() {
       if(!process.client)return;

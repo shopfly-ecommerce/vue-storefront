@@ -5,38 +5,38 @@ import { domain, api } from '@/ui-domain'
 Vue.mixin({
   data() {
     return {
-      // 图片上传API
+      // Image upload API
       MixinUploadApi: `${process.env.API_BASE || api.base}/uploaders`,
-      // 地区上传API
+      // Region upload API
       MixinRegionApi: `${process.env.API_BASE || api.base}/regions/@id/children`,
-      // 域名
+      // The domain name
       MixinDomain: domain,
       // API
       MixinApi: api
     }
   },
   computed: {
-    /** 计算是否有forward */
+    /** Calculate if there isforward */
     MixinForward() {
       const { forward } = this.$route.query
       return forward ? `?forward=${forward}` : ''
     },
-    /** 站点信息 */
+    /** Site information*/
     site() {
       return this.$store.getters.site
     }
   },
   methods: {
-    /** 滚动到顶部【动画】 */
+    /** Scroll to the top【animation】 */
     MixinScrollToTop(top) {
       if (process.server) return
       $("html,body").animate({ scrollTop: top || 0 }, 300)
     },
-    /** 用得比较多，放到mixin里 */
+    /** Use it a lot. Put it inmixinIn the*/
     MixinRequired(message, trigger) {
-      return { required: true, pattern: /^\S.*$/gi, message: message + '【不能以空格开始】', trigger: trigger || 'blur' }
+      return { required: true, pattern: /^\S.*$/gi, message: message + '【Cannot start with a space】', trigger: trigger || 'blur' }
     },
-    /** 返回上一页 */
+    /** Return to previous page*/
     MixinRouterBack() {
       if (window.history.length <= 1) {
         location.href = '/'
@@ -44,12 +44,12 @@ Vue.mixin({
         window.history.back()
       }
     },
-    /** 是否为微信浏览器 */
+    /** Whether the browser is wechat*/
     MixinIsWeChatBrowser() {
       if (!process.client) return false
       return /micromessenger/i.test(navigator.userAgent)
     },
-    /** base64转Blob */
+    /** base64turnBlob */
     MixinBase64toBlob(base64) {
       const byteString = atob(base64.split(',')[1])
       const mimeString = base64.split(',')[0].split(':')[1].split(';')[0]
@@ -61,7 +61,7 @@ Vue.mixin({
       return new Blob([ab], {type: mimeString})
     },
     /**
-     * 打开IM
+     * Open theIM
      * @constructor
      */
     MixinOpenIm(shop_id = '', params = {}) {
@@ -74,7 +74,7 @@ Vue.mixin({
           if (res.qq) {
             window.open("http://wpa.qq.com/msgrd?v=3&uin="+ res.qq +"&site=qq&menu=yes")
           } else {
-            this.$message.error('未配置客服联系方式！')
+            this.$message.error('Customer service contact information is not configured！')
           }
         })
       }

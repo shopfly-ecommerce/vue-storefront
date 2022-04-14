@@ -1,7 +1,7 @@
 <!--
-插件来自：
+The plug-in from：
 https://github.com/826327700/vue-piczoom
-由于使用npm安装方式报错，所以放到本地
+Due to the usenpmInstallation mode error, so put to local
 -->
 <template>
   <div class="magnifier-box" :class="[vertical && 'vertical']" :ref="id" @mousemove="mousemove" @mouseover="mouseover" @mouseleave="mouseleave">
@@ -64,7 +64,7 @@ https://github.com/826327700/vue-piczoom
       }
     },
     created(){
-      var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+      var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****Confusing characters are removed by defaultoOLl,9gq,Vv,Uu,I1****/
       var maxPos = $chars.length;
       var str = '';
       for (let i = 0; i < 10; i++) {
@@ -166,21 +166,21 @@ https://github.com/826327700/vue-piczoom
           return false
         }
         let _this = this
-        //获取实际的offset
+        // Get the actual offset
         function offset(curEle){
           var totalLeft = null, totalTop = null, par = curEle.offsetParent
-          //首先加自己本身的左偏移和上偏移
+          // First add its own left offset and upper offset
           totalLeft += curEle.offsetLeft
           totalTop += curEle.offsetTop
-          //只要没有找到body，我们就把父级参照物的边框和偏移也进行累加
+          // As long as the body is not found, we add the border and offset of the parent reference as well
           while(par){
             if(navigator.userAgent.indexOf("MSIE 8.0") === -1){
-              //累加父级参照物的边框
+              // Accumulates the border of the parent reference
               totalLeft += par.clientLeft;
               totalTop += par.clientTop
             }
 
-            //累加父级参照物本身的偏移
+            // The offset of the parent reference itself is accumulated
             totalLeft += par.offsetLeft;
             totalTop += par.offsetTop
             par = par.offsetParent;
@@ -271,7 +271,7 @@ https://github.com/826327700/vue-piczoom
         var min_step = 0;
         var max_step = 3;
         if (img == null) return;
-        //img的高度和宽度不能在img元素隐藏后获取，否则会出错
+        // The height and width of img cannot be obtained after the IMG element is hidden, otherwise an error will occur
         var height = img.height
         var width = img.width
 
@@ -280,7 +280,7 @@ https://github.com/826327700/vue-piczoom
         }
         if (direction == 'right') {
           step++;
-          //旋转到原位置，即超过最大值
+          // Rotate to original position, that is, exceed maximum value
           step > max_step && (step = min_step);
         } else {
           step--;
@@ -288,7 +288,7 @@ https://github.com/826327700/vue-piczoom
         }
         var canvas = document.createElement('canvas')
 
-        //旋转角度以弧度值为参数
+        // The rotation Angle takes radian value as parameter
         var degree = step * 90 * Math.PI / 180
         var ctx = canvas.getContext('2d')
         canvas.width = height

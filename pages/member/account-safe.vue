@@ -3,44 +3,44 @@
     <div class="member-nav">
       <ul class="member-nav-list">
         <li class="active">
-          <a href="./account-safe">账号安全</a>
+          <a href="./account-safe">Security</a>
         </li>
       </ul>
     </div>
     <div class="safe-title">
       <el-alert
-        title="安全提醒"
+        title="Security reminder"
         type="warning"
         :closable="false"
         show-icon
       >
-        <p>建议您启动全部安全设置，以保障账户及资金安全。</p>
-        <p>确认您登录的是{{ site.site_name }}网址<a href="http://www.javamall.com.cn" target="_blank">http://www.javamall.com.cn</a>，注意防范进入钓鱼网站，不要轻信各种即时通讯工具发送的商品或支付链接，谨防网购诈骗。</p>
-        <p>建议您安装杀毒软件，并定期更新操作系统等软件补丁，确保账户及交易安全。</p>
+        <p>It is recommended that you start all security Settings to ensure the security of accounts and funds.</p>
+        <p>Make sure you are logged in{{ site.site_name }}The url<a href="http://www.javamall.com.cn" target="_blank">http://www.javamall.com.cn</a>, pay attention to guard against entering phishing websites, do not trust a variety of instant messaging tools to send goods or payment links, beware of online fraud.</p>
+        <p>You are advised to install antivirus software and update software patches such as the operating system regularly to ensure account and transaction security.</p>
       </el-alert>
     </div>
     <div class="safe-item">
-      <div class="fore1"><strong>登录密码</strong></div>
+      <div class="fore1"><strong>Password</strong></div>
       <div class="fore2">
-        <span v-if="!user.mobile">互联网账号存在被盗风险，建议您先绑定手机号。</span>
-        <span v-else>互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</span>
+        <span v-if="!user.mobile">Internet accounts may be stolen. You are advised to bind your mobile phone number first.</span>
+        <span v-else>Your Internet account may be stolen. You are advised to change your password periodically to protect your account security.</span>
       </div>
       <div class="fore3">
-        <nuxt-link v-if="!user.mobile" to="/member/bind-mobile">绑定</nuxt-link>
-        <nuxt-link v-else to="/member/change-password">修改</nuxt-link>
+        <nuxt-link v-if="!user.mobile" to="/member/bind-mobile">The binding</nuxt-link>
+        <nuxt-link v-else to="/member/change-password">edit</nuxt-link>
       </div>
     </div>
     <div class="safe-item">
-      <div class="fore1"><strong>手机验证</strong></div>
+      <div class="fore1"><strong>Phone verification</strong></div>
       <div class="fore2">
-        <span>您验证的手机：</span>
-        <strong v-if="!user.mobile">未绑定手机</strong>
+        <span>Your verified mobile phone：</span>
+        <strong v-if="!user.mobile">Unbound phone</strong>
         <strong v-else>{{ user.mobile | secrecyMobile }}</strong>&nbsp;&nbsp;
-        <span>若已丢失或停用，请立即更换，</span><span style="color:#cc0000;">避免账户被盗</span>
+        <span>If lost or out of use, please replace immediately.</span><span style="color:#cc0000;">Avoid account theft</span>
       </div>
       <div class="fore3">
-        <nuxt-link v-if="user.mobile" to="/member/change-mobile">修改</nuxt-link>
-        <nuxt-link v-else to="/member/bind-mobile">绑定</nuxt-link>
+        <nuxt-link v-if="user.mobile" to="/member/change-mobile">edit</nuxt-link>
+        <nuxt-link v-else to="/member/bind-mobile">The binding</nuxt-link>
       </div>
     </div>
   </div>
@@ -52,7 +52,7 @@
     name: 'account-safe',
     head() {
       return {
-        title: `账户安全-${this.site.title}`
+        title: `Security-${this.site.title}`
       }
     },
     computed: {
