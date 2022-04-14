@@ -9,33 +9,33 @@
       </ul>
     </div>
     <div class="order-search">
-      <input type="text" v-model="params.goods_name" placeholder="输入订单中商品关键词" @keyup.enter="Search_GET_OrderList">
-      <button type="button" @click="Search_GET_OrderList">搜索</button>
-      <span v-if="orderData">搜到：<em>{{ orderData.data_total }}</em> 笔订单</span>
-      <span v-else>搜索中...</span>
+      <input type="text" v-model="params.goods_name" placeholder="Enter keywords" @keyup.enter="Search_GET_OrderList">
+      <button type="button" @click="Search_GET_OrderList">search</button>
+      <span v-if="orderData">search：<em>{{ orderData.data_total }}</em> orders</span>
+      <span v-else>In the search...</span>
     </div>
-    <empty-member v-if="orderData && !orderData.data.length">暂无订单</empty-member>
+    <empty-member v-if="orderData && !orderData.data.length">No orders</empty-member>
     <template v-else>
       <div class="order-table">
         <div class="order-table-thead">
-          <span style="width: 420px">商品名称</span>
-          <span style="width: 80px">单价</span>
-          <span style="width: 80px">数量</span>
+          <span style="width: 420px">Name</span>
+          <span style="width: 80px">Price</span>
+          <span style="width: 80px">Quantity</span>
           <span style="width: 60px"></span>
-          <span style="width: 150px">订单金额</span>
-          <span style="width: 100px">订单状态</span>
-          <span style="width: 110px">订单操作</span>
+          <span style="width: 150px">Amount</span>
+          <span style="width: 100px">Status</span>
+          <span style="width: 110px">&nbsp;</span>
         </div>
         <ul class="order-table-tbody">
           <template v-for="order in orderData.data">
             <li v-if="orderData" :key="order.order_sn">
               <div class="order-tbody-title">
-                <span class="pay-type">{{ order.payment_type === 'ONLINE' ? '线上支付' : '货到付款' }}：</span>
+                <span class="pay-type">{{ order.payment_type === 'ONLINE' ? 'The online payment' : 'Cash on delivery' }}：</span>
                 <span class="price"><em>￥</em>{{ order.order_amount | unitPrice }}</span>
               </div>
               <div class="order-tbody-ordersn">
-                <span>订单编号：{{ order.sn }}</span>
-                <span>下单时间：{{ order.create_time | unixToDate }}</span>
+                <span>order no.：{{ order.sn }}</span>
+                <span>create time：{{ order.create_time | unixToDate }}</span>
               </div>
               <div class="order-tbody-item">
                 <div class="order-item-sku">
@@ -47,7 +47,7 @@
                     </div>
                     <div class="goods-name-box">
                       <a :href="'/goods/' + sku.goods_id" class="goods-name" target="_blank">
-                        <span v-if="order.order_type === 'pintuan'" class="assemble-color">多人拼团</span>
+                        <span v-if="order.order_type === 'pintuan'" class="assemble-color">Many people spell group</span>
                         {{ sku.name }}
                       </a>
                       <p v-if="sku.spec_list" class="sku-spec">{{ sku | formatterSkuSpec }}</p>
@@ -55,14 +55,14 @@
                     <div class="sku-price">{{ sku.original_price | unitPrice('￥') }}</div>
                     <div class="sku-num">x {{ sku.num }}</div>
                     <div class="after-sale-btn">
-                      <nuxt-link v-if="sku.goods_operate_allowable_vo.allow_apply_service" :to="'/member/after-sale/apply?order_sn=' + order.sn + '&sku_id=' + sku.sku_id">申请售后</nuxt-link>
-                      <nuxt-link v-if="sku.snapshot_id" :to="{path:'/goods/snapshot?id=' + sku.snapshot_id + '&sku_id=' + sku.sku_id,query:{orderData:order.order_amount}}">交易快照</nuxt-link>
+                      <nuxt-link v-if="sku.goods_operate_allowable_vo.allow_apply_service" :to="'/member/after-sale/apply?order_sn=' + order.sn + '&sku_id=' + sku.sku_id">Apply for after sales</nuxt-link>
+                      <nuxt-link v-if="sku.snapshot_id" :to="{path:'/goods/snapshot?id=' + sku.snapshot_id + '&sku_id=' + sku.sku_id,query:{orderData:order.order_amount}}">snapshot</nuxt-link>
                     </div>
                   </div>
                 </div>
                 <div class="order-item-price">
                   <strong>{{ order.order_amount | unitPrice('￥') }}</strong>
-                  <p>运费（{{ order.shipping_amount | unitPrice('￥') }}）</p>
+                  <p>freight（{{ order.shipping_amount | unitPrice('￥') }}）</p>
                   <p>{{ order.payment_text }}</p>
                 </div>
                 <div class="order-item-status">
@@ -78,17 +78,17 @@
                     class="time-down"
                     v-if="order.cancel_left_time"
                   >
-                    <i class="iconfont ea-icon-time"></i>剩余{{ getPayTimeDown(order) }}
+                    <i class="iconfont ea-icon-time"></i>{{ getPayTimeDown(order) }}
                   </div>
                 </div>
                 <div class="order-item-operate">
-                  <a v-if="order.order_operate_allowable_vo.allow_cancel" href="javascript:;" @click="handleCancelOrder(order.sn)">取消订单</a>
-                  <nuxt-link v-if="order.order_operate_allowable_vo.allow_service_cancel" :to="'./after-sale/apply?order_sn=' + order.sn">取消订单</nuxt-link>
-                  <a v-if="order.order_operate_allowable_vo.allow_rog" href="javascript:;" @click="handleRogOrder(order.sn)">确认收货</a>
-                  <nuxt-link v-if="order.order_operate_allowable_vo.allow_pay" :to="'/checkout/cashier?order_sn=' + order.sn">订单付款</nuxt-link>
-                  <nuxt-link v-if="order.order_operate_allowable_vo.allow_comment" :to="'/member/comments?order_sn=' + order.sn">去评论</nuxt-link>
-                  <nuxt-link v-if="order.order_operate_allowable_vo.allow_apply_service" :to="'/member/after-sale/apply?order_sn=' + order.sn">申请售后</nuxt-link>
-                  <nuxt-link :to="'./my-order/detail?order_sn=' + order.sn">查看详情</nuxt-link>
+                  <a v-if="order.order_operate_allowable_vo.allow_cancel" href="javascript:;" @click="handleCancelOrder(order.sn)">Cancel</a>
+                  <nuxt-link v-if="order.order_operate_allowable_vo.allow_service_cancel" :to="'./after-sale/apply?order_sn=' + order.sn">Cancel</nuxt-link>
+                  <a v-if="order.order_operate_allowable_vo.allow_rog" href="javascript:;" @click="handleRogOrder(order.sn)">Confirm delivery</a>
+                  <nuxt-link v-if="order.order_operate_allowable_vo.allow_pay" :to="'/checkout/cashier?order_sn=' + order.sn">Payment</nuxt-link>
+                  <nuxt-link v-if="order.order_operate_allowable_vo.allow_comment" :to="'/member/comments?order_sn=' + order.sn">Comment</nuxt-link>
+                  <nuxt-link v-if="order.order_operate_allowable_vo.allow_apply_service" :to="'/member/after-sale/apply?order_sn=' + order.sn">Return</nuxt-link>
+                  <nuxt-link :to="'./my-order/detail?order_sn=' + order.sn">Detail</nuxt-link>
                 </div>
               </div>
             </li>
@@ -125,13 +125,13 @@
         },
         orderData: '',
         navList: [
-          { title: '所有订单', status: '' },
-          { title: '待付款', status: 'WAIT_PAY' },
-          { title: '待发货', status: 'WAIT_SHIP' },
-          { title: '待收货', status: 'WAIT_ROG' },
-          { title: '已取消', status: 'CANCELLED' },
-          { title: '已完成', status: 'COMPLETE' },
-          { title: '待评价', status: 'WAIT_COMMENT' }
+          { title: 'All orders', status: '' },
+          { title: 'Not Yet Payment', status: 'WAIT_PAY' },
+          { title: 'Not Yet Shipped', status: 'WAIT_SHIP' },
+          // { title: 'For the goods', status: 'WAIT_ROG' },
+          { title: 'Cancelled', status: 'CANCELLED' },
+          { title: 'Completed', status: 'COMPLETE' },
+          { title: 'To evaluate', status: 'WAIT_COMMENT' }
         ]
       }
     },
@@ -143,59 +143,59 @@
       }
     },
     methods: {
-      /** 当前页数发生改变 */
+      /** The current page number changed*/
       handleCurrentPageChange(cur) {
         this.params.page_no = cur
         this.GET_OrderList()
       },
-      /** 取消订单 */
+      /** Cancel the order*/
       handleCancelOrder(order_sn) {
         this.$layer.prompt({
           formType: 2,
           value: ' ',
-          title: '请输入取消原因',
+          title: 'Please enter a reason for cancellation',
           maxlength: 200
         }, (value, index) => {
           const val = value.trim()
           if (!val) {
-            this.$message.error('请填写取消原因！')
+            this.$message.error('Please fill in the reason for cancellation！')
           } else if (val.length > 200) {
-            this.$message.error('最多输入200个字符！')
+            this.$message.error('Most input200A character！')
           } else {
             API_Order.cancelOrder(order_sn, val).then(() => {
-              this.$message.success('订单取消申请成功！')
+              this.$message.success('Order cancellation request successful！')
               layer.close(index)
               this.GET_OrderList()
             })
           }
         })
       },
-      /** 确认收货 */
+      /** Confirm the goods*/
       handleRogOrder(order_sn) {
-        this.$confirm('请确认是否收到货物，否则可能会钱财两空！', () => {
+        this.$confirm('Please confirm whether you have received the goods or you may lose all your money！', () => {
           API_Order.confirmReceipt(order_sn).then(() => {
-            this.$message.success('确认收货成功！')
+            this.$message.success('Confirm receipt of goods successfully！')
             this.GET_OrderList()
           })
         })
       },
-      /** 获取支付倒计时 */
+      /** Get payment countdown*/
       getPayTimeDown(order) {
         const { cancel_left_time: rema } = order
         if (rema <= 3600) {
-          return `0时${parseInt(rema / 60)}分`
+          return `0:${parseInt(rema / 60)}`
         } else {
           const h = parseInt(rema / 3600)
           const m = parseInt((rema - h * 3600) / 60)
-          return `${h}时${m}分`
+          return `${h}:${m}`
         }
       },
-      /** 搜索获取数据 */
+      /** Search for data*/
       Search_GET_OrderList(){
         this.params.page_no = 1
         this.GET_OrderList()
       },
-      /** 获取订单数据 */
+      /** Get order data*/
       GET_OrderList() {
         API_Order.getOrderList(this.params).then(response => {
           this.orderData = response
