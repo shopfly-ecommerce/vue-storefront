@@ -1,27 +1,27 @@
 <template>
   <div class="ckt-item time">
     <div class="top-ckt">
-      <span class="title-top">送货时间</span>
+      <span class="title-top">Delivery time</span>
       <div class="clearfix"></div>
     </div>
     <div class="content-ckt time">
       <div
-        :class="['ckt-checkbox time', receiveTime === '任意时间' && 'selected']"
-        @click="handleSetReceiveTime('任意时间')"
+        :class="['ckt-checkbox time', receiveTime === 'At any time' && 'selected']"
+        @click="handleSetReceiveTime('At any time')"
       >
-        <span>任意时间</span>
+        <span>At any time</span>
       </div>
       <div
-        :class="['ckt-checkbox time', receiveTime === '仅工作日' && 'selected']"
-        @click="handleSetReceiveTime('仅工作日')"
+        :class="['ckt-checkbox time', receiveTime === 'Only working day' && 'selected']"
+        @click="handleSetReceiveTime('Only working day')"
       >
-        <span>仅工作日</span>
+        <span>Only working days</span>
       </div>
       <div
-        :class="['ckt-checkbox time', receiveTime === '仅休息日' && 'selected']"
-        @click="handleSetReceiveTime('仅休息日')"
+        :class="['ckt-checkbox time', receiveTime === 'Only holiday' && 'selected']"
+        @click="handleSetReceiveTime('Only holiday')"
       >
-        <span>仅休息日</span>
+        <span>Only a day off</span>
       </div>
     </div>
     <div class="placeholder-20"></div>
@@ -30,8 +30,8 @@
 
 <script>
   /**
-   * 结算页
-   * 送货时间组件
+   * The settlement page
+   * Delivery time component
    */
   import * as API_Trade from '@/api/trade'
   export default {
@@ -40,7 +40,7 @@
     methods: {
       handleSetReceiveTime(time) {
         API_Trade.setReceiveTime(time).then(() => {
-          this.$message.success('设置成功！')
+          this.$message.success('Set up the success！')
           this.$emit('change', time)
         })
       }

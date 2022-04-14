@@ -1,31 +1,31 @@
 <template>
   <div class="ckt-item receipt">
     <div class="top-ckt">
-      <span class="title-top">发票信息</span>
+      <span class="title-top">The invoice information</span>
       <div class="clearfix"></div>
     </div>
     <div class="content-ckt receipt">
-      <div v-if="!receipt.receipt_title" class="item">无需发票</div>
+      <div v-if="!receipt.receipt_title" class="item">Without the invoice</div>
       <template v-else>
         <div class="item receipt-title">{{ receipt.receipt_title }}</div>
         <div class="item receipt-content">{{ receipt.receipt_content }}</div>
       </template>
-      <a href="javascript:;" class="item edit-btn" @click="handleEditReceiptInfo">修改</a>
-      <a v-if="receipt && receipt.receipt_title" href="javascript:;" class="item cancel-btn" @click="handleCancelReceipt">取消发票</a>
+      <a href="javascript:;" class="item edit-btn" @click="handleEditReceiptInfo">edit</a>
+      <a v-if="receipt && receipt.receipt_title" href="javascript:;" class="item cancel-btn" @click="handleCancelReceipt">Cancel the invoice</a>
     </div>
     <div id="receiptForm" class="receipt-layer" style="display: none">
       <el-form :model="receiptForm" :rules="receiptRules" ref="receiptForm" label-width="100px">
-        <el-form-item label="发票抬头" prop="receipt_title">
-          <!--个人抬头 start-->
+        <el-form-item label="The invoice looked up" prop="receipt_title">
+          <!--People looked upstart-->
           <div
             class="ckt-checkbox title-receipt"
-            :class="[selectedReceipt.receipt_title === '个人' && 'selected']"
+            :class="[selectedReceipt.receipt_title === 'personal' && 'selected']"
             @click="handleSelectReceipt"
           >
-            <span class="title">个人</span>
+            <span class="title">personal</span>
           </div>
-          <!--个人抬头 end-->
-          <!--个人发票抬头列表 start-->
+          <!--People looked upend-->
+          <!--Personal invoice title liststart-->
           <div
             v-for="receipt in receipts"
             :key="receipt.receipt_title"
@@ -41,51 +41,51 @@
               class="company-receipt-input"
               v-model="receiptForm.receipt_title"
               maxlength="60"
-              placeholder="单位发票抬头"
+              placeholder="Title of unit invoice"
               @click.stop="() => {}"
             >
             <div class="title-btns">
-              <a href="javascript:;" class="btn save-btn" @click.stop="handleSaveReceipt">保存</a>
-              <a href="javascript:;" class="btn edit-btn" @click.stop="handleEditReceipt(receipt)">编辑</a>
-              <a href="javascript:;" class="btn delete-btn" @click.stop="handleDeleteReceipt(receipt)">删除</a>
-              <a href="javascript:;" class="btn cancel-btn" @click="receiptForm = {}">取消</a>
+              <a href="javascript:;" class="btn save-btn" @click.stop="handleSaveReceipt">save</a>
+              <a href="javascript:;" class="btn edit-btn" @click.stop="handleEditReceipt(receipt)">edit</a>
+              <a href="javascript:;" class="btn delete-btn" @click.stop="handleDeleteReceipt(receipt)">delete</a>
+              <a href="javascript:;" class="btn cancel-btn" @click="receiptForm = {}">cancel</a>
             </div>
           </div>
-          <!--个人发票抬头列表 end-->
-          <!--编辑抬头 start-->
+          <!--Personal invoice title listend-->
+          <!--Editor looked upstart-->
           <div
             v-if="receiptForm.receipt_title !== undefined && receiptForm.receipt_id === -1"
             class="ckt-checkbox title-receipt selected editting"
           >
-            <input class="company-receipt-input" v-model="receiptForm.receipt_title" maxlength="60" placeholder="新增单位发票抬头">
+            <input class="company-receipt-input" v-model="receiptForm.receipt_title" maxlength="60" placeholder="New unit invoice title">
             <div class="title-btns">
-              <a href="javascript:;" class="btn save-btn" @click.stop="handleSaveReceipt">保存</a>
+              <a href="javascript:;" class="btn save-btn" @click.stop="handleSaveReceipt">save</a>
             </div>
           </div>
-          <!--编辑抬头 end-->
-          <!--新增单位发票 start-->
+          <!--Editor looked upend-->
+          <!--New unit invoicestart-->
           <a
             v-if="!receiptForm.receipt_id"
             href="javascript:;"
             class="add-receipt"
             @click="handleAddReceipt"
-          >新增单位发票</a>
-          <!--新增单位发票 end-->
+          >New unit invoice</a>
+          <!--New unit invoiceend-->
         </el-form-item>
         <el-form-item
           v-if="receiptForm.tax_no !== undefined"
-          label="发票税号"
+          label="The invoice id number"
           prop="tax_no"
         >
           <input
             v-model="receiptForm.tax_no"
             :readonly="receiptForm.receipt_title === undefined"
             class="duty-receipt-input"
-            placeholder="请填写发票税号"
+            placeholder="Please fill in the invoice tax number"
             maxlength="50"
           >
         </el-form-item>
-        <el-form-item label="发票内容" prop="content">
+        <el-form-item label="The invoice content" prop="content">
           <div class="ckt-checkbox content-receipt selected">
             <span>{{ content }}</span>
           </div>
@@ -97,8 +97,8 @@
 
 <script>
   /**
-   * 结算页
-   * 发票组件
+   * The settlement page
+   * Invoice component
    */
   import * as API_Members from '@/api/members'
   import * as API_Trade from '@/api/trade'
@@ -108,17 +108,17 @@
     props: ['receipt'],
     data() {
       return {
-        // 发票表单
+        // The invoice form
         receiptForm: {},
-        // 发票表单规则
+        // Invoice form rules
         receiptRules: {
-          receipt_title: [this.MixinRequired('请填写发票抬头！')],
+          receipt_title: [this.MixinRequired('Please fill in the invoice title！')],
           tax_no: [
-            this.MixinRequired('请填写纳税人识别号！'),
+            this.MixinRequired('Please fill in taxpayer identification number！'),
             {
               validator: (rule, value, callback) => {
                 if (!RegExp.TINumber.test(value)) {
-                  callback(new Error('纳税人识别号格式不正确！'))
+                  callback(new Error('The taxpayer identification number format is incorrect！'))
                 } else {
                   callback()
                 }
@@ -127,33 +127,33 @@
             }
           ]
         },
-        // 会员发票列表
+        // Member invoice List
         receipts: [],
-        // 发票内容统一设置
-        content: '明细',
-        // 已选择发票
+        // Invoice content is set uniformly
+        content: 'The detail',
+        // Selected invoice
         selectedReceipt: this.receipt
       }
     },
     mounted() {
-      // 获取会员发票列表
+      // Get a list of member invoices
       this.GET_ReceiptList()
     },
     methods: {
-      /** 修改发票信息 */
+      /** Modifying invoice information*/
       handleEditReceiptInfo() {
         this.$layer.open({
           type: 1,
-          title: '发票信息',
+          title: 'The invoice information',
           zIndex: 200,
           area: '550px',
           scrollbar: false,
           content: $('#receiptForm'),
-          btn: ['确认', '取消'],
+          btn: ['confirm', 'cancel'],
           yes: this.handleConfirmReceipt
         })
       },
-      /** 选择已有发票 */
+      /** Select existing invoice*/
       handleSelectReceipt(receipt) {
         this.receiptForm = {
           tax_no: receipt.tax_no
@@ -161,14 +161,14 @@
         this.$refs['receiptForm'].clearValidate()
         if (!receipt.receipt_title) {
           this.selectedReceipt = {
-            receipt_title: '个人',
+            receipt_title: 'personal',
             receipt_content: this.content
           }
           return false
         }
         this.selectedReceipt = JSON.parse(JSON.stringify(receipt))
       },
-      /** 新增单位发票 */
+      /** New unit invoice*/
       handleAddReceipt() {
         this.receiptForm = {
           receipt_id: -1,
@@ -178,25 +178,25 @@
         }
         this.selectedReceipt = ''
       },
-      /** 修改发票 */
+      /** Modify the invoice*/
       handleEditReceipt(receipt) {
         this.receiptForm = JSON.parse(JSON.stringify(receipt))
         this.selectedReceipt = ''
       },
-      /** 删除发票 */
+      /** Delete the invoice*/
       handleDeleteReceipt(receipt) {
         if (receipt.receipt_id === this.selectedReceipt.receipt_id) {
-          this.$message.error('已选择发票不能删除！')
+          this.$message.error('Selected invoices cannot be deleted！')
           return
         }
-        this.$confirm('确定要删除这个发票吗？', () => {
+        this.$confirm('Are you sure you want to delete this invoice？', () => {
           API_Members.deleteReceipt(receipt.receipt_id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.GET_ReceiptList()
           })
         })
       },
-      /** 保存发票 */
+      /** Save the invoice*/
       handleSaveReceipt() {
         const params = JSON.parse(JSON.stringify(this.receiptForm))
         const { receipt_title } = params
@@ -204,14 +204,14 @@
         if (receipt_id) {
           const hasSameTitle = this.receipts.filter(item => item.receipt_title === receipt_title)[0]
           if (hasSameTitle && hasSameTitle.receipt_id !== receipt_id) {
-            this.$message.error('已经有相同的发票抬头了！')
+            this.$message.error('We already have the same invoice title！')
             return false
           }
         }
         this.$refs['receiptForm'].validate((valid) => {
           if (valid) {
             const saveSuccess = () => {
-              this.$message.success('保存成功！')
+              this.$message.success('Save success！')
               this.receiptForm = {}
               this.handleSelectReceipt(params)
               this.GET_ReceiptList()
@@ -223,39 +223,39 @@
               API_Members.addReceipt(params).then(saveSuccess)
             }
           } else {
-            this.$message.error('表单填写有误，请核对！')
+            this.$message.error('There is an error in the form. Please check it！')
             return false
           }
         })
       },
-      /** 确认发票 */
+      /** Confirm the invoice*/
       handleConfirmReceipt(index) {
         if (this.receiptForm.receipt_title !== undefined) {
-          this.$message.error('请先保存正在编辑的发票！')
+          this.$message.error('Please save the invoice you are editing first！')
           return false
         }
         if (!this.selectedReceipt.receipt_title) {
-          this.$message.error('请选择发票抬头！')
+          this.$message.error('Please select invoice title！')
           return false
         }
         let receipt = JSON.parse(JSON.stringify(this.selectedReceipt)) || {}
-        receipt.type = receipt.receipt_title === '个人' ? 0 : 1
+        receipt.type = receipt.receipt_title === 'personal' ? 0 : 1
         API_Trade.setRecepit(receipt).then(() => {
-          this.$message.success('设置成功！')
+          this.$message.success('Set up the success！')
           this.$emit('change', receipt)
           this.$layer.close(index)
         })
       },
-      /** 取消发票 */
+      /** Cancel the invoice*/
       handleCancelReceipt() {
-        this.$confirm('确定要取消发票吗？', () => {
+        this.$confirm('Are you sure you want to cancel the invoice？', () => {
           API_Trade.cancelReceipt().then(() => {
-            this.$message.success('取消成功！')
+            this.$message.success('Cancel the success！')
             this.$emit('change', {})
           })
         })
       },
-      /** 获取发票列表 */
+      /** Get invoice list*/
       GET_ReceiptList() {
         API_Members.getReceipts().then(response => {
           this.receipts = response.VATORDINARY.reverse()
