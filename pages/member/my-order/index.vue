@@ -11,7 +11,7 @@
     <div class="order-search">
       <input type="text" v-model="params.goods_name" placeholder="Enter keywords" @keyup.enter="Search_GET_OrderList">
       <button type="button" @click="Search_GET_OrderList">search</button>
-      <span v-if="orderData">search：<em>{{ orderData.data_total }}</em> orders</span>
+      <span v-if="orderData"><em>{{ orderData.data_total }}</em> orders</span>
       <span v-else>In the search...</span>
     </div>
     <empty-member v-if="orderData && !orderData.data.length">No orders</empty-member>
