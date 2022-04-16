@@ -1,9 +1,7 @@
-API_MODEL=pro
-API_BASE=http://api.base.javamall.com.cn
-API_BUYER=http://api.buyer.javamall.com.cn
-API_SELLER=http://api.seller.javamall.com.cn
-API_ADMIN=http://api.admin.javamall.com.cn
+API_BASE=https://api-b2c-v710.javamall.com.cn/base
+API_BUYER=https://api-b2c-v710.javamall.com.cn/buyer
+API_SELLER=https://api-b2c-v710.javamall.com.cn/seller
+API_IM=https://api-b2c-v710.javamall.com.cn/im
 DOMAIN_BUYER_PC=http://buyer.javamall.com.cn
 DOMAIN_BUYER_WAP=http://m.buyer.javamall.com.cn
 DOMAIN_SELLER=http://seller.javamall.com.cn
-DOMAIN_ADMIN=http://admin.javamall.com.cn

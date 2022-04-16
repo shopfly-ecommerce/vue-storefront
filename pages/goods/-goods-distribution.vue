@@ -64,8 +64,8 @@
           API_distribution.generateShortLink({ goods_id: this.$route.params.id}).then(response => {
             this.isShowQRCode = true
             const _query = response.message.substring(response.message.indexOf("?"), response.message.length)
-            this.config.value = `${domain.buyer_wap}/goods/${this.$route.params.id}${_query}`
-            this.config.value_pc = `${domain.buyer_pc}/goods/${this.$route.params.id}${_query}`
+            this.config.value = `${process.env.domain_buyer_wap}/goods/${this.$route.params.id}${_query}`
+            this.config.value_pc = `${process.env.domain_buyer_pc}/goods/${this.$route.params.id}${_query}`
           })
         }
     },

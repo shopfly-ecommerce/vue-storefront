@@ -4,7 +4,6 @@
  */
 
 import request, { Method } from '@/utils/request'
-import { api } from '@/ui-domain'
 import md5 from 'js-md5'
 
 /**
@@ -14,7 +13,7 @@ import md5 from 'js-md5'
  * @returns {string}
  */
 export function getConnectUrl(client_type, login_type) {
-  return `${process.env.API_BUYER || api.buyer}/passport/connect/${client_type}/${login_type}`
+  return `passport/connect/${client_type}/${login_type}`
 }
 
 /**

@@ -1,4 +1,11 @@
+import { resolve } from 'path'
+import { api, domain } from './ui-domain'
+
 module.exports = {
+  alias: {
+    '~': resolve(__dirname),
+    '@': resolve(__dirname)
+  },
   env: {
     /**
      * 分销功能开关
@@ -10,7 +17,13 @@ module.exports = {
      * 如果有IM使用权限，请设置为true
      * 如果没有启用IM，则会使用环信服务
      */
-    im: false
+    im: false,
+    api_base: process.env.API_BASE || api.base,
+    api_buyer: process.env.API_BUYER || api.buyer,
+    api_im: process.env.API_IM || api.im,
+    domain_buyer_pc: process.env.DOMAIN_BUYER_PC || domain.buyer_pc,
+    domain_buyer_wap: process.env.DOMAIN_BUYER_WAP || domain.buyer_wap,
+    domain_seller: process.env.DOMAIN_SELLER || domain.seller
   },
   head: {
     meta: [
@@ -33,40 +46,19 @@ module.exports = {
   },
   loading: { color: '#29d' },
   build: {
-    analyze: false,
-    extend (config, { isDev, isClient }) {
-      if (isDev && isClient) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
-      }
-      if (isClient) {
-        config.entry['polyfill'] = ['babel-polyfill']
-      }
-      config.resolve.alias['vue$'] = 'vue/dist/vue.esm.js'
-    },
-    extractCSS: {
-      allChunks: true
-    },
     externals: {
       psl: 'window.psl'
     },
-    vendor: ['axios'],
     babel: {
-      "plugins": [
-        ["component",
+      'plugins': [
+        ['component',
           {
-            "libraryName": "element-ui",
-            "styleLibraryName": "theme-chalk"
+            'libraryName': 'element-ui',
+            'styleLibraryName': 'theme-chalk'
           }
         ]
       ]
     },
-    plugins: [],
-    publicPath: '/'
   },
   css: [
     '~assets/styles/normalize.css',
@@ -76,6 +68,16 @@ module.exports = {
     'swiper/dist/css/swiper.css',
     'viewerjs/dist/viewer.css'
   ],
+  modules: ['@kimyvgy/nuxt-page-cache'],
+  cache: {
+    useHostPrefix: false,
+    pages: ['/'],
+    store: {
+      type: 'memory',
+      max: 200,
+      ttl: 60
+    }
+  },
   plugins: [
     { src: '~plugins/vue-layer', ssr: false },
     { src: '~plugins/vue-lazyload', ssr: true },
@@ -89,14 +91,15 @@ module.exports = {
     { src: '~plugins/v-viewer.js', ssr: false },
   ],
   router: {
-    middleware: 'auth-site',
-    scrollBehavior: function (to, from, savedPosition) {
-      return { x: 0, y: 0 }
-    }
+    middleware: 'auth-site'
   },
-  transition: 'page',
-  ignorePrefix: '-',
+  server: {
+    port: 3000,
+    host: '0.0.0.0',
+    timing: false
+  },
   generate: {
+    interval: 1000,
     subFolders: true
   }
 }

@@ -5,7 +5,6 @@
 import Vue from 'vue'
 import Storage from './storage'
 import request from '@/utils/request'
-import { api } from '@/ui-domain'
 
 /**
  * 检查token：
@@ -25,7 +24,7 @@ export default function checkToken(options) {
   // 刷新Token
   const refreshToken = Storage.getItem('refresh_token')
   // 获取store
-  const { $store } = Vue.prototype.$nuxt
+  const { $store } = window.$nuxt
   // 返回异步方法
   return new Promise((resolve, reject) => {
     /**

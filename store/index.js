@@ -1,7 +1,6 @@
 import * as types from './mutation-types'
 import * as API_Common from '@/api/common'
 import * as API_Home from '@/api/home'
-import * as API_Goods from '@/api/goods'
 import * as API_Message from '@/api/message'
 import uuidv1 from 'uuid/v1'
 import Cookie from 'cookie'
@@ -22,9 +21,7 @@ export const state = () => ({
   // 站点信息
   site: '',
   // 未读消息数量
-  unreadMessageNum: 0,
-  // 环境变量
-  env: ''
+  unreadMessageNum: 0
 })
 
 /** mutations */
@@ -69,14 +66,6 @@ export const mutations = {
    */
   [types.GET_UNREAD_MESSAGE](state, num) {
     state.unreadMessageNum = num
-  },
-  /**
-   * 设置环境变量
-   * @param state
-   * @param env
-   */
-  [types.SET_ENV_VARS](state, env) {
-    state.env = env
   }
 }
 
@@ -85,23 +74,11 @@ export const actions = {
   /**
    * nuxt服务初始化时调用
    * @param commit
+   * @param dispatch
    * @param req
    * @param res
    */
   async nuxtServerInit({ commit, dispatch }, { req, res }) {
-    const { env: e } = process
-    const __env__ = {
-      API_MODEL: e.API_MODEL,
-      API_BASE: e.API_BASE,
-      API_BUYER: e.API_BUYER,
-      API_SELLER: e.API_SELLER,
-      API_ADMIN: e.API_ADMIN,
-      DOMAIN_BUYER_PC: e.DOMAIN_BUYER_PC,
-      DOMAIN_BUYER_WAP: e.DOMAIN_BUYER_WAP,
-      DOMAIN_SELLER: e.DOMAIN_SELLER,
-      DOMAIN_ADMIN: e.DOMAIN_ADMIN
-    }
-    await commit(types.SET_ENV_VARS, __env__)
     if (req && req.headers && req.headers.cookie) {
       const cookies = Cookie.parse(req.headers.cookie) || {}
       let { user } = cookies
@@ -188,11 +165,5 @@ export const getters = {
    * @param state
    * @returns {getters.unreadMessageNum|(function(*))|*|number}
    */
-  unreadMessageNum: state => state.unreadMessageNum,
-  /**
-   * 获取环境变量
-   * @param state
-   * @returns {*}
-   */
-  env: state => state.env
+  unreadMessageNum: state => state.unreadMessageNum
 }

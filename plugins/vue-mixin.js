@@ -6,9 +6,9 @@ Vue.mixin({
   data() {
     return {
       // 图片上传API
-      MixinUploadApi: `${process.env.API_BASE || api.base}/uploaders`,
+      MixinUploadApi: `${process.env.api_base}/uploaders`,
       // 地区上传API
-      MixinRegionApi: `${process.env.API_BASE || api.base}/regions/@id/children`,
+      MixinRegionApi: `${process.env.api_base}/regions/@id/children`,
       // 域名
       MixinDomain: domain,
       // API

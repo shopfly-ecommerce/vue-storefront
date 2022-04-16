@@ -2,17 +2,15 @@ import Vue from 'vue'
 import axios from 'axios'
 import https from 'https'
 import { Loading } from 'element-ui'
-import { api} from '@/ui-domain'
 import Storage from '@/utils/storage'
-import { Foundation } from '@/ui-utils'
-import md5 from 'js-md5'
 import checkToken from '@/utils/checkToken'
+
 const qs = require('qs')
 
 // 创建axios实例
 const service = axios.create({
-  timeout: 8000,     // 请求超时时间
-  baseURL: api.buyer, // 买家端API
+  timeout: 60 * 1000,
+  baseURL: process.env.api_buyer,
   httpsAgent: new https.Agent({
     rejectUnauthorized: false
   })
@@ -31,33 +29,31 @@ service.interceptors.request.use(config => {
   if (is_put_post && !is_file && !is_json) {
     config.data = qs.stringify(config.data, { arrayFormat: 'repeat' })
   }
-  /** 配置全屏加载 */
-  if (process.client && loading !== false) {
-    config.loading = Loading.service({
-      fullscreen: true,
-      background: 'rgba(255,255,255,.3)',
-      spinner: 'icon-custom-loading',
-      lock: false
-    })
-  }
 
-  // uuid
-  if (process.client) {
-    const uuid = Storage.getItem('uuid')
-    config.headers['uuid'] = uuid
-  }
-
-  // 获取访问Token
-  let accessToken = Storage.getItem('access_token')
-  if (accessToken && config.needToken) {
-    config.headers['Authorization'] = accessToken
+  if (process.browser) {
+    /** 配置全屏加载 */
+    if (loading !== false) {
+      config.loading = Loading.service({
+        fullscreen: true,
+        background: 'rgba(255,255,255,.3)',
+        spinner: 'icon-custom-loading',
+        lock: false
+      })
+    }
+    // 配置uuid
+    config.headers['uuid'] = Storage.getItem('uuid')
+    // 获取访问Token
+    let accessToken = Storage.getItem('access_token')
+    if (accessToken && config.needToken) {
+      config.headers['Authorization'] = accessToken
+    }
   }
   return config
 }, error => {
   Promise.reject(error)
 })
 
-// respone拦截器
+// response拦截器
 service.interceptors.response.use(
   async response => {
     await closeLoading(response)
@@ -69,7 +65,7 @@ service.interceptors.response.use(
     const error_response = error.response || {}
     const error_data = error_response.data || {}
     if (error_response.status === 403) {
-      const { $store, $router, $route } = Vue.prototype.$nuxt
+      const { $store, $router, $route } = window.$nuxt
       if (!Storage.getItem('refresh_token')) return
       $store.dispatch('cart/cleanCartStoreAction')
       $store.dispatch('user/removeUserAction')

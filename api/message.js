@@ -2,7 +2,6 @@
  * 站内消息相关API
  */
 
-import { api } from '@/ui-domain'
 import request, { Method } from '@/utils/request'
 
 /**
@@ -68,7 +67,7 @@ export function deleteMessage(ids) {
  */
 export function getUnreadChatNum() {
   return request({
-    url: `${api.im}/buyer/im/unread-num`,
+    url: `${process.env.API_IM}/buyer/im/unread-num`,
     method: Method.POST,
     loading: false,
     needToken: true

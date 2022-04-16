@@ -25,6 +25,10 @@
   import * as IndexComponents from '@/pages/-index'
   import * as API_Home from '@/api/home'
   import templates, { templateArray } from './-index/templates'
+  const components = {}
+  Object.keys(IndexComponents).forEach(key => {
+    components[key] = IndexComponents[key]
+  })
   export default {
     name: 'index',
     async asyncData() {
@@ -45,7 +49,7 @@
         title: `商城首页-${this.site.title}`
       }
     },
-    components: { ...IndexComponents },
+    components: components,
     data() {
       return {
         /** 首页卡片tab x坐标 */

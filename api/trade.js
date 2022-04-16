@@ -4,7 +4,6 @@
  */
 
 import request, { Method } from '@/utils/request'
-import { api } from '@/ui-domain'
 
 /**
  * 获取购物车列表

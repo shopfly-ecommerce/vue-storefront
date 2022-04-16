@@ -16,8 +16,9 @@
           <!--商品信息【包括规格、优惠券、促销等】-->
           <goods-info :goods="goods" @spec-img-change="(img) => { this.specImage = img }"/>
         </div>
-        <div v-show="showShare" class="bdsharebuttonbox bdshare-button-style1-16" style="margin-top: 10px">
-          <a href="javascript:" :class="['collect-goods-btn', collected && 'collected']" @click="handleCollectionGoods">{{ collected ? '已收藏' : '收藏商品' }}</a>
+        <div class="collect-goods-box" @click="handleCollectionGoods">
+          <i :class="['collect-goods-btn', collected && 'collected']"></i>
+          <a href="javascript:">{{ collected ? '已收藏' : '收藏商品' }}</a>
         </div>
       </div>
       <div class="details">
@@ -59,7 +60,6 @@
 
 <script>
   import Vue from 'vue'
-  import { mapGetters } from 'vuex'
   import * as API_Common from '@/api/common'
   import * as API_Goods from '@/api/goods'
   import * as API_Members from '@/api/members'
@@ -70,6 +70,11 @@
   import 'viewerjs/dist/viewer.css'
   import Viewer from 'v-viewer'
   Vue.use(Pagination).use(Viewer)
+  const components = {}
+  Object.keys(GoodsComponents).forEach(key => {
+    components[key] = GoodsComponents[key]
+  })
+
   export default {
     name: 'goods-detail',
     validate({ params }) {
@@ -103,7 +108,7 @@
         ]
       }
     },
-    components: GoodsComponents,
+    components: components,
     data() {
       return {
         // 显示分销分享按钮
@@ -116,7 +121,7 @@
         // 商品是否已被收藏
         collected: false,
         // 显示分享按钮
-        showShare: false
+        showShare: true
       }
     },
     mounted() {
@@ -131,8 +136,6 @@
         }
         // 记录浏览量统计【用于统计】
         API_Common.recordViews(window.location.href)
-        // 加载百度分享代码
-        this.loadBdShareScript()
         // 如果页面是被分享的
         if (this.$route.query.su) {
           API_distribution.accessShortLink({su: this.$route.query.su }).then(() => { console.log(9856) })
@@ -170,34 +173,6 @@
       /** 关闭当前窗口 */
       handleCloseWindow() {
         window.close()
-      },
-      /** 加载百度分享 */
-      loadBdShareScript() {
-        this.$nextTick(() => {
-          const { goods } = this
-          window._bd_share_config = {
-            common: {
-              bdSnsKey:{},
-              bdUrl: location.href,
-              bdText: goods.goods_name,
-              bdMini: "2",
-              bdPic: goods.thumbnail,
-              bdStyle: "1",
-              bdSize: "16",
-              bdMiniList: ["mshare","qzone","tsina","bdysc","weixin","kaixin001","tqf","tieba","douban","sqq","copy"]
-            },
-            share: {
-              bdSize: 16,
-              bdMiniList: ["mshare","qzone","tsina","bdysc","weixin","kaixin001","tqf","tieba","douban","sqq","copy"],
-            }
-          };
-          const s = document.createElement('script');
-          s.type = 'text/javascript';
-          s.id = 'BdShareScript';
-          s.src = '/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5);
-          document.body.appendChild(s);
-          this.showShare = true
-        })
       }
     },
     destroyed() {
@@ -232,11 +207,20 @@
       justify-content: space-between;
     }
   }
-  .collect-goods-btn {
-    margin-left: 20px;
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABrElEQVQ4T62TP0hcQRCHf7P7zk64BITEPliJtQQMCJaJpLjCRu723u6BMYgpgmArmkaCkCI7U5xw5StsgoJaXGMn6ZLiSJr8wSbkVeHgMLfhyT05L4cIuuWPmW/Yb2cJtzx0y35cARhjJrTWNQAPlVKJ934vG2CtLQF4DiAAOBCRRj74EuCcyxrjEAIT0ZcQwisAPwFERPSIiHa73W4EYJ2I9pl5KYNcAJxzkwAkTdPHSZL8zenW2n0iOmfmZ3lmjBnXWn9USs167z/ngOUQwqiIbPU7qdVqU51O53e9Xv/en8dxvEFEP0TkfQ54EUK4JyIbN5Fqrd0G8E1Edi4A1Wr1vtb6JE3TqSRJOtdBSqXSSLFY/EREM8x81i9xNbPPzK+vAzjn3gL4yszvLiX2Gsg5dxRC2BaRg2EQa60BsCAic/89YxYYY0a11odKqZfe+9MBcYtKqZV2uz3TaDT+DAVkYblcflAoFD4AWBOR4yyL43heKbUJ4Akz/+oHD13lSqUyFkVRBjnpFU8T0dPB5kEHV67ds/2GiLqtVmut2WyeD/Nyt5/pJks0WPMPjeaXEW5C95kAAAAASUVORK5CYII=");
-    &.collected {
-      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABd0lEQVQ4T6WSPUvDcBDGn2uVxjRpQVqngqXJomBnaUEcHBXBTfFbuCouOjn7CURw081BN18KgksHoZg/aSeHikvTSrXJSVMT+pJKgzfey4977h7CP4P651nXYy1gkZjlGSEeCWCvzpnMbEuS5mXghQyj7eV9gKVpeyA6BhBzi8xlcpz9KebX72j0FMAqiCJg/gRwqAhx0m1zAVYut4NI5DxATRvMNojk4Rozb6tCXLiAhq6XCFgOcw5mLqlCFDxAnYBUKADwrhpGuidB025AtBYKwHynCrHSA+j6LoCzMABiPogLceR/oaFpV0S0OQmEmSuKEHkCvnwAp9NKM5F4AFH+LwgDH9O2XZBMs+K/sd8sliTdE7AQBGHAItsuKqZZHjGSl2ho2hwBtyBaGnApUI/a9rpsmk/9+QEr+5ukUqqVTF4TUfHXlc/U6WzEa7W34c0CAa6TdT3WZL4E4MSF2OoeLEjWWIALyWYlVKvOuOGRI07ywuGeH8P8iBFSzfHsAAAAAElFTkSuQmCC");
+  .collect-goods-box {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    i {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABrElEQVQ4T62TP0hcQRCHf7P7zk64BITEPliJtQQMCJaJpLjCRu723u6BMYgpgmArmkaCkCI7U5xw5StsgoJaXGMn6ZLiSJr8wSbkVeHgMLfhyT05L4cIuuWPmW/Yb2cJtzx0y35cARhjJrTWNQAPlVKJ934vG2CtLQF4DiAAOBCRRj74EuCcyxrjEAIT0ZcQwisAPwFERPSIiHa73W4EYJ2I9pl5KYNcAJxzkwAkTdPHSZL8zenW2n0iOmfmZ3lmjBnXWn9USs167z/ngOUQwqiIbPU7qdVqU51O53e9Xv/en8dxvEFEP0TkfQ54EUK4JyIbN5Fqrd0G8E1Edi4A1Wr1vtb6JE3TqSRJOtdBSqXSSLFY/EREM8x81i9xNbPPzK+vAzjn3gL4yszvLiX2Gsg5dxRC2BaRg2EQa60BsCAic/89YxYYY0a11odKqZfe+9MBcYtKqZV2uz3TaDT+DAVkYblcflAoFD4AWBOR4yyL43heKbUJ4Akz/+oHD13lSqUyFkVRBjnpFU8T0dPB5kEHV67ds/2GiLqtVmut2WyeD/Nyt5/pJks0WPMPjeaXEW5C95kAAAAASUVORK5CYII=");
+      background-repeat: no-repeat;
+      background-size: 100%;
+      &.collected {
+        background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABd0lEQVQ4T6WSPUvDcBDGn2uVxjRpQVqngqXJomBnaUEcHBXBTfFbuCouOjn7CURw081BN18KgksHoZg/aSeHikvTSrXJSVMT+pJKgzfey4977h7CP4P651nXYy1gkZjlGSEeCWCvzpnMbEuS5mXghQyj7eV9gKVpeyA6BhBzi8xlcpz9KebX72j0FMAqiCJg/gRwqAhx0m1zAVYut4NI5DxATRvMNojk4Rozb6tCXLiAhq6XCFgOcw5mLqlCFDxAnYBUKADwrhpGuidB025AtBYKwHynCrHSA+j6LoCzMABiPogLceR/oaFpV0S0OQmEmSuKEHkCvnwAp9NKM5F4AFH+LwgDH9O2XZBMs+K/sd8sliTdE7AQBGHAItsuKqZZHjGSl2ho2hwBtyBaGnApUI/a9rpsmk/9+QEr+5ukUqqVTF4TUfHXlc/U6WzEa7W34c0CAa6TdT3WZL4E4MSF2OoeLEjWWIALyWYlVKvOuOGRI07ywuGeH8P8iBFSzfHsAAAAAElFTkSuQmCC");
+      }
     }
   }
   .details {

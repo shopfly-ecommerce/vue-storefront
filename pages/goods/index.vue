@@ -173,15 +173,13 @@
   import { Pagination } from 'element-ui'
   Vue.use(Pagination);
   import * as qs from 'qs'
-  import { mapActions, mapGetters } from 'vuex'
   import * as API_Goods from '@/api/goods'
   export default {
     name: 'goods-list',
-    async asyncData({ params, query, error }) {
+    async asyncData({ query, error }) {
       let goodsListData;
       let selectorData;
-	    console.log(params, query);
-      const _parmas = {
+      const params = {
         page_no: 1,
         page_size: 20,
         sort: 'def_asc',
@@ -189,7 +187,7 @@
       };
       try {
         const values = await Promise.all([
-          API_Goods.getGoodsList(_parmas),
+          API_Goods.getGoodsList(params),
           API_Goods.getGoodsSelector(query)
         ]);
         goodsListData = values[0];
@@ -200,7 +198,7 @@
       return {
         goodsListData,
         selectorData,
-        params: _parmas
+        params: params
       }
     },
     head() {

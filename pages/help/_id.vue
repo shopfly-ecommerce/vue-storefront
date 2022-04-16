@@ -29,7 +29,9 @@
     computed: {
       categoryName() {
         const { categorys } = this.$parent
-        const cate = categorys.filter(item => item.id === this.article.category_id)[0]
+        if (!categorys) return ''
+        const cate = categorys.find(item => item.id === this.article.category_id)
+        if (!cate) return ''
         return cate.name
       }
     }

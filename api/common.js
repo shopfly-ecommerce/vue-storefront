@@ -4,7 +4,6 @@
 
 import request, { Method } from '@/utils/request'
 import Storage from '@/utils/storage'
-import { api } from '@/ui-domain'
 
 /**
  * 获取图片验证码URL
@@ -14,7 +13,7 @@ import { api } from '@/ui-domain'
  */
 export function getValidateCodeUrl(uuid, type) {
   if (!uuid || !type) return ''
-  return `${process.env.API_BASE || api.base}/captchas/${uuid}/${type}?r=${new Date().getTime()}`
+  return `${process.env.api_base}/captchas/${uuid}/${type}?r=${new Date().getTime()}`
 }
 
 /**
@@ -22,7 +21,7 @@ export function getValidateCodeUrl(uuid, type) {
  */
 export function getSiteData() {
   return request({
-    url: `${process.env.API_BASE || api.base}/site-show`,
+    url: `${process.env.api_base}/site-show`,
     method: Method.GET
   })
 }
@@ -49,7 +48,7 @@ export function recordViews(url) {
  */
 export function getSettingsInfo() {
   return request({
-    url: `${api.base}/settings/info`,
+    url: `${process.env.api_base}/settings/info`,
     method: 'get'
   })
 }
