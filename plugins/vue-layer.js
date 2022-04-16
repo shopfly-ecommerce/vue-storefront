@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 /**
- * 普通alert弹框
+ * ordinaryalertbounced
  * @param message
  * @param fn
  * @returns {*|void}
@@ -17,16 +17,17 @@ const alert = function (message, fn) {
   })
 }
 /**
- * 操作确认
+ * Operational qualification
  * @param message
  * @param fn
  * @returns {*|boolean}
  */
 const confirm = function (message, fn, cancel) {
-  return window.layer.confirm(message || '确认这个操作吗？', {
+  return window.layer.confirm(message || 'Confirm this operation？', {
     icon: 3,
-    title: '提示',
+    title: 'prompt',
     area: ['275px'],
+    btn: ['yes','no'],
     closeBtn: 0,
     scrollbar: false
   }, function (index) {
@@ -39,13 +40,13 @@ const confirm = function (message, fn, cancel) {
 }
 
 /**
- * 消息提示
+ * Message prompt
  * @type {{success : (function(*=, *=, *=) : *), error : (function(*=, *=, *=) : *)}}
  * @private
  */
 const _message = {
   /**
-   * 成功提示
+   * Successful tip
    * @param message
    * @param opts
    * @param fn
@@ -54,7 +55,7 @@ const _message = {
   success: function (message, opts, fn) {
     fn = typeof fn === 'function' ? fn : opts
     opts = typeof opts === 'object' ? opts : {}
-    return window.layer.msg(message || '成功！', {
+    return window.layer.msg(message || 'successful！', {
       icon: 1,
       skin: 'layer-skin-custom-msg',
       offset: '10px',
@@ -64,7 +65,7 @@ const _message = {
   },
 
   /**
-   * 错误提示
+   * Error message
    * @param message
    * @param opts
    * @param fn
@@ -73,7 +74,7 @@ const _message = {
   error: function (message, opts, fn) {
     fn = typeof fn === 'function' ? fn : opts
     opts = typeof opts === 'object' ? opts : {}
-    return window.layer.msg(message || '出错！', {
+    return window.layer.msg(message || 'error！', {
       icon: 2,
       skin: 'layer-skin-custom-msg',
       offset: '10px',
@@ -84,14 +85,14 @@ const _message = {
 }
 
 /**
- * 配置全局layer
+ * Configure globallayer
  */
 window.layer.config({
   skin: 'layer-skin-common',
   btnAlign: 'c'
 })
 
-// 注册到Vue原型链上
+// Registered toVueOn the prototype chain
 Vue.prototype.$layer = window.layer
 Vue.prototype.$alert = alert
 Vue.prototype.$confirm = confirm

@@ -3,12 +3,12 @@
     <div class="member-nav">
       <ul class="member-nav-list">
         <li>
-          <nuxt-link to="./my-recommend">我推荐的人</nuxt-link>
+          <nuxt-link to="./my-recommend">Someone I recommend</nuxt-link>
         </li>
       </ul>
     </div>
     <div>
-      <div class="my-refereer">我的推荐人：<span>{{ myRefereer || '没有推荐人' }}</span></div>
+      <div class="my-refereer">My references：<span>{{ myRefereer || 'No references' }}</span></div>
       <div>
         <el-table
 	        :data="data"
@@ -44,9 +44,9 @@
               <span>{{scope.row[column.dataIndex]}}</span>
             </template>
           </el-table-column>
-          <el-table-column label="TA的订单" align="center">
+          <el-table-column label="TAThe order of" align="center">
             <template slot-scope="scope">
-              <el-button type="text" size="mini" @click="lookDetails(scope.row)">查看详情</el-button>
+              <el-button type="text" size="mini" @click="lookDetails(scope.row)">Check the details</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -73,62 +73,62 @@
   export default {
     name: 'my-recommend',
     computed: {
-      // 格式化数据源
+      // Formatted data source
       data() {
         return Utils.MSDataTransfer.treeToArray(this.dataSource, null, null, this.defaultExpandAll)
       }
     },
     data() {
       return {
-        /** 分页请求参数 */
+        /** Paging request parameters*/
         params: {
           page_no: 1,
           page_size: 10
         },
 
-        /** 分页信息 */
+        /** The paging information*/
         pageData: {
           page_no: 1,
           page_size: 10,
           data_total: 0
         },
 
-        /** 我的推荐人 */
+        /** My references*/
         myRefereer: '',
 
-        /** 显示状态*/
+        /** According to the state*/
         showstatus: 1,
 
-        /** 商品分组*/
+        /** Commodity group*/
         categoryID: 0,
 
-        /** 默认展开 */
+        /** Open by default*/
         defaultExpandAll: false,
 
-        /** 是否默认树形结构数据 */
+        /** Whether to default to tree structured data*/
         treeStructure: true,
 
-        /** 列信息 */
+        /** Column information*/
         columns: [
           {
             text: '',
             dataIndex: 'useravatar'
           },
           {
-            text: '会员',
+            text: 'members',
             dataIndex: 'name'
           },
           {
-            text: 'TA的推荐人数',
+            text: 'TANumber of recommendations',
             dataIndex: 'downline'
           },
           {
-            text: 'TA的返利',
+            text: 'TAThe rebate',
             dataIndex: 'rebate_total'
           }
         ],
 
-        /** 推荐人列表  */
+        /** Referral List*/
         dataSource: []
       }
     },
@@ -137,49 +137,49 @@
       this.GET_referee()
     },
     methods: {
-      /** 我的推荐人 */
+      /** My references*/
       GET_myReferee() {
         API_distribution.getMyRefereer().then(response => {
           this.myRefereer = response.message
         })
       },
 
-      /** 获取推荐人 */
+      /** Get referees*/
       GET_referee() {
         API_distribution.getRefereeList().then(response => {
           this.dataSource = response
         })
       },
 
-      /** 当前页数发生改变 */
+      /** The current page number changed*/
       handleCurrentPageChange(cur) {
         this.params.page_no = cur;
         this.GET_referee()
       },
 
-      /** 查看详情 */
+      /** Check the details*/
       lookDetails(row) {
         this.$router.push({ path: '/member/distribution/my-performance', query: { member_id: row.id } })
       },
 
-      // 显示行
+      // The lines
       showTr({ row, index }) {
         let show = (row._parent ? (row._parent._expanded && row._parent._show) : true);
         row._show = show;
         return show ? '' : 'display:none;'
       },
 
-      // 展开下级
+      // On the lower
       toggle(trIndex) {
         this.data[trIndex]._expanded = !this.data[trIndex]._expanded
       },
 
-      // 显示层级关系的空格和图标
+      // Displays Spaces and ICONS for hierarchical relationships
       spaceIconShow(index) {
         return this.treeStructure && index === 0
       },
 
-      // 点击展开和关闭的时候，图标的切换
+      // Click expand and close when the icon toggles
       toggleIconShow(index, record) {
         return this.treeStructure && index === 0 && record.item && record.item.length
       }
@@ -188,14 +188,14 @@
 </script>
 
 <style type="text/scss" lang="scss" scoped>
-  /*我的推荐人*/
+  /*My references*/
   .my-refereer {
     line-height: 50px;
     font-size: 16px;
     margin-left: 10px;
     color: #333;
   }
-  /*用户头像*/
+  /*The avatars*/
   .user-avatar {
     width: 10px;
     /*width: 25px;*/

@@ -1,14 +1,14 @@
 
 <template>
   <el-table :data="skuList" style="width: 100%">
-    <el-table-column label="商品列表" align="center" width="100">
+    <el-table-column label="Products" align="center" width="100">
       <template slot-scope="scope">
         <a :href="'/goods/' + scope.row.goods_id" target="_blank">
           <img :src="scope.row[image]"  class="goods-image">
         </a>
       </template>
     </el-table-column>
-    <el-table-column label="商品名称" align="center">
+    <el-table-column label="Name" align="center">
       <template slot-scope="scope">
         <div style="display: inline-block">
           <a :href="'/goods/' + scope.row.goods_id" target="_blank" class="goods-name">{{ scope.row[name] }}</a>
@@ -19,13 +19,13 @@
         </div>
       </template>
     </el-table-column>
-    <el-table-column label="商品单价" align="center" width="120">
+    <el-table-column label="Product  price" align="center" width="120">
       <template slot-scope="scope">{{ scope.row[price] | unitPrice('￥') }}</template>
     </el-table-column>
-    <el-table-column label="数量" align="center" width="90">
+    <el-table-column label="Quantity" align="center" width="90">
       <template slot-scope="scope">{{ scope.row[num] }}</template>
     </el-table-column>
-    <el-table-column label="商品小计" align="center" width="120">
+    <el-table-column label="Subtotal" align="center" width="120">
       <template slot-scope="scope">{{ ((scope.row[num] * scope.row[price])) | unitPrice('￥') }}</template>
     </el-table-column>
   </el-table>

@@ -1,29 +1,29 @@
 <template>
   <div v-if="goods" id="goods">
     <div v-if="!goods.goods_off" class="goods-auth w">
-      <img src="../../assets/images/background-goods-off.jpg" alt="商品已下架">
+      <img src="../../assets/images/background-goods-off.jpg" alt="The merchandise has been removed from the shelves">
       <div class="goods-auth-btns">
-        <a href="/">去首页</a>
-        <a href="javascript:" @click="handleCloseWindow">关闭窗口</a>
+        <a href="/">Go to the home page</a>
+        <a href="javascript:" @click="handleCloseWindow">Close the window</a>
       </div>
     </div>
     <template v-else>
       <bread-nav :goods="goods"/>
       <div class="content">
         <div class="inner-content">
-          <!--商品相册-->
+          <!--Photo album-->
           <goods-zoom :images="goods.gallery_list" :spec-img="specImage"/>
-          <!--商品信息【包括规格、优惠券、促销等】-->
+          <!--Product information【Including specifications、coupons、Sales promotion etc.】-->
           <goods-info :goods="goods" @spec-img-change="(img) => { this.specImage = img }"/>
         </div>
         <div class="collect-goods-box" @click="handleCollectionGoods">
           <i :class="['collect-goods-btn', collected && 'collected']"></i>
-          <a href="javascript:">{{ collected ? '已收藏' : '收藏商品' }}</a>
+          <a href="javascript:">{{ collected ? 'Already collected' : 'Collection product' }}</a>
         </div>
       </div>
       <div class="details">
         <div class="inner w">
-          <!--店铺标签商品推荐-->
+          <!--Store label product recommendation-->
           <goods-tags :shop-id="goods.seller_id"/>
           <div class="detail-container">
             <div class="detail-tabs">
@@ -36,19 +36,19 @@
             </div>
             <div class="detail-content">
               <div
-                v-show="curTab === '商品详情'"
+                v-show="curTab === 'Product details'"
                 class="intro-detail"
                 v-html="goods.intro"
                 v-lazy-container="{ selector: 'img' }"
               ></div>
-              <!--商品参数-->
-              <goods-params v-show="curTab === '规格参数'" :goods-params="goods.param_list"/>
-              <!--商品评论-->
-              <goods-comments v-show="curTab === '商品评论'" :goods-id="goods.goods_id" :grade="goods.grade"/>
-              <!--商品咨询-->
-              <goods-consulting v-show="curTab === '商品咨询'" :goods-id="goods.goods_id"/>
-              <!--销售记录-->
-              <sales-record v-show="curTab === '销售记录'" :goods-id="goods.goods_id"/>
+              <!--Product parameters-->
+              <goods-params v-show="curTab === 'Specification'" :goods-params="goods.param_list"/>
+              <!--Product comments-->
+              <goods-comments v-show="curTab === 'Product comments'" :goods-id="goods.goods_id" :grade="goods.grade"/>
+              <!--Product consulting-->
+              <goods-consulting v-show="curTab === 'Product consulting'" :goods-id="goods.goods_id"/>
+              <!--Sales record-->
+              <sales-record v-show="curTab === 'Sales record'" :goods-id="goods.goods_id"/>
             </div>
           </div>
         </div>
@@ -85,21 +85,21 @@
       try {
         goods = await API_Goods.getGoods(params.id)
       } catch (e) {
-        error({ statusCode: 500, message: '商品已不存在' })
+        error({ statusCode: 500, message: 'The product not exist' })
       }
       if (goods.intro) {
         goods.intro = goods.intro.replace(/src=/g, 'data-src=')
       }
       return {
         goods,
-        // 当前商品是否可以浏览
+        // Whether the current item is browsable
         canView: goods.is_auth !== 0 && goods.goods_off === 1
       }
     },
     head() {
       const { goods, site } = this
       return {
-        title: `${goods.page_title || goods.goods_name || '商品详情'}-${site.site_name}`,
+        title: `${goods.page_title || goods.goods_name || 'Product details'}-${site.site_name}`,
         meta: [
           { hid: 'keywords', name: 'keywords', content: goods.meta_keywords },
           { hid: 'description', name: 'description', content: `${goods.meta_description}-${site.site_name}` },
@@ -111,31 +111,33 @@
     components: components,
     data() {
       return {
-        // 显示分销分享按钮
+        // Displays the distribution share button
         show_dis: process.env.distribution,
         goods: '',
-        /** 规格图片 */
+        /** Sku pictures*/
         specImage: '',
-        tabs: ['商品详情', '规格参数', '商品评论', '商品咨询', '销售记录'].map((item, index) => ({ title: item, active: index === 0 })),
-        curTab: '商品详情',
-        // 商品是否已被收藏
+        tabs: ['Product details', 'Specification', 'Product comments', 'Product consulting', 'Sales record'].map((item, index) => ({ title: item, active: index === 0 })),
+        curTab: 'Product details',
+        // Whether the item has been collected
         collected: false,
-        // 显示分享按钮
+        // Show share button
         showShare: true
       }
     },
     mounted() {
       const { goods_id, seller_id } = this.goods
-      // 如果商品可以查看
+      // If the goods can be viewed
       if (this.canView) {
-        // 如果用户已登录，加载收藏状态
+        // If the user is logged in, load the favorites state
         if (Storage.getItem('refresh_token')) {
           API_Members.getGoodsIsCollect(goods_id).then(response => {
             this.collected = response.message
           })
         }
-        // 记录浏览量统计【用于统计】
+        // 2. Used of statistics.
         API_Common.recordViews(window.location.href)
+        // 加载百度分享代码
+        this.loadBdShareScript()
         // 如果页面是被分享的
         if (this.$route.query.su) {
           API_distribution.accessShortLink({su: this.$route.query.su }).then(() => { console.log(9856) })
@@ -143,26 +145,26 @@
       }
     },
     methods: {
-      /** 收藏商品 */
+      /** Collection product*/
       handleCollectionGoods() {
         if (!Storage.getItem('refresh_token')) {
-          this.$message.error('您还未登录，不能收藏商品！')
+          this.$message.error('You have not logged in, can not collect goods！')
           return false
         }
         const { goods_id } = this.goods
         if (this.collected) {
           API_Members.deleteGoodsCollection(goods_id).then(() => {
-            this.$message.success('取消收藏成功！')
+            this.$message.success('Unfavorites successful！')
             this.collected = false
           })
         } else {
           API_Members.collectionGoods(goods_id).then(() => {
-            this.$message.success('收藏成功！')
+            this.$message.success('Collection of success！')
             this.collected = true
           })
         }
       },
-      /** 商品详情tab点击事件 */
+      /** Product detailstabClick on the event*/
       handleClickTabItem(tab) {
         this.curTab = tab.title
         this.tabs.map(item => {
@@ -170,13 +172,41 @@
           return item
         })
       },
-      /** 关闭当前窗口 */
+      /** Close current window*/
       handleCloseWindow() {
         window.close()
+      },
+      /** 加载百度分享 */
+      loadBdShareScript() {
+        this.$nextTick(() => {
+          const { goods } = this
+          window._bd_share_config = {
+            common: {
+              bdSnsKey:{},
+              bdUrl: location.href,
+              bdText: goods.goods_name,
+              bdMini: "2",
+              bdPic: goods.thumbnail,
+              bdStyle: "1",
+              bdSize: "16",
+              bdMiniList: ["mshare","qzone","tsina","bdysc","weixin","kaixin001","tqf","tieba","douban","sqq","copy"]
+            },
+            share: {
+              bdSize: 16,
+              bdMiniList: ["mshare","qzone","tsina","bdysc","weixin","kaixin001","tqf","tieba","douban","sqq","copy"],
+            }
+          };
+          const s = document.createElement('script');
+          s.type = 'text/javascript';
+          s.id = 'BdShareScript';
+          s.src = '/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5);
+          document.body.appendChild(s);
+          this.showShare = true
+        })
       }
     },
     destroyed() {
-      // 当组件销毁时，移除百度分享创建的标签
+      // Tags created by Baidu Share are removed when the component is destroyed
       const removeIds = ['BdShareScript', 'bdshare_weixin_qrcode_dialog_bg', 'bdshare_weixin_qrcode_dialog']
       const removeClass = ['bdshare_dialog_box', 'bdshare_dialog_bg', 'bdshare_popup_box']
       removeIds.forEach(id => {

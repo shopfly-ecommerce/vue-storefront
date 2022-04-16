@@ -1,8 +1,8 @@
 /**
  * Created by Andste on 2018/7/2.
- * base    : 基础业务API
- * buyer   : 买家API
- * im      : IMAPI
+ * base    : Based on the businessAPI
+ * buyer   : buyersAPI
+ * im      : IM API
  */
 
 export const dev = {

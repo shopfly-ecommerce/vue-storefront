@@ -1,20 +1,20 @@
 <template>
   <el-table v-if="giftList && giftList.length" :data="giftList" style="width: 100%">
-    <el-table-column label="赠品列表" width="100" align="center">
+    <el-table-column label="Gift list" width="100" align="center">
       <template slot-scope="scope">
         <a :href="scope.row.gift_img" target="_blank">
           <img :src="scope.row.gift_img"  class="goods-image">
         </a>
       </template>
     </el-table-column>
-    <el-table-column label="赠品名称" align="center">
+    <el-table-column label="Name of gift" align="center">
       <template slot-scope="scope">
         <div style="display: inline-block">
           <a :href="scope.row.gift_img" target="_blank" class="goods-name">{{ scope.row.gift_name }}</a>
         </div>
       </template>
     </el-table-column>
-    <el-table-column label="赠品单价" width="120" align="center">
+    <el-table-column label="Present the unit price" width="120" align="center">
       <template slot-scope="scope">{{ scope.row.gift_price | unitPrice('￥') }}</template>
     </el-table-column>
     <el-table-column label="" width="90"/>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  // 订单附赠赠品和优惠券列表
+  // The order comes with a list of freebies and coupons
   export default {
     name: 'gift-list',
     props: ['gift-list']

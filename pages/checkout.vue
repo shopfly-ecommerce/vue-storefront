@@ -4,8 +4,8 @@
 
 <script>
   /**
-   * 这里只是作为路由容器
-   * 主要的代码在checkout/index.vue里
+   * This is just a routing container
+   * The main code is incheckout/index.vueIn the
    */
   export default {
     name: 'checkout',

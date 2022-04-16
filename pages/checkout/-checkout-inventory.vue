@@ -1,8 +1,8 @@
 <template>
   <div class="ckt-item inventory">
     <div class="top-ckt">
-      <span class="title-top">配送清单</span>
-      <span class="other-top"><nuxt-link to="/cart" class="c-back-cart">返回购物车修改</nuxt-link></span>
+      <span class="title-top">Delivery list</span>
+      <span class="other-top"><nuxt-link to="/cart" class="c-back-cart">Back to shopping cart</nuxt-link></span>
       <div class="clearfix"></div>
     </div>
     <div class="content-ckt-inventory inventory">
@@ -13,22 +13,22 @@
       >
         <div class="left-item-inventory">
           <div class="express-inventory">
-            <div class="title-item-inventory">配送方式</div>
+            <div class="title-item-inventory">Shipping type</div>
             <div class="content-item-inventory express">
-              <div class="ckt-checkbox express selected" :title="'运费（' + shop.price.freight_price + '元）'">
-                <span>运费&nbsp;（{{ shop.price.freight_price }}&nbsp;元）</span>
+              <div class="ckt-checkbox express selected" :title="'freight（' + shop.price.freight_price + 'USD）'">
+                <span>freight&nbsp;（{{ shop.price.freight_price }}&nbsp;USD）</span>
               </div>
             </div>
             <div style="clear: both;"></div>
           </div>
-          <div class="express-weight">总重量：{{ shop.weight }}kg</div>
+          <div class="express-weight">Total weight：{{ shop.weight }}kg</div>
           <div class="hr-inventory"></div>
           <div class="discount-inventory">
-            <div class="title-item-inventory">优惠折扣</div>
+            <div class="title-item-inventory">Discount</div>
             <div class="content-item-inventory">
               <template v-if="!shop.coupon_list || !shop.coupon_list.length">
-                <p class="no-item-discount-inventory">您还没有领到优惠劵，去&nbsp;
-                  <nuxt-link to="/coupons" target="_blank" style="color: #005ea7;">领券中心</nuxt-link>&nbsp;看看吧！
+                <p class="no-item-discount-inventory">You havent got your coupon yet.<br/>&nbsp;
+                  <nuxt-link to="/coupons" target="_blank" style="color: #005ea7;">Try coupon mall </nuxt-link>&nbsp;
                 </p>
               </template>
               <template v-else>
@@ -50,8 +50,8 @@
                   </div>
                   <div class="money-item-discount">￥{{ coupon.amount || unitPrice }}</div>
                   <div class="detail-item-discount">
-                    <p class="first">{{ "满"+parseFloat(coupon.use_term.slice(1,10)).toString()+".0可用" }}</p>
-                    <p>有效期至{{ coupon.end_time | unixToDate('yyyy-MM-dd') }}</p>
+                    <p class="first">{{ "full"+parseFloat(coupon.use_term.slice(1,10)).toString()+".0available" }}</p>
+                    <p>Will be valid until{{ coupon.end_time | unixToDate('yyyy-MM-dd') }}</p>
                   </div>
                 </div>
               </template>
@@ -62,13 +62,11 @@
         <div class="right-item-inventory">
           <div class="gooods-inventory">
             <div class="title-item-inventory">
-              <div class="store-name">店铺名称：
-                {{ shop.seller_name }}
-              </div>
+
               <div class="store-total">
-                <div class="discount-store-total">优惠折扣： <span>-￥{{ shop.price.discount_price | unitPrice }}</span>
+                <div class="discount-store-total">discount： <span>-￥{{ shop.price.discount_price | unitPrice }}</span>
                 </div>
-                <div class="total-store-total">店铺合计（含运费）： <span>￥{{ shop.price.total_price | unitPrice }}</span>
+                <div class="total-store-total"> total: <span>￥{{ shop.price.total_price | unitPrice }}</span>
                 </div>
               </div>
               <input type="hidden" name="storeid" value="18">
@@ -86,7 +84,7 @@
                     <a :href="'/goods/' + goods.goods_id" target="_blank">
                       <img :src="goods.goods_image">
                     </a>
-                    <span v-if="!goods.is_ship" class="out-of-stock-tip">该地区无货</span>
+                    <span v-if="!goods.is_ship" class="out-of-stock-tip">There is no stock in the area</span>
                   </td>
                   <td class="name-gooods-inventory">
                     <a :href="'/goods/' + goods.goods_id" target="_blank">
@@ -98,14 +96,14 @@
                     </p>
                   </td>
                   <td class="price-gooods-inventory">
-                    ￥{{ goods.purchase_price | unitPrice }}{{ goods.point ? ('+'+goods.point+'积分')  : '' }}
-                    <p v-if="goods.purchase_price < goods.original_price" class="price-goods-org">原价￥{{ goods.original_price | unitPrice }}</p>
+                    ￥{{ goods.purchase_price | unitPrice }}{{ goods.point ? ('+'+goods.point+'point')  : '' }}
+                    <p v-if="goods.purchase_price < goods.original_price" class="price-goods-org">The original price￥{{ goods.original_price | unitPrice }}</p>
                     <p class="goods-weight">{{ goods.goods_weight }}kg</p>
                   </td>
                   <td class="num-gooods-inventory">x{{ goods.num }}</td>
                   <td class="subtotal-gooods-inventory">
                     <span v-if="goods.is_ship">￥{{ goods.subtotal | unitPrice }}</span>
-                    <span v-else>该地区无货</span>
+                    <span v-else>There is no stock in the area</span>
                   </td>
                 </tr>
                 </tbody>
@@ -113,18 +111,18 @@
             </div>
             <div class="gift-item-inventory">
               <div class="gift-item" v-if="shop.gift_coupon_list && shop.gift_coupon_list.length">
-                <div class="gf-tit">赠送优惠券：</div>
+                <div class="gf-tit">Complimentary coupons：</div>
                 <div class="gf-con">
                   <span :key="index" v-for="(coupon, index) in shop.gift_coupon_list">
-                    价值{{ coupon.amount }}元的优惠券
+                    The value of{{ coupon.amount }}Yuan coupon
                   </span>
                 </div>
               </div>
               <div class="gift-item" v-if="shop.gift_list && shop.gift_list.length">
-                <div class="gf-tit">赠送礼品：</div>
+                <div class="gf-tit">gifts：</div>
                 <div class="gf-con gift">
                   <span :key="index" v-for="(gift, index) in shop.gift_list">
-                    价值{{ gift.gift_price }}元的{{ gift.gift_name }}
+                    The value of{{ gift.gift_price }}yuan{{ gift.gift_name }}
                     <a :href="gift.gift_img" target="_blank">
                       <img :src="gift.gift_img" alt="" class="gift-img">
                     </a>
@@ -141,11 +139,10 @@
       </div>
     </div>
     <div class="bottom-ckt-inventory">
-      订单备注：
+      Remarks：
       <el-input v-model="iRemark" size="small" :maxlength="200" clearable>
-        <el-button slot="append" @click="handleSetRemark">保存</el-button>
+        <el-button slot="append" @click="handleSetRemark">save</el-button>
       </el-input>
-      <span class="remark-tip">*请勿填写有关支付、收货、发票方面的信息，如有特殊需要请联系客服人员。</span>
     </div>
     <div class="placeholder-20"></div>
   </div>
@@ -153,8 +150,8 @@
 
 <script>
   /**
-   * 结算页
-   * 购物车清单组件
+   * The settlement page
+   * Shopping cart list component
    */
   import * as API_Trade from '@/api/trade'
   export default {
@@ -169,9 +166,9 @@
       remark(newVal) { this.iRemark = newVal }
     },
     methods: {
-      /** 使用优惠券 */
+      /** Use coupons*/
       useCoupon(shopIndex, coupon, couponIndex) {
-        // 取消使用
+        // Cancel the use
         if (coupon.enable === 0) {
           this.$message.error(coupon.error_msg)
           return
@@ -186,10 +183,10 @@
           })
         }
       },
-      /** 设置备注 */
+      /** Set the note*/
       handleSetRemark() {
         API_Trade.setRemark(this.iRemark).then(() => {
-          this.$message.success('保存成功！')
+          this.$message.success('Save success！')
         })
       }
     }

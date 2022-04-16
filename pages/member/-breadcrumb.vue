@@ -1,13 +1,13 @@
 <template>
   <div id="member-breadcrumb" class="w">
-    <a href="/"><i class="iconfont ea-icon-home"></i>首页</a>&ensp;&gt;
-    <nuxt-link to="/member">会员中心</nuxt-link>&ensp;&gt;
+    <a href="/"><i class="iconfont ea-icon-home"></i>Home</a>&gt;
+    <nuxt-link to="/member">Your Account</nuxt-link>&gt;
     <template v-if="fullPath === '/member'">
       <nuxt-link to="/member/my-profile"> {{ $store.getters.user.uname }}</nuxt-link>
     </template>
     <template v-else v-for="(b, i) in breadcrumbs">
       <nuxt-link :to="b.path" :key="b.path"> {{ b.title }}</nuxt-link>
-      <template v-if="i !== breadcrumbs.length - 1">&ensp;&gt;</template>
+      <template v-if="i !== breadcrumbs.length - 1">&gt;</template>
     </template>
   </div>
 </template>

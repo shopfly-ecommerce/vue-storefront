@@ -3,21 +3,21 @@
     <div class="member-nav">
       <ul class="member-nav-list">
         <li class="active">
-          <nuxt-link to="./after-sale">售后列表</nuxt-link>
+          <nuxt-link to="./after-sale">After the list</nuxt-link>
         </li>
       </ul>
     </div>
     <div class="after-sale-container">
       <el-table :data="afterSale.data" style="width: 100%">
-        <el-table-column label="申请时间">
+        <el-table-column label="To apply for time">
           <template slot-scope="scope">{{ scope.row.create_time | unixToDate }}</template>
         </el-table-column>
-        <el-table-column prop="sn" label="退货(款)单编号"/>
-        <el-table-column prop="refuse_type_text" label="售后类型"/>
-        <el-table-column prop="refund_status_text" label="售后状态" width="150"/>
-        <el-table-column label="操作" width="100">
+        <el-table-column prop="sn" label="Return of the goods(paragraph)A single number"/>
+        <el-table-column prop="refuse_type_text" label="After type"/>
+        <el-table-column prop="refund_status_text" label="After state" width="150"/>
+        <el-table-column label="Operation" width="100">
           <template slot-scope="scope">
-            <nuxt-link :to="'/member/after-sale/detail?sn=' + scope.row.sn">查看</nuxt-link>
+            <nuxt-link :to="'/member/after-sale/detail?sn=' + scope.row.sn">To view</nuxt-link>
           </template>
         </el-table-column>
       </el-table>
@@ -51,12 +51,12 @@
       this.GET_AfterSale()
     },
     methods: {
-      /** 当前页数发生改变 */
+      /** The current page number changed*/
       handleCurrentPageChange(page) {
         this.params.page_no = page
         this.GET_AfterSale()
       },
-      /** 获取售后列表 */
+      /** Get after-sale list*/
       GET_AfterSale() {
         API_AfterSale.getAfterSale(this.params).then(response => {
           this.afterSale = response

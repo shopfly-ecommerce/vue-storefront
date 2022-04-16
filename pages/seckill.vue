@@ -1,7 +1,7 @@
 <template>
   <div id="seckill" class="seckill-container">
     <div class="seckill-title">
-      <h1>限时抢购</h1>
+      <h1>flash</h1>
     </div>
     <div :class="['seckill-timeline', timeline_fixed && 'fixed']">
       <div class="inner-timeline w">
@@ -15,10 +15,10 @@
             <a href="javascript:;" class="main-timeline-item">
               <div class="timeline-wrap">
                 <div class="line-timeline"><i>{{ timeLine.time_text }}:00</i></div>
-                <div class="next-timeline"><i>{{ timeLine.distance_time === 0 ? '正在抢购' : '即将开始' }}</i></div>
+                <div class="next-timeline"><i>{{ timeLine.distance_time === 0 ? 'Are snapping up' : 'Is about to begin' }}</i></div>
                 <div class="time-timeline">
-                  <b class="b-text">{{ timeLine.distance_time === 0 ? '正在抢购' : '即将开始' }}</b>
-                  <b class="b-time">{{ timeLine.distance_time === 0 ? (onlyOne ? '距结束' : '距下一轮') : '距开始' }}<i>{{ timesText[index].hours }}</i>:<i>{{ timesText[index].minutes }}</i>:<i>{{ timesText[index].seconds }}</i></b>
+                  <b class="b-text">{{ timeLine.distance_time === 0 ? 'Are snapping up' : 'Is about to begin' }}</b>
+                  <b class="b-time">{{ timeLine.distance_time === 0 ? (onlyOne ? 'From the end of the' : 'From the next round of') : 'From the start' }}<i>{{ timesText[index].hours }}</i>:<i>{{ timesText[index].minutes }}</i>:<i>{{ timesText[index].seconds }}</i></b>
                 </div>
               </div>
             </a>
@@ -61,24 +61,24 @@
                 <span class="goods-org-price">{{ goods.original_price | unitPrice }}</span>
               </div>
               <span v-if="seckillIsStart" class="progress">
-                <i class="progress-txt">已售{{ countProgress(goods) }}%</i>
+                <i class="progress-txt">sold{{ countProgress(goods) }}%</i>
                 <i class="progress-inner">
                   <b class="progress-completed" :style="{width: countProgress(goods) + '%'}"></b>
                 </i>
               </span>
-              <span v-else class="tip">限时抢购 抢先提醒</span>
+              <span v-else class="tip">Flash sale alert</span>
             </div>
 
             <a v-if="countProgress(goods)==100"
               href="javascript:;"
               class="buy-btn"
               target="_blank"
-            >{{ seckillIsStart ? '已售空' : '即将开始' }}</a>
+            >{{ seckillIsStart ? 'Has been sold out' : 'Is about to begin' }}</a>
             <a v-else
               :href="'/goods/' + goods.goods_id"
               class="buy-btn"
               target="_blank"
-            >{{ seckillIsStart ? '立即抢购' : '即将开始' }}</a>
+            >{{ seckillIsStart ? 'Snapped up immediately' : 'Is about to begin' }}</a>
           </div>
         </li>
       </ul>
@@ -104,7 +104,7 @@
     name: 'seckill',
     head() {
       return {
-        title: `限时抢购-${this.site.title}`
+        title: `flash-${this.site.title}`
       }
     },
     data() {
@@ -122,7 +122,7 @@
       }
     },
     computed: {
-      /** 获取当前选中的时间节点是否开始 */
+      /** Gets whether the currently selected time node is started*/
       seckillIsStart() {
         return this.timeLines.filter(item => item.active)[0].distance_time === 0
       }
@@ -135,19 +135,19 @@
       this.GET_TimeLine()
     },
     methods: {
-      /** 当前页数发生改变 */
+      /** The current page number changed*/
       handleCurrentPageChange(page_no) {
         this.params.page_no = page_no
         this.GET_TimeLineGoods()
       },
-      /** 时间段盒子是否浮动 */
+      /** Whether the time range box floats*/
       timeLineFixedStatus() {
-        // 获取滚动条当前位置
+        // Gets the current position of the scroll bar
         const bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop
-        // 是否固定到顶部
+        // Whether fixed to the top
         this.timeline_fixed = bodyScrollTop >= 31 + 140 + 90
       },
-      /** 时间段被选中 */
+      /** Time period selected*/
       handleClickTimeLine(timeLineIndex, timeLine) {
         const { timeLines } = this
         this.MixinScrollToTop(31 + 140 + 90)
@@ -159,14 +159,14 @@
         this.params.range_time = timeLine.time_text
         this.GET_TimeLineGoods()
       },
-      /** 开始倒计时 */
+      /** Start the countdown*/
       startCountDown() {
         this.interval = setInterval(() => {
           const { times, timesText } = this
           for (let i = 0; i < times.length; i ++) {
             if (i === 0 && times[i] === 0) {
               clearInterval(this.interval)
-              this.$alert('新的限时抢购开始啦，请确认查看！', function () {
+              this.$alert('The new flash sale has started, please confirm to check！', function () {
                 location.reload()
               })
               break
@@ -178,16 +178,16 @@
           this.$set(this, 'times', times)
         }, 1000)
       },
-      /** 计算销售百分比 */
+      /** Calculate percentage of sales*/
       countProgress(goods) {
         if (!this.seckillIsStart) return 0
         return (goods.sold_num / (goods.sold_num + goods.sold_quantity) * 100).toFixed(0)
       },
-      /** 获取时间线 */
+      /** Get the timeline*/
       GET_TimeLine() {
         API_Promotions.getSeckillTimeLine().then(response => {
           if (!response || !response.length) {
-            this.$alert('暂时还没有限时抢购正在进行，去别处看看吧！', () => {
+            this.$alert('There are no flash sales going on yet, so look elsewhere！', () => {
               this.$router.push({ path: '/' })
             })
             return false
@@ -220,7 +220,7 @@
           this.startCountDown()
         })
       },
-      /** 获取对应时刻的商品 */
+      /** Get the item at the corresponding time*/
       GET_TimeLineGoods() {
         API_Promotions.getSeckillTimeGoods(this.params).then(response => {
           this.$set(this, 'goodsList', response)

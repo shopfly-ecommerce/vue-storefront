@@ -10,24 +10,24 @@
         <div v-if="user" class="card-user-show logined">
           <p>Hi,<nuxt-link to="/member"> {{ user.nickname || user.uname }}</nuxt-link></p>
           <p class="btns">
-            <nuxt-link to="/member" class="to-member">进入个人中心</nuxt-link>
+            <nuxt-link to="/member" class="to-member">Access to personal Center</nuxt-link>
           </p>
         </div>
         <div v-else class="card-user-show">
-          <p>Hi,<a href="#">&ensp;欢迎来到{{ site.site_name }} ！</a></p>
+          <p>Hi,<a href="#">Welcome to{{ site.site_name }} ！</a></p>
           <p class="btns">
-            <nuxt-link :to="'/login' + MixinForward" class="please-login">请登录</nuxt-link>
-            <nuxt-link :to="'/register' + MixinForward" class="to-register">去注册</nuxt-link>
+            <nuxt-link :to="'/login' + MixinForward" class="please-login">Sign in </nuxt-link>
+            <nuxt-link :to="'/register' + MixinForward" class="to-register">Register</nuxt-link>
           </p>
         </div>
       </div>
     </div>
     <div class="card-news">
       <div class="card-news-tab">
-        <a href="#" @mouseenter="card_news_tab_x = 0">商城公告</a>
-        <a href="#" @mouseenter="card_news_tab_x = 70">商城促销</a>
+        <a href="#" @mouseenter="card_news_tab_x = 0">notes</a>
+        <a href="#" @mouseenter="card_news_tab_x = 70">promotion</a>
         <div class="card-news-tab-active" :style="{transform: 'translateX('+ card_news_tab_x +'px)'}" @click="handleTransform"></div>
-        <!--<a href="#" class="card-news-more">更多</a>-->
+        <!--<a href="#" class="card-news-more">More and more</a>-->
       </div>
       <div class="card-news-content">
         <div class="card-news-con-item" v-show="card_news_tab_x === 0">
@@ -55,23 +55,23 @@
     <div class="card-service">
       <nuxt-link to="/member/my-points" class="service-item">
         <i class="iconfont ea-icon-point"></i>
-        <span>我的积分</span>
+        <span>Points</span>
       </nuxt-link>
       <nuxt-link to="/member/my-comments" class="service-item">
         <i class="iconfont ea-icon-score"></i>
-        <span>我的评价</span>
+        <span>Comment</span>
       </nuxt-link>
       <nuxt-link to="/member/my-order" class="service-item">
         <i class="iconfont ea-icon-order"></i>
-        <span>我的订单</span>
+        <span>Orders</span>
       </nuxt-link>
       <nuxt-link to="/member/my-collection" class="service-item">
         <i class="iconfont ea-icon-star"></i>
-        <span>我的收藏</span>
+        <span>Collection</span>
       </nuxt-link>
       <nuxt-link to="/member/account-safe" class="service-item">
         <i class="iconfont ea-icon-security"></i>
-        <span>账号安全</span>
+        <span>Security</span>
       </nuxt-link>
     </div>
   </div>
@@ -104,7 +104,7 @@ export default {
     })
   },
   methods: {
-    /** 显示商城公告 */
+    /** Display Mall Announcement*/
     handleShowNotice(notice) {
       this.$layer.open({
         type: 1,
@@ -113,7 +113,7 @@ export default {
         area: ['500px', '350px'],
         scrollbar: false,
         shadeClose: true,
-        btn: ['确定'],
+        btn: ['save'],
         btnAlign: 'c',
         content: `<div style="padding: 15px">${notice.content}</div>`
       });

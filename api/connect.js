@@ -1,13 +1,13 @@
 /**
  * Created by Andste on 2018/7/2.
- * 信任登录相关API
+ * Trusted login correlationAPI
  */
 
 import request, { Method } from '@/utils/request'
 import md5 from 'js-md5'
 
 /**
- * 获取第三方登录url
+ * Obtaining third-party Loginurl
  * @param client_type
  * @param login_type
  * @returns {string}
@@ -17,7 +17,7 @@ export function getConnectUrl(client_type, login_type) {
 }
 
 /**
- * 获取个人中心绑定url
+ * Get the personal center bindingurl
  * @param login_type
  * @returns {string}
  */
@@ -30,7 +30,7 @@ export function getLogindConnectUrl(login_type) {
 }
 
 /**
- * 第三方登录绑定
+ * Third-party Login Binding
  * @param uuid
  * @param params
  */
@@ -44,7 +44,7 @@ export function loginByConnect(uuid, params) {
 }
 
 /**
- * 登录绑定openid
+ * Log on to the bindingopenid
  * @param uuid
  */
 export function loginBindConnect(uuid) {
@@ -56,7 +56,7 @@ export function loginBindConnect(uuid) {
 }
 
 /**
- * 注册绑定openid
+ * Registered bindingopenid
  * @param uuid
  */
 export function registerBindConnect(uuid) {
@@ -68,7 +68,7 @@ export function registerBindConnect(uuid) {
 }
 
 /**
- * 获取绑定列表
+ * Getting the binding list
  */
 export function getConnectList() {
   return request({
@@ -79,7 +79,7 @@ export function getConnectList() {
 }
 
 /**
- * 解绑
+ * unbundling
  * @param type
  */
 export function unbindConnect(type) {

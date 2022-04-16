@@ -10,15 +10,15 @@
       toPage() {
         const { type, value } = this.opt
         switch (type) {
-          // 链接地址
+          // The link address
           case 'URL': return value
-          // 商品
+          // goods
           case 'GOODS': return `/goods/${value}`
-          // 关键字
+          // keyword
           case 'KEYWORD': return `/goods?keyword=${encodeURIComponent(value)}`
-          // 店铺
+          // The store
           case 'SHOP': return `/shop/${value}`
-          // 分类
+          // Categories
           case 'CATEGORY': return `/goods?category=${value}`
           default: return '/'
         }

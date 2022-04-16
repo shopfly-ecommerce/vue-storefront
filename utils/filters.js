@@ -1,7 +1,7 @@
 import { Foundation } from '@/ui-utils'
 
 /**
- * 金钱单位置换  2999 --> 2,999.00
+ * Monetary unit replacement2999 --> 2,999.00
  * @param val
  * @param unit
  * @param location
@@ -19,7 +19,7 @@ export function unitPrice(val, unit, location) {
 }
 
 /**
- * 处理unix时间戳，转换为可阅读时间格式
+ * To deal withunixTimestamp, converted to readable time format
  * @param unix
  * @param format
  * @returns {*|string}
@@ -42,30 +42,30 @@ export function unixToDate(unix, format) {
 }
 
 /**
- * 根据订单状态码返回订单状态
+ * Returns the order status according to the order status code
  * @param status_code
  * @returns {string}
  */
 export function unixOrderStatus(status_code) {
   switch (status_code) {
     case 'NEW':
-      return '新订单'
+      return 'The new orders'
     case 'INTODB_ERROR':
-      return '入库失败'
+      return 'Storage failure'
     case 'CONFIRM':
-      return '已确认'
+      return 'Have been confirmed'
     case 'PAID_OFF':
-      return '已付款'
+      return 'Payment has been'
     case 'SHIPPED':
-      return '已发货'
+      return 'Has been shipped'
     case 'ROG':
-      return '已收货'
+      return 'Have the goods'
     case 'COMPLETE':
-      return '已完成'
+      return 'Has been completed'
     case 'CANCELLED':
-      return '已取消'
+      return 'Has been cancelled'
     case 'AFTER_SERVICE':
-      return '售后中'
+      return 'In the after-sale'
   }
 }
 
@@ -83,7 +83,7 @@ export function secrecyMobile(mobile) {
 }
 
 /**
- * 格式化货品的规格
+ * The specification of the formatted item
  * @param sku
  * @returns {*}
  */

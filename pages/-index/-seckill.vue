@@ -2,11 +2,11 @@
   <div v-if="time !== false && goodsList && goodsList.length" class="seckill-container w">
     <div class="seckill-hd">
       <a href="/seckill" class="seckill-hd-a" target="_blank">
-        <div class="sk-title">限时抢购</div>
+        <div class="sk-title">flash</div>
         <div class="sk-sub-title">FLASH DEALS</div>
         <i class="iconfont ea-icon-lightning sk-icon"></i>
         <div class="sk-desc">
-          {{ timeLine.distance_time === 0 ? (onlyOne ? '本轮距离结束还剩' : '距离下一轮开始还有') : '距开始' }}
+          {{ timeLine.distance_time === 0 ? (onlyOne ? 'Were still close to the end of this cycle' : 'Theres still time for the next round') : 'From the start' }}
         </div>
         <div class="sk-time">
           <div class="time-item"><span class="time-text">{{ times.hours }}</span></div>
@@ -50,21 +50,21 @@
     name: 'index-seckill',
     data() {
       return {
-        // 时间
+        // time
         time: false,
-        // 商品列表
+        // List of goods
         goodsList: '',
-        // 时间
+        // time
         times: {
           hours: '00',
           minutes: '00',
           seconds: '00'
         },
-        // 是否只有一场
+        // Is there only one show
         onlyOne: false,
-        // 当前这一场的时刻信息
+        // Time information for the current scene
         timeLine: '',
-        // swiper配置
+        // Swiper configuration
         swiperOptions: {
           autoplay: false,
           simulateTouch: false,
@@ -81,13 +81,13 @@
       this.GET_TimeLine()
     },
     methods: {
-      /** 开始倒计时 */
+      /** Start the countdown*/
       startCountDown() {
         this.interval = setInterval(() => {
           let { time } = this;
           if (time <= 0) {
             clearInterval(this.interval);
-            this.$alert(this.onlyOne ? '本轮限时抢购已结束！' : '下一轮限时抢购已经开始啦！请确认查看', function () {
+            this.$alert(this.onlyOne ? 'This round of flash sale has ended！' : 'The next flash sale has already started！Please confirm and check.', function () {
               location.reload()
             });
             return false
@@ -98,7 +98,7 @@
           this.$set(this, 'time', time)
         }, 1000)
       },
-      /** 获取时间段 */
+      /** Get time period*/
       GET_TimeLine() {
         API_Promotions.getSeckillTimeLine().then(response => {
           if (!response || !response.length) {
@@ -113,7 +113,7 @@
           this.GET_GoodsList(response[0].time_text)
         })
       },
-      /** 获取商品列表 */
+      /** Get a list of items*/
       GET_GoodsList(range_time) {
         API_Promotions.getSeckillTimeGoods({ range_time }).then(response => {
           this.goodsList = response.data

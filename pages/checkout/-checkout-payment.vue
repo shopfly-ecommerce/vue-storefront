@@ -1,7 +1,7 @@
 <template>
   <div class="ckt-item payment">
     <div class="top-ckt">
-      <span class="title-top">支付类型</span>
+      <span class="title-top">Payment type</span>
       <span class="other-top"><a href="javascript:;"></a></span>
       <div class="clearfix"></div>
     </div>
@@ -11,18 +11,18 @@
           :class="['ckt-checkbox', 'pay', paymentType === 'ONLINE' && 'selected']"
           @click="handleSetPaymentType('ONLINE')"
         >
-          <span>在线支付</span>
+          <span>Online payment</span>
         </li>
         <li
           :class="['ckt-checkbox', 'pay', paymentType === 'COD' && 'selected']"
           @click="handleSetPaymentType('COD')"
         >
-          <span>货到付款</span>
+          <span>Cash on delivery</span>
         </li>
       </ul>
     </div>
     <div class="collapse-ckt-pay">
-      <span class="more-collapse-ckt">更多方式</span>
+      <span class="more-collapse-ckt">More ways</span>
       <i class="icon-collapse-ckt-pay"></i>
     </div>
     <div class="placeholder-20"></div>
@@ -31,8 +31,8 @@
 
 <script>
   /**
-   * 结算页
-   * 支付类型组件
+   * The settlement page
+   * Payment type component
    */
   import * as API_Trade from '@/api/trade'
   export default {
@@ -41,7 +41,7 @@
     methods: {
       handleSetPaymentType(type) {
         API_Trade.setPaymentType(type).then(() => {
-          this.$message.success('设置成功！')
+          this.$message.success('Set up the success！')
           this.$emit('change', type)
         })
       }

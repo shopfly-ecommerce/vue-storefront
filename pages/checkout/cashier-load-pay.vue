@@ -1,6 +1,6 @@
 <template>
   <div class="__pay_form__">
-    <h3 class="tip">支付跳转中...</h3>
+    <h3 class="tip">Payment jump...</h3>
   </div>
 </template>
 

@@ -5,9 +5,9 @@
       <strong>{{ title }}</strong>
     </div>
     <div class="prom-time" v-if="!is_snapshot">
-      距离结束
+      From the end of the
       <template v-if="day > 0">
-        <span>{{ day }}</span>天
+        <span>{{ day }}</span>day
       </template>
       <span>{{ hours }}</span>:<span>{{ minutes }}</span>:<span>{{ seconds }}</span>
     </div>

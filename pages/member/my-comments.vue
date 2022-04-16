@@ -3,11 +3,11 @@
     <div class="member-nav">
       <ul class="member-nav-list">
         <li class="active">
-          <a href="./my-comments">我的评论</a>
+          <a href="./my-comments">My comments</a>
         </li>
       </ul>
     </div>
-    <empty-member v-if="comments && !comments.data.length">暂无评论</empty-member>
+    <empty-member v-if="comments && !comments.data.length">No comments</empty-member>
     <template v-else>
       <div class="comments-container">
         <ul>
@@ -17,7 +17,7 @@
               <span>{{ comment.create_time | unixToDate }}</span>
             </div>
             <div class="comment-body">
-              <strong>我的评论：</strong>
+              <strong>My comments：</strong>
               <div>
                 <p v-html="comment.content.replace(/\n/g, '<br>')"></p>
                 <div v-if="comment.images && comment.images.length > 0" class="comment-gallery">
@@ -28,7 +28,7 @@
               </div>
             </div>
             <div v-if="comment.reply_status === 1" class="comment-body reply">
-              <strong>掌柜回复：</strong>
+              <strong>The shopkeeper replies：</strong>
               <div>
                 <p v-html="comment.reply.content.replace(/\n/g, '<br>')"></p>
               </div>
@@ -55,7 +55,7 @@
     name: 'my-comments',
     head() {
       return {
-        title: `我的评论-${this.site.title}`
+        title: `My comments-${this.site.title}`
       }
     },
     data() {
@@ -71,7 +71,7 @@
       this.GET_Comments()
     },
     methods: {
-      /** 当前页数发生改变 */
+      /** The current page number changed*/
       handleCurrentPageChange(page) {
         this.params.page_no = page
         this.GET_Comments()

@@ -1,11 +1,11 @@
 /**
- * 站内消息相关API
+ * Intra-station message correlationAPI
  */
 
 import request, { Method } from '@/utils/request'
 
 /**
- * 获取消息列表
+ * Get message list
  * @param params
  * @returns {AxiosPromise}
  */
@@ -21,7 +21,7 @@ export function getMessages(params) {
 }
 
 /**
- * 获取站内未读消息
+ * Gets an unread message from the station
  * @param params
  * @returns {AxiosPromise}
  */
@@ -38,7 +38,7 @@ export function getMesssagesAsUnread(params) {
 }
 
 /**
- * 标记消息为已读
+ * Mark the message as read
  * @param ids
  */
 export function messageMarkAsRead(ids) {
@@ -50,7 +50,7 @@ export function messageMarkAsRead(ids) {
 }
 
 /**
- * 删除消息
+ * Delete the message
  * @param ids
  */
 export function deleteMessage(ids) {
@@ -62,7 +62,7 @@ export function deleteMessage(ids) {
 }
 
 /**
- * 获取未读客服IM消息数量
+ * Get unread customer serviceIMNumber of messages
  * @returns {AxiosPromise<any>|Promise<unknown>|*}
  */
 export function getUnreadChatNum() {

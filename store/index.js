@@ -12,22 +12,22 @@ if (!Storage.getItem('uuid') && process.client) {
 
 /** state */
 export const state = () => ({
-  // 导航栏
+  // The navigation bar
   navList: [],
-  // 分类
+  // Categories
   categories: [],
-  // 热搜关键词
+  // Hot search keywords
   hotKeywords: [],
-  // 站点信息
+  // Site information
   site: '',
-  // 未读消息数量
+  // Number of unread messages
   unreadMessageNum: 0
 })
 
 /** mutations */
 export const mutations = {
   /**
-   * 设置站点cookie
+   * Set up the sitecookie
    * @param state
    * @param data
    */
@@ -36,7 +36,7 @@ export const mutations = {
     process.client && Storage.setItem('site', global.JSON.stringify(data))
   },
   /**
-   * 设置分类数据
+   * Setting Classification Data
    * @param state
    * @param data
    */
@@ -44,7 +44,7 @@ export const mutations = {
     state.categories = data
   },
   /**
-   * 设置导航栏数据
+   * Set the navigation bar data
    * @param state
    * @param data
    */
@@ -52,7 +52,7 @@ export const mutations = {
     state.navList = data
   },
   /**
-   * 设置热搜关键词数据
+   * Set the hot search keyword data
    * @param state
    * @param data
    */
@@ -60,7 +60,7 @@ export const mutations = {
     state.hotKeywords = data
   },
   /**
-   * 未读消息数量
+   * Number of unread messages
    * @param state
    * @param num
    */
@@ -72,7 +72,7 @@ export const mutations = {
 /** actions */
 export const actions = {
   /**
-   * nuxt服务初始化时调用
+   * nuxtCalled when the service is initialized
    * @param commit
    * @param dispatch
    * @param req
@@ -89,36 +89,36 @@ export const actions = {
       }
       await commit('user/SET_USER_INFO', user)
     }
-    // 获取公共数据
+    // Getting public data
     await dispatch('getCommonDataAction')
   },
   /**
-   * 获取公共数据
+   * Getting public data
    * @param commit
    * @returns {Promise<void>}
    */
   async getCommonDataAction({ commit }) {
     const commons = await Promise.all([
-      // 站点信息
+      // Site information
       API_Common.getSiteData(),
-      // 导航栏
+      // The navigation bar
       API_Home.getSiteMenu(),
-      // 分类数据
+      // Categorical data
       API_Home.getCategory(),
-      // 热门关键字
+      // Hot keywords
       API_Home.getHotKeywords()
     ])
-    // 站点信息
+    // Site information
     commit(types.SET_SITE_DATA, commons[0])
-    // 导航栏
+    // The navigation bar
     commit(types.SET_NAV_DATA, commons[1])
-    // 分类数据
+    // Categorical data
     commit(types.SET_CATEGORY_DATA, commons[2])
-    // 热门关键字
+    // Hot keywords
     commit(types.SET_HOT_KEYWORDS, commons[3])
   },
   /**
-   * 获取未读消息数
+   * Gets the number of unread messages
    * @param commit
    * @returns {Promise<void>}
    */
@@ -131,37 +131,37 @@ export const actions = {
 /** getters */
 export const getters = {
   /**
-   * 分类列表
+   * Classification list
    * @param state
    * @returns {*}
    */
   categories: state => state.categories,
   /**
-   * 导航栏
+   * The navigation bar
    * @param state
    * @returns {*}
    */
   navList: state => state.navList,
   /**
-   * 热搜关键词
+   * Hot search keywords
    * @param state
    * @returns {*}
    */
   hotKeywords: state => state.hotKeywords,
   /**
-   * 获取用户信息
+   * Obtaining User information
    * @param state
    * @returns {*}
    */
   user: state => state.user.user,
   /**
-   * 获取站点信息
+   * Get site information
    * @param state
    * @returns {getters.site|(function(*))|string}
    */
   site: state => state.site,
   /**
-   * 获取未读消息数量
+   * Gets the number of unread messages
    * @param state
    * @returns {getters.unreadMessageNum|(function(*))|*|number}
    */

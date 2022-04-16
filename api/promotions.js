@@ -1,12 +1,12 @@
 /**
  * Created by Andste on 2018/7/15.
- * 促销相关API
+ * Sales relatedAPI
  */
 
 import request, { Method } from '@/utils/request'
 
 /**
- * 获取商品促销活动列表
+ * Get a list of promotional items
  * @param goods_id
  */
 export function getGoodsPromotions(goods_id) {
@@ -18,7 +18,7 @@ export function getGoodsPromotions(goods_id) {
 }
 
 /**
- * 获取团购分类
+ * Get group-buying categories
  */
 export function getGroupBuyCategorys() {
   return request({
@@ -28,7 +28,7 @@ export function getGroupBuyCategorys() {
 }
 
 /**
- * 获取团购商品
+ * Get group-buy items
  * @param params
  */
 export function getGroupBuyGoods(params) {
@@ -40,7 +40,7 @@ export function getGroupBuyGoods(params) {
 }
 
 /**
- * 获取团信息
+ * Get group information
  * @param gb_id
  */
 export function getGroupBuyDetail(gb_id) {
@@ -51,7 +51,7 @@ export function getGroupBuyDetail(gb_id) {
 }
 
 /**
- * 获取店铺优惠券
+ * Get store coupons
  * @param seller_id
  */
 export function getShopCoupons(seller_id) {
@@ -64,7 +64,7 @@ export function getShopCoupons(seller_id) {
 }
 
 /**
- * 获取积分商城分类
+ * Get points mall classification
  */
 export function getPointsCategory() {
   return request({
@@ -74,7 +74,7 @@ export function getPointsCategory() {
 }
 
 /**
- * 获取积分商城商品
+ * Get points mall goods
  * @param params
  */
 export function getPointsGoods(params) {
@@ -86,7 +86,7 @@ export function getPointsGoods(params) {
 }
 
 /**
- * 获取限时抢购时间线
+ * Get a flash sale timeline
  */
 export function getSeckillTimeLine() {
   return request({
@@ -97,7 +97,7 @@ export function getSeckillTimeLine() {
 }
 
 /**
- * 获取限时抢购商品
+ * Get flash sale items
  * @param params
  */
 export function getSeckillTimeGoods(params) {
@@ -110,7 +110,7 @@ export function getSeckillTimeGoods(params) {
 }
 
 /**
- * 获取全部优惠券
+ * Get all coupons
  * @param params
  */
 export function getAllCoupons(params) {

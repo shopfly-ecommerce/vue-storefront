@@ -1,11 +1,11 @@
 /**
- * 申请售后相关API
+ * Application for after-sale relatedAPI
  */
 
 import request, { Method } from '@/utils/request'
 
 /**
- * 获取售后列表
+ * Get after-sale list
  * @param params
  * @returns {AxiosPromise}
  */
@@ -19,7 +19,7 @@ export function getAfterSale(params) {
 }
 
 /**
- * 获取售后申请数据
+ * Obtain after-sales application data
  * @param order_sn
  * @param sku_id
  */
@@ -33,8 +33,8 @@ export function getAfterSaleData(order_sn, sku_id) {
 }
 
 /**
- * 获取售后详情
- * @param sn 订单编号
+ * Obtain after-sale details
+ * @param sn Order no.
  * @returns {AxiosPromise}
  */
 export function getAfterSaleDetail(sn) {
@@ -46,7 +46,7 @@ export function getAfterSaleDetail(sn) {
 }
 
 /**
- * 申请退款
+ * To apply for a refund
  * @param params
  */
 export function applyAfterSaleMoney(params) {
@@ -59,7 +59,7 @@ export function applyAfterSaleMoney(params) {
 }
 
 /**
- * 申请退货
+ * To apply for a refund
  * @param params
  */
 export function applyAfterSaleGoods(params) {
@@ -72,7 +72,7 @@ export function applyAfterSaleGoods(params) {
 }
 
 /**
- * 申请取消订单
+ * Application for Cancellation of order
  * @param params
  */
 export function applyAfterSaleCancel(params) {

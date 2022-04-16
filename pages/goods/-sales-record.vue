@@ -1,17 +1,17 @@
 <template>
   <div id="sales-record" class="sales-record">
     <el-table :data="salesList.data" style="width: 100%">
-      <el-table-column prop="buyer_name" label="买家" align="center"/>
-      <el-table-column label="购买价格" align="center">
+      <el-table-column prop="buyer_name" label="buyers" align="center"/>
+      <el-table-column label="The purchase price" align="center">
         <template slot-scope="scope">
           <span class="price">￥{{ scope.row.price | unitPrice }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="num" label="购买数量" align="center"/>
-      <el-table-column label="付款时间" align="center">
+      <el-table-column prop="num" label="Purchase quantity" align="center"/>
+      <el-table-column label="Time of payment" align="center">
         <template slot-scope="scope">
           <span v-if="scope.row.pay_time">{{ scope.row.pay_time | unixToDate }}</span>
-          <span v-else>未付款</span>
+          <span v-else>Not paying</span>
         </template>
       </el-table-column>
     </el-table>
@@ -48,12 +48,12 @@
       this.GET_SalesList()
     },
     methods: {
-      /** 当页数发生改变 */
+      /** When the page count changes*/
       handleCurrentChange(page_no) {
         this.params.page_no = page_no
         this.GET_SalesList()
       },
-      /** 获取销售记录 */
+      /** Obtain sales records*/
       GET_SalesList() {
         API_Trade.getGoodsSales(this.goodsId, this.params).then(response => {
           this.salesList = response

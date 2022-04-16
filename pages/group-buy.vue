@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="group-buy w">
-      <div v-if="groupBuy && !groupBuy.data.length" class="no-data">暂无数据...</div>
+      <div v-if="groupBuy && !groupBuy.data.length" class="no-data">no data...</div>
       <ul v-else class="group-buy-list">
         <li v-for="(gb, index) in groupBuy.data" :key="index">
           <div class="gl-item">
@@ -32,8 +32,8 @@
               </a>
             </div>
             <p class="gl-sub-title">{{ gb.gb_title }}</p>
-            <div class="gl-buy-count">已销售：{{ gb.show_buy_num }}件</div>
-            <a :href="'/goods/' + gb.goods_id" target="_blank" class="gl-join-btn">我要参团</a>
+            <div class="gl-buy-count">sales：{{ gb.show_buy_num }}a</div>
+            <a :href="'/goods/' + gb.goods_id" target="_blank" class="gl-join-btn">I want to tuxedo</a>
           </div>
         </li>
       </ul>
@@ -58,7 +58,7 @@
     name: 'group-buy',
     head() {
       return {
-        title: `团购-${this.site.title}`
+        title: `A bulk-${this.site.title}`
       }
     },
     data() {
@@ -69,25 +69,25 @@
           cat_id: 0
         },
         categorys: [
-          { cat_id: 0, cat_name: '全部', active: true }
+          { cat_id: 0, cat_name: 'all', active: true }
         ],
         groupBuy: ''
       }
     },
     mounted() {
-      // 获取团购分类
+      // Get group purchase categories
       API_Promotions.getGroupBuyCategorys().then(response => {
         this.categorys.push(...response.sort((x, y) => x.cat_order > y.cat_order))
       })
       this.GET_GroupBuyGoods()
     },
     methods: {
-      /** 当前分页数发生改变 */
+      /** The current page count has changed*/
       handleCurrentPageChange(page_no) {
         this.params.page_no = page_no
         this.GET_GroupBuyGoods()
       },
-      /** 选择团购分类 */
+      /** Select group purchase categories*/
       handleClickCate(cate) {
         const { categorys } = this
         this.$set(this, 'categorys', categorys.map(item => {
@@ -97,7 +97,7 @@
         this.params.cat_id = cate.cat_id
         this.GET_GroupBuyGoods()
       },
-      /** 获取团购商品 */
+      /** Get group-buy items*/
       GET_GroupBuyGoods() {
         const params = JSON.parse(JSON.stringify(this.params))
         if (params.cat_id === 0) delete params.cat_id

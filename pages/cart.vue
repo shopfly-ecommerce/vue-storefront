@@ -12,30 +12,30 @@
           <span class="checkbox select-all" @click="handleCheckAll">
             <a href="javascript:;" :class="['check', 'check-all', all_checked && 'checked']">
               <i class="iconfont ea-icon-check"></i>
-            </a>全选
+            </a>Select all
           </span>
-          <span class="title">商品信息</span>
-          <span class="price">单价（元）</span>
-          <span class="num">数量</span>
-          <span class="weight">重量（kg）</span>
-          <span class="total">小计（元）</span>
-          <span class="action">操作</span>
+          <span class="title">Product information</span>
+          <span class="price">Price（USD）</span>
+          <span class="num">Number</span>
+          <span class="weight">Weight（kg）</span>
+          <span class="total">subtotal（USD）</span>
+          <span class="action">&nbsp;</span>
         </div>
         <div class="list-content">
           <div v-if="shopList && shopList.length > 0" class="">
             <div v-for="shop in shopList" :key="shop.shop_id" class="shop-item">
-              <div class="shop-header" :class="[shop.invalid === 1 && 'invalid']">
-                <div v-if="shop.invalid === 1" style="width: 35px"></div>
-                <a v-else href="javascript:;" :class="['check', shop.checked && 'checked']" @click="handleCheckShop(shop)">
-                  <i class="iconfont ea-icon-check"></i>
-                </a>
-                <span class="shop-name">{{ shop.seller_name }}</span>
-                <span class="shop-act-info" v-if="shop.promotion_notice">[{{ shop.promotion_notice }}]</span>
-              </div>
+<!--              <div class="shop-header" :class="[shop.invalid === 1 && 'invalid']">-->
+<!--                <div v-if="shop.invalid === 1" style="width: 35px"></div>-->
+<!--                <a v-else href="javascript:;" :class="['check', shop.checked && 'checked']" @click="handleCheckShop(shop)">-->
+<!--                  <i class="iconfont ea-icon-check"></i>-->
+<!--                </a>-->
+<!--                <span class="shop-name">{{ shop.seller_name }}</span>-->
+<!--                <span class="shop-act-info" v-if="shop.promotion_notice">[{{ shop.promotion_notice }}]</span>-->
+<!--              </div>-->
               <div class="shop-body">
                 <div v-for="sku in shop.sku_list" :key="sku.sku_id" class="sku-item" :class="[sku.invalid === 1 && 'invalid']">
                   <div class="item clearfix">
-                    <span v-if="sku.invalid === 1" class="invalid-pla">已失效</span>
+                    <span v-if="sku.invalid === 1" class="invalid-pla">Has the failure</span>
                     <a v-else href="javascript:;" :class="['check', sku.checked && 'checked']" @click="handleCheckSku(sku)">
                       <i class="iconfont ea-icon-check"></i>
                     </a>
@@ -62,7 +62,7 @@
                         v-if="sku.invalid !== 1 && sku.single_list && sku.single_list.length"
                       >
                         <a @click.stop="handleShowAct(sku)" class="activity-btn" href="javascript:void(0)" slot="reference">
-                          促销<i class="iconfont ea-icon-arrow-down"></i>
+                          Sales promotion<i class="iconfont ea-icon-arrow-down"></i>
                         </a>
                         <div @click.stop="() => {}" class="activity-list" v-show="sku.sku_id === show_act_sku_id">
                           <ul class="act-list">
@@ -80,12 +80,12 @@
                                 :name="'act_'+sku.sku_id"
                                 value="clean"
                                 type="radio"
-                              >不参与促销活动
+                              >Do not participate in promotional activities
                             </li>
                           </ul>
                           <div class="activity-list-btns">
-                            <a @click="handleConfirmChangeAct(sku)" class="act-l-btn confirm" href="javascript:void(0)">确定</a>
-                            <a @click="show_act_sku_id = null" class="act-l-btn" href="javascript:void(0)">取消</a>
+                            <a @click="handleConfirmChangeAct(sku)" class="act-l-btn confirm" href="javascript:void(0)">save</a>
+                            <a @click="show_act_sku_id = null" class="act-l-btn" href="javascript:void(0)">cancel</a>
                           </div>
                         </div>
                       </div>
@@ -103,8 +103,8 @@
                         >
                         <a :class="['oper', sku.num >= sku.enable_quantity && 'unable']" href="javascript:;" @click="handleUpdateSkuNum(sku, '+')">+</a>
                       </div>
-                      <div v-if="sku.invalid === 1">此商品已失效</div>
-                      <span v-if="!sku.is_ship" class="out-of-stock-tip">无货</span>
+                      <div v-if="sku.invalid === 1">This item is no longer valid</div>
+                      <span v-if="!sku.is_ship" class="out-of-stock-tip">Is not available</span>
                     </div>
                     <div class="sku-weight">
                       {{ (sku.num * sku.goods_weight).toFixed(2) }}
@@ -121,21 +121,21 @@
               </div>
               <div class="shop-footer">
                 <div class="shop-footer-item">
-                  重量：<span>{{ shop.weight.toFixed(2) }}kg</span>
+                  Weight：<span>{{ shop.weight.toFixed(2) }}kg</span>
                 </div>
                 <div class="shop-footer-item price">
                   <em>￥</em>
                   <span>{{ shop.price.original_price | unitPrice }}</span>
                 </div>
-                <div class="shop-cash-back" v-if="shop.price.cash_back">[返现：-￥{{ shop.price.cash_back | unitPrice }}]</div>
+                <div class="shop-cash-back" v-if="shop.price.cash_back">[Cash back：-￥{{ shop.price.cash_back | unitPrice }}]</div>
               </div>
             </div>
           </div>
           <div v-else style="background: #fff">
             <div class="empty-cart">
-              <h1>您的购物车中暂无商品</h1>
-              <a href="/">挑选心爱的商品</a>
-              <nuxt-link to="/member/my-order">查看我的订单</nuxt-link>
+              <h1>Your cart is empty</h1>
+              <a href="/">Choose  favorite</a>
+              <nuxt-link to="/member/my-order">Check my order</nuxt-link>
             </div>
           </div>
         </div>
@@ -149,18 +149,18 @@
               <a href="javascript:;" :class="['check', 'check-all', all_checked && 'checked']">
                   <i class="iconfont ea-icon-check"></i>
                 </a>
-                <span>全选 共（<b>{{ allCount }}</b>）件</span>
+                <span>Selelct all（<b>{{ allCount }}</b>）items</span>
             </span>
             <em>|</em>
-            <a href="javascript:;" class="check-tool-a" @click="handleBatchDelete">批量删除</a>
+            <a href="javascript:;" class="check-tool-a" @click="handleBatchDelete">Batch delete</a>
             <em>|</em>
-            <a href="javascript:;" class="check-tool-a" @click="handleCleanCart">清空购物车</a>
+            <a href="javascript:;" class="check-tool-a" @click="handleCleanCart">Empty shopping cart</a>
           </div>
           <div class="check-bar-right">
-            <span>已选商品<b style="color: #ff5e5e; margin: 0 2px">{{ checkedCount }}</b>件</span>
+            <span>Items( <b style="color: #ff5e5e; margin: 0 2px">{{ checkedCount }}</b>)</span>
             <em>|</em>
-            <span>合计：<b class="price">￥<i>{{ (cartTotal.total_price || 0) | unitPrice }}</i></b></span>
-            <a href="javascript:;" :class="['check-btn', !checkedCount && 'disabled']" @click="handleCheckout">去结算</a>
+            <span>Subtotal：<b class="price">￥<i>{{ (cartTotal.total_price || 0) | unitPrice }}</i></b></span>
+            <a href="javascript:;" :class="['check-btn', !checkedCount && 'disabled']" @click="handleCheckout">Checkout</a>
           </div>
         </div>
       </div>
@@ -181,32 +181,32 @@
     middleware: 'auth-user',
     head() {
       return {
-        title: `购物车-${this.site.title}`
+        title: `The shopping cart-${this.site.title}`
       }
     },
     data() {
       return {
-        /** 结算栏相对顶部高度 */
+        /** Height of settlement column relative to top*/
         check_bar_top: 0,
-        /** 是否固定到顶部 */
+        /** Whether fixed to the top*/
         check_bar_fiexd_top: false,
-        /** 是否固定到底部 */
+        /** Whether to fix the bottom*/
         check_bar_fiexd_bottom: false,
-        /** 当前操作的输入框的值【变化之前】 */
+        /** The value of the input box for the current operation【Before the change】 */
         current_input_value: 1,
-        /** 显示促销选择框 */
+        /** Displays the promotion selection box*/
         show_act_sku_id: null
       }
     },
     mounted() {
       this.$nextTick(() => {
-        /** 获内容区域jQuery对象 */
+        /** Access content areajQueryobject*/
         this.$cartContent = $('#cart-content')
-        /** 添加滚动事件监听 */
+        /** Add a scroll event listener*/
         window.addEventListener('scroll', this.countCheckBarFiexd)
-        /** 添加点击事件 */
+        /** Add click events*/
         window.addEventListener('click', this.handleCloseAct)
-        /** 获取购物车数据 */
+        /** Get shopping cart data*/
         this.getCartData()
       })
     },
@@ -218,85 +218,85 @@
         allCount: 'cart/allCount',
         cartTotal: 'cart/cartTotal'
       }),
-      /** 是否全部选中 */
+      /** All selected*/
       all_checked() {
         return !!this.checkedCount && this.checkedCount === this.allCount
       }
     },
     watch: {
-      /** 当数据变化时，重新计算结算栏相对顶部距离。并且计算是应该固定在顶部，还是固定到底部，或者是位置不变 */
+      /** When the data changes, recalculate the distance between the settlement column and the top. And calculate whether it should be fixed at the top, or at the bottom, or in the same position*/
       skuList() {
-        // 计算当前结算栏相对顶部距离【计算结算栏以上的高度】
+        // Calculate the distance between the current settlement bar and the top of the settlement bar
         this.$nextTick(() => {
-          // 31: 顶部快捷导航高度 -|- 100: logo区域高度 -|- 20 + 20: 内容margin-top + 内容padding-bottom
+          // 31: at the top of the quick navigation highly - | - 100: the logo area highly - | - 20 + 20: content padding - bottom margin - top + content
           this.check_bar_top = 31 + (this.$cartContent.height() + 20 + 20) + 100
           this.countCheckBarFiexd()
         })
       }
     },
     methods: {
-      /** 勾选、取消勾选商品 */
+      /** Check the、cancelCheck theproduct*/
       handleCheckSku(sku) {
         console.log(11, sku)
         this.checkSkuItem({ sku_id: sku.sku_id, checked: sku.checked ? 0 : 1 })
       },
-      /** 勾选、取消勾选店铺 */
+      /** Check the、cancelCheck theThe store*/
       handleCheckShop(shop) {
         this.checkShopSku({ shop_id: shop.seller_id, checked: shop.checked ? 0 : 1 })
       },
-      /** 全选、取消全选 */
+      /** Select all、cancelSelect all*/
       handleCheckAll() {
         this.checkAll(this.all_checked ? 0 : 1)
       },
-      /** 更新商品数量 */
+      /** Update quantity of goods*/
       handleUpdateSkuNum(sku, symbol) {
         if (symbol === '-' && sku.num < 2) return
         if (symbol === '+' && sku.num >= sku.enable_quantity) {
-          this.$message.error('超过最大库存！')
+          this.$message.error('Over maximum stock！')
           return
         }
         let _num = symbol === '+' ? sku.num + 1 : sku.num - 1
         this.updateSkuNum({sku_id: sku.sku_id, num: _num})
       },
-      /** 输入框被焦点【记录当前值】 */
+      /** The input box is focused【Record current value】 */
       handleSkuNumFocus(sku) {
         this.current_input_value = sku.num
       },
-      /** 输入框值发生改变 */
+      /** The input field value changed*/
       handleSkuNumChanged(event, sku) {
         const _value = event.target.value
         if (!RegExp.integer.test(_value)) {
-          this.$message.error('您的输入不合法！')
+          this.$message.error('Your input is invalid！')
           event.target.value = this.current_input_value
           return
         }
         if(Number(_value) > sku.enable_quantity) {
-          this.$message.error('超过可用库存！');
+          this.$message.error('Excess of available stock！');
           return
         }
         if (Number(_value) === sku.num) return
         this.current_input_value = sku.num
         this.updateSkuNum({sku_id: sku.sku_id, num: Number(_value)})
       },
-      /** 删除 */
+      /** delete*/
       handleDelete(sku) {
-        this.$confirm('确定要删除这个货品吗？', () => {
+        this.$confirm('Are you sure you want to delete this item？', () => {
           this.deleteSkuItem(sku.sku_id).then(response => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
           })
         })
       },
-      /** 批量删除 */
+      /** Batch delete*/
       handleBatchDelete() {
         this.skuList.forEach(ite => {
           if (ite.checked == 1) {
             if (!this.skuList.length) return
-            this.$confirm('确定要删除这些货品吗？', () => {
-              // 筛选出已选中的
+            this.$confirm('Are you sure you want to delete these items？', () => {
+              // Filter out the selected ones
               const _sku_list = this.skuList.filter(item => item.checked).map(item => item.sku_id)
               if (!_sku_list.length) return
               this.deleteSkuItem(_sku_list).then(response => {
-                this.$message.success('删除成功！')
+                this.$message.success('Delete the success！')
               })
             })
           } else {
@@ -304,27 +304,27 @@
           }
         })
       },
-      /** 清空购物车 */
+      /** Empty shopping cart*/
       handleCleanCart() {
-        this.$confirm('确定要清空购物车吗？', () => {
-          this.cleanCart().then(() => this.$message.success('购物车已清空！'))
+        this.$confirm('Are you sure you want to empty your shopping cart？', () => {
+          this.cleanCart().then(() => this.$message.success('Cart empty！'))
         })
       },
-      /** 去结算 */
+      /** To settle accounts*/
       handleCheckout() {
         if (!this.checkedCount) return false
         this.$router.push({ path: '/checkout' })
       },
-      /** 监听页面滚动，实现结算栏浮起、固定 */
+      /** Monitor page scrolling, realize the settlement column float、fixed*/
       countCheckBarFiexd(event) {
-        // 获取滚动条当前位置
+        // Gets the current position of the scroll bar
         const bodyScrollTop = document.documentElement.scrollTop || document.body.scrollTop
-        // 是否固定到顶部
+        // Whether fixed to the top
         this.check_bar_fiexd_top = bodyScrollTop > this.check_bar_top
-        // 是否固定到底部
+        // Whether to fix the bottom
         this.check_bar_fiexd_bottom = bodyScrollTop < (this.check_bar_top - window.innerHeight  + 60)
       },
-      /** 确认修改促销活动 */
+      /** Confirm modification of promotion*/
       handleConfirmChangeAct(sku) {
         const eleStr = `input[name=act_${sku.sku_id}]:checked`
         const val = $(eleStr).val()
@@ -340,7 +340,7 @@
         }
         this.show_act_sku_id = null
       },
-      /** 展示sku促销弹框 */
+      /** showskuPromotion bounced*/
       handleShowAct(sku) {
         const { sku_id } = sku
         const { show_act_sku_id } = this
@@ -351,39 +351,39 @@
           this.show_act_sku_id = sku_id
         }
       },
-      /** 关闭sku促销弹框 */
+      /** closeskuPromotion bounced*/
       handleCloseAct() {
         this.show_act_sku_id = null
       },
-      /** 检查是否没有活动被参与 */
+      /** Check to see if no activity is involved*/
       handleActsChecked(acts) {
         const act = acts.filter(item => item.is_check === 1)
         return act.length === 0
       },
       /** vuex/cart */
       ...mapActions({
-        // 获取购物车数据
+        // Get shopping cart data
         getCartData: 'cart/getCartDataAction',
-        // 更新货品数量
+        // Update quantity of goods
         updateSkuNum: 'cart/updateSkuNumAction',
-        // 选择、取消选择货品
+        // Select and deselect goods
         checkSkuItem: 'cart/checkSkuItemAction',
-        // 选择、取消选择店铺内所有商品
+        // Select and deselect all items in the store
         checkShopSku: 'cart/checkShopSkuAction',
-        // 全选、取消全选
+        // Select all, cancel select all
         checkAll: 'cart/checkAllAction',
-        // 删除货品
+        // Delete the item
         deleteSkuItem: 'cart/deleteSkuItemAction',
-        // 清空购物车
+        // Empty shopping cart
         cleanCart: 'cart/cleanCartAction',
-        // 更换促销活动
+        // Change promotions
         changeActivity: 'cart/changeActivityAction',
-        // 不参加活动
+        // Not participating in activities
         cleanActivity: 'cart/cleanActivityAction'
       })
     },
     destroyed() {
-      /** 当组件销毁时，移除事件监听 */
+      /** Remove event listeners when a component is destroyed*/
       window.removeEventListener('scroll', this.countCheckBarFiexd)
       window.removeEventListener('click', this.handleCloseAct)
     }

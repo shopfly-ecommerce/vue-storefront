@@ -1,5 +1,5 @@
 /**
- * 注册全局组件
+ * Registering global components
  */
 
 import Vue from 'vue'

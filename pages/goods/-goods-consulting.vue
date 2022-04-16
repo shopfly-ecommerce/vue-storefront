@@ -1,8 +1,8 @@
 <template>
   <div id="goods-consulting" class="goods-consulting">
     <div class="inner-consulting">
-      <span class="consu-tip">因厂家更改商品包装、场地、附配件等不做提前通知，且每位咨询者购买、提问时间等不同。为此，客服回复的咨询只针对当前当天咨询问题，给您带来的不便还请谅解，谢谢！</span>
-      <a href="javascript:;" class="want-consu-btn" @click="handleShowPrompt">我要咨询</a>
+      <span class="consu-tip">The manufacturer changed the packaging of the goods、site、Accessories and accessories are not notified in advance and are purchased by each consultant、Question time and so on. Therefore, the consultation replied by customer service is only for the current day, please understand the inconvenience brought to you, thank you！</span>
+      <a href="javascript:;" class="want-consu-btn" @click="handleShowPrompt">I want to consulting</a>
     </div>
     <div v-if="consulting" class="content-consulting">
       <div v-for="consult in consulting.data" :key="consult.ask_id" class="item-consulting">
@@ -15,7 +15,7 @@
           <div class="box-cons">
             <p class="content-cons" v-html="consult.content.replace(/\n/g, '<br>')"></p>
             <template v-if="consult.reply_status === 1">
-              <p style="margin-top: 10px;color: #e6a23c">掌柜回复：</p>
+              <p style="margin-top: 10px;color: #e6a23c">The shopkeeper replies：</p>
               <p class="reply-cons">{{ consult.reply }}</p>
             </template>
           </div>
@@ -35,8 +35,8 @@
 
 <script>
   /**
-   * 商品咨询模块
-   * 这里可以对商品进行咨询
+   * Commodity consulting module
+   * Merchandise can be consulted here
    */
   import * as API_Members from '@/api/members'
   import Storage from '@/utils/storage'
@@ -56,22 +56,22 @@
       this.GET_Consulting()
     },
     methods: {
-      /** 当页数发生改变时 */
+      /** When the page count changes*/
       handleCurrentPageChange(page_no) {
         this.params.page_no = page_no
         this.GET_Consulting()
       },
-      /** 显示咨询窗 */
+      /** Display consultation window*/
       handleShowPrompt() {
         if (!Storage.getItem('user')) {
-          this.$confirm('您还未登录，要现在去登录吗？', () => {
+          this.$confirm('You havent logged in yet. Do you want to log in now？', () => {
             this.$router.push({ path: '/login', query: { forward: this.$route.path } })
           })
           return false
         }
         this.$layer.prompt({
           formType: 2,
-          title: '向商家咨询',
+          title: 'Consult the merchant',
           maxlength: 200,
           area: ['300px', '60px'],
           scrollbar: false
@@ -80,12 +80,12 @@
           value.replace(/\n/g, '<br>')
           API_Members.consultating(this.goodsId, value).then(() => {
             layer.close(index)
-            this.$message.success('提交成功！')
+            this.$message.success('Submitted successfully！')
             this.GET_Consulting()
           })
         })
       },
-      /** 获取咨询列表 */
+      /** Get a consultation list*/
       GET_Consulting() {
         API_Members.getGoodsConsultations(this.goodsId, this.params).then(response => {
           this.consulting = response

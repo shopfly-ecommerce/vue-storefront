@@ -1,12 +1,12 @@
 /**
- * 公共API
+ * publicAPI
  */
 
 import request, { Method } from '@/utils/request'
 import Storage from '@/utils/storage'
 
 /**
- * 获取图片验证码URL
+ * Get the image captchaURL
  * @param uuid
  * @param type
  * @returns {string}
@@ -17,7 +17,7 @@ export function getValidateCodeUrl(uuid, type) {
 }
 
 /**
- * 获取站点设置
+ * Get site Settings
  */
 export function getSiteData() {
   return request({
@@ -27,7 +27,7 @@ export function getSiteData() {
 }
 
 /**
- * 记录浏览量【用于统计】
+ * Record page Views【For statistical】
  */
 export function recordViews(url) {
   return request({
@@ -42,8 +42,8 @@ export function recordViews(url) {
 }
 
 /**
- * 获取设置信息
- * 主要是QQ号
+ * Get setting Information
+ * mainlyQQNo.
  * @returns {*}
  */
 export function getSettingsInfo() {

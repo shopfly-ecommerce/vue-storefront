@@ -1,6 +1,6 @@
 /**
  * Created by Andste on 2018/6/14.
- * 结算页组件导出
+ * The settlement page component is exported
  */
 
 import CheckoutAddress from './-checkout-address'

@@ -3,19 +3,19 @@
     <li :class="[step === 1 ? 'active' : '']">
       <i class="step-1"></i>
       <span></span>
-      <p>我的购物车</p>
+      <p>Cart</p>
       <strong></strong>
     </li>
     <li :class="[step === 2 ? 'active' : '']">
       <i class="step-2"></i>
       <span></span>
-      <p>填写核对订单信息</p>
+      <p>Checkout</p>
       <strong></strong>
     </li>
     <li :class="[step === 3 ? 'active' : '']">
       <i class="step-3"></i>
       <span></span>
-      <p>成功提交订单</p>
+      <p>Successful</p>
       <strong></strong>
     </li>
   </ul>

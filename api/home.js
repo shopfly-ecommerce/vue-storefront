@@ -5,7 +5,7 @@
 import request, { Method } from '@/utils/request'
 
 /**
- * 获取焦点图
+ * Get focus map
  * @param client_type
  */
 export function getFocusPictures(client_type = 'PC') {
@@ -18,7 +18,7 @@ export function getFocusPictures(client_type = 'PC') {
 }
 
 /**
- * 获取导航列表
+ * Get the navigation list
  */
 export function getSiteMenu(client_type = 'PC') {
   return request({
@@ -30,7 +30,7 @@ export function getSiteMenu(client_type = 'PC') {
 }
 
 /**
- * 获取首页商品分类
+ * Get home page merchandise classification
  * @param parent_id
  */
 export function getCategory(parent_id = 0) {
@@ -42,7 +42,7 @@ export function getCategory(parent_id = 0) {
 }
 
 /**
- * 获取热门关键词
+ * Get hot keywords
  * @param num
  */
 export function getHotKeywords(num = 7) {
@@ -55,7 +55,7 @@ export function getHotKeywords(num = 7) {
 }
 
 /**
- * 获取楼层数据
+ * Get floor data
  * @param client_type
  * @param page_type
  */

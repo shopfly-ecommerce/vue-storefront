@@ -10,7 +10,7 @@
                 <nuxt-link :to="'/help/' + article.article_id">{{ article.article_name }}</nuxt-link>
               </li>
               <li v-if="!cate.articles || !cate.articles.length">
-                暂无文章...
+                No article...
               </li>
             </ul>
           </dd>

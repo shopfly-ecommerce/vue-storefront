@@ -3,153 +3,153 @@
     <div class="member-nav">
       <ul class="member-nav-list">
         <li :class="[type === 'money' && 'active']" @click="handleChangeType('money')">
-          <a href="javascript:;">申请退款</a>
+          <a href="javascript:;">To apply for a refund</a>
         </li>
         <li v-if="$route.query.sku_id" :class="[type === 'goods' && 'active']" @click="handleChangeType('goods')">
-          <a href="javascript:;">申请退货</a>
+          <a href="javascript:;">To apply for a refund</a>
         </li>
       </ul>
     </div>
     <div class="apply-container">
       <div v-show="type === 'money'">
         <el-form :model="returnMoneyForm" :rules="returnMoneyRules" ref="returnMoneyForm" label-width="120px">
-          <el-form-item label="退款方式：" prop="account_type">
-            <el-select v-model="returnMoneyForm.account_type" :disabled="original_way" size="small" placeholder="请选择退款方式">
-              <el-option v-if="original_way" label="原路退回" value=""></el-option>
-              <el-option label="支付宝" value="ALIPAY"></el-option>
-              <el-option label="微信" value="WEIXINPAY"></el-option>
-              <el-option label="银行转账" value="BANKTRANSFER"></el-option>
+          <el-form-item label="The refund way：" prop="account_type">
+            <el-select v-model="returnMoneyForm.account_type" :disabled="original_way" size="small" placeholder="Please select refund method">
+              <el-option v-if="original_way" label="The way back" value=""></el-option>
+              <el-option label="Alipay" value="ALIPAY"></el-option>
+              <el-option label="WeChat" value="WEIXINPAY"></el-option>
+              <el-option label="Bank transfer" value="BANKTRANSFER"></el-option>
             </el-select>
           </el-form-item>
           <div v-if="returnMoneyForm.account_type === 'BANKTRANSFER'">
-            <el-form-item label="银行名称：" prop="bank_name">
-              <el-input v-model="returnMoneyForm.bank_name" size="small" :maxlength="180" placeholder="请输入银行名称"/>
+            <el-form-item label="Bank name：" prop="bank_name">
+              <el-input v-model="returnMoneyForm.bank_name" size="small" :maxlength="180" placeholder="Please enter the bank name"/>
             </el-form-item>
-            <el-form-item label="银行开户行：" prop="bank_deposit_name">
-              <el-input v-model="returnMoneyForm.bank_deposit_name" size="small" :maxlength="180" placeholder="请输入银行开户行"/>
+            <el-form-item label="Bank opening bank：" prop="bank_deposit_name">
+              <el-input v-model="returnMoneyForm.bank_deposit_name" size="small" :maxlength="180" placeholder="Please input bank opening bank"/>
             </el-form-item>
-            <el-form-item label="银行开户名：" prop="bank_account_name">
-              <el-input v-model="returnMoneyForm.bank_account_name" size="small" :maxlength="180" placeholder="请输入银行开户名"/>
+            <el-form-item label="Bank account name：" prop="bank_account_name">
+              <el-input v-model="returnMoneyForm.bank_account_name" size="small" :maxlength="180" placeholder="Please enter your bank account name"/>
             </el-form-item>
-            <el-form-item label="银行账号：" prop="bank_account_number">
-              <el-input v-model="returnMoneyForm.bank_account_number" size="small" :maxlength="180" placeholder="请输入银行账号"/>
+            <el-form-item label="The bank account：" prop="bank_account_number">
+              <el-input v-model="returnMoneyForm.bank_account_number" size="small" :maxlength="180" placeholder="Please enter your bank account number"/>
             </el-form-item>
           </div>
-          <el-form-item v-else label="退款账号：" prop="return_account">
-            <el-input v-model="returnMoneyForm.return_account" :disabled="original_way" size="small" :maxlength="180" placeholder="请输入退款账号"/>
+          <el-form-item v-else label="Refund account：" prop="return_account">
+            <el-input v-model="returnMoneyForm.return_account" :disabled="original_way" size="small" :maxlength="180" placeholder="Please enter your refund account number"/>
           </el-form-item>
-          <el-form-item label="退款原因：" prop="refund_reason">
-            <el-select v-model="returnMoneyForm.refund_reason" size="small" placeholder="请选择退款原因">
-              <el-option v-if="ship_rog" label="商品质量有问题" value="商品质量有问题"></el-option>
-              <el-option v-if="ship_rog" label="收到商品与描述不符" value="收到商品与描述不符"></el-option>
-              <el-option v-if="ship_rog" label="不喜欢/不想要" value="不喜欢/不想要"></el-option>
-              <el-option label="发票问题" value="发票问题"></el-option>
-              <el-option v-if="ship_rog" label="空包裹" value="空包裹"></el-option>
-              <el-option label="快递无记录" value="快递无记录"></el-option>
-              <el-option label="快递一直没有收到" value="快递一直没有收到"></el-option>
-              <el-option label="买错/不想要" value="买错/不想要"></el-option>
-              <el-option label="未按照时间发货" value="未按照时间发货"></el-option>
-              <el-option label="其他" value="其他"></el-option>
+          <el-form-item label="A refund reason：" prop="refund_reason">
+            <el-select v-model="returnMoneyForm.refund_reason" size="small" placeholder="Please select the reason for the refund">
+              <el-option v-if="ship_rog" label="There is something wrong with the quality of the goods" value="There is something wrong with the quality of the goods"></el-option>
+              <el-option v-if="ship_rog" label="The goods received did not match the description" value="The goods received did not match the description"></el-option>
+              <el-option v-if="ship_rog" label="Dont like/Dont want" value="Dont like/Dont want"></el-option>
+              <el-option label="The invoice issue" value="The invoice issue"></el-option>
+              <el-option v-if="ship_rog" label="Air parcel" value="Air parcel"></el-option>
+              <el-option label="Express delivery no record" value="Express delivery no record"></el-option>
+              <el-option label="The delivery never arrived" value="The delivery never arrived"></el-option>
+              <el-option label="Buy the wrong/Dont want" value="Buy the wrong/Dont want"></el-option>
+              <el-option label="The goods are not delivered as scheduled" value="The goods are not delivered as scheduled"></el-option>
+              <el-option label="other" value="other"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="退款金额：">
+          <el-form-item label="The refund amount：">
             <span class="price">￥</span>
             <span class="price" style="font-size: 16px;font-weight: 600">{{ (returnMoneyForm.return_money || 0) | unitPrice }}</span>
           </el-form-item>
-          <!--<el-form-item label="积分抵扣：">-->
-            <!--<span class="price">-{{ order.use_point }}积分</span>-->
-            <!--<span class="point-tip">（积分不退还）</span>-->
+          <!--<el-form-item label="Points deduction：">-->
+            <!--<span class="price">-{{ order.use_point }}point</span>-->
+            <!--<span class="point-tip">（Credits are not refundable）</span>-->
           <!--</el-form-item>-->
-          <el-form-item label="问题描述：">
+          <el-form-item label="Problem description：">
             <el-input
               type="textarea"
               :autosize="{ minRows: 2, maxRows: 4 }"
-              placeholder="请输入问题描述(180字以内)"
+              placeholder="Please enter a problem description(180characters)"
               :maxlength="180"
               style="width: 300px"
               v-model="returnMoneyForm.customer_remark">
             </el-input>
           </el-form-item>
           <el-form-item label="">
-            <el-button type="danger" size="small" @click="handleSubmitRturnMoney">提交申请</el-button>
+            <el-button type="danger" size="small" @click="handleSubmitRturnMoney">Submit an application</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div v-show="type === 'goods'">
         <div class="order-detail">
           <div class="order-intro">
-            <h1>订单信息</h1>
+            <h1>The order information</h1>
             <div class="detail-list">
-              <dl><dt>收货地址：</dt><dd>{{ this.order.ship_province }} {{ this.order.ship_city }} {{ this.order.ship_county }} {{ this.order.ship_town }} - {{ order.ship_addr }}</dd></dl>
-              <dl class="top-line"><dt>订单编号：</dt><dd>{{ this.order_sn }}</dd></dl>
-              <dl><dt>付款方式：</dt><dd>{{ this.order.payment_type === 'ONLINE' ? `在线支付 ${this.order.payment_method_name || ''}` : '货到付款' }}</dd></dl>
-              <dl><dt>已付款金额：</dt><dd><span class="price">￥{{ this.order.order_price | unitPrice }}</span></dd></dl>
-              <dl><dt>下单时间：</dt><dd>{{ this.order.create_time | unixToDate }}</dd></dl>
+              <dl><dt>Shipping address：</dt><dd>{{ this.order.ship_province }} {{ this.order.ship_city }} {{ this.order.ship_county }} {{ this.order.ship_town }} - {{ order.ship_addr }}</dd></dl>
+              <dl class="top-line"><dt>Order no.：</dt><dd>{{ this.order_sn }}</dd></dl>
+              <dl><dt>Terms of payment：</dt><dd>{{ this.order.payment_type === 'ONLINE' ? `Online payment${this.order.payment_method_name || ''}` : 'Cash on delivery' }}</dd></dl>
+              <dl><dt>Amount paid：</dt><dd><span class="price">￥{{ this.order.order_price | unitPrice }}</span></dd></dl>
+              <dl><dt>Create time：</dt><dd>{{ this.order.create_time | unixToDate }}</dd></dl>
             </div>
           </div>
           <el-form :model="returnGoodsForm" :rules="returnGoodsRules" ref="returnGoodsForm" label-width="120px" style="margin-top: 10px;margin-left: 10px">
-            <el-form-item label="退款方式：" prop="account_type">
-              <el-select v-model="returnGoodsForm.account_type" :disabled="original_way" size="small" placeholder="请选择退款方式">
-                <el-option v-if="original_way" label="原路退回" value=""></el-option>
-                <el-option label="支付宝" value="ALIPAY"></el-option>
-                <el-option label="微信" value="WEIXINPAY"></el-option>
-                <el-option label="银行转账" value="BANKTRANSFER"></el-option>
+            <el-form-item label="The refund way：" prop="account_type">
+              <el-select v-model="returnGoodsForm.account_type" :disabled="original_way" size="small" placeholder="Please select refund method">
+                <el-option v-if="original_way" label="The way back" value=""></el-option>
+                <el-option label="Alipay" value="ALIPAY"></el-option>
+                <el-option label="WeChat" value="WEIXINPAY"></el-option>
+                <el-option label="Bank transfer" value="BANKTRANSFER"></el-option>
               </el-select>
             </el-form-item>
             <div v-if="returnGoodsForm.account_type === 'BANKTRANSFER'">
-              <el-form-item label="银行名称：" prop="bank_name">
-                <el-input v-model="returnGoodsForm.bank_name" size="small" :maxlength="180" placeholder="请输入银行名称"/>
+              <el-form-item label="Bank name：" prop="bank_name">
+                <el-input v-model="returnGoodsForm.bank_name" size="small" :maxlength="180" placeholder="Please enter the bank name"/>
               </el-form-item>
-              <el-form-item label="银行开户行：" prop="bank_deposit_name">
-                <el-input v-model="returnGoodsForm.bank_deposit_name" size="small" :maxlength="180" placeholder="请输入银行开户行"/>
+              <el-form-item label="Bank opening bank：" prop="bank_deposit_name">
+                <el-input v-model="returnGoodsForm.bank_deposit_name" size="small" :maxlength="180" placeholder="Please input bank opening bank"/>
               </el-form-item>
-              <el-form-item label="银行开户名：" prop="bank_account_name">
-                <el-input v-model="returnGoodsForm.bank_account_name" size="small" :maxlength="180" placeholder="请输入银行开户名"/>
+              <el-form-item label="Bank account name：" prop="bank_account_name">
+                <el-input v-model="returnGoodsForm.bank_account_name" size="small" :maxlength="180" placeholder="Please enter your bank account name"/>
               </el-form-item>
-              <el-form-item label="银行账号：" prop="bank_account_number">
-                <el-input v-model="returnGoodsForm.bank_account_number" size="small" :maxlength="180" placeholder="请输入银行账号"/>
+              <el-form-item label="The bank account：" prop="bank_account_number">
+                <el-input v-model="returnGoodsForm.bank_account_number" size="small" :maxlength="180" placeholder="Please enter your bank account number"/>
               </el-form-item>
             </div>
-            <el-form-item v-else label="退款账号：" prop="return_account">
-              <el-input v-model="returnGoodsForm.return_account" :disabled="original_way" size="small" :maxlength="180" placeholder="请输入退款账号"/>
+            <el-form-item v-else label="Refund account：" prop="return_account">
+              <el-input v-model="returnGoodsForm.return_account" :disabled="original_way" size="small" :maxlength="180" placeholder="Please enter your refund account number"/>
             </el-form-item>
-            <el-form-item label="退货原因：" prop="refund_reason">
-              <el-select v-model="returnGoodsForm.refund_reason" size="small" placeholder="请选择退款原因">
-                <el-option label="商品质量有问题" value="商品质量有问题"></el-option>
-                <el-option label="收到商品与描述不符" value="收到商品与描述不符"></el-option>
-                <el-option label="不喜欢/不想要" value="不喜欢/不想要"></el-option>
-                <el-option label="发票问题" value="发票问题"></el-option>
-                <el-option label="空包裹" value="空包裹"></el-option>
-                <el-option label="快递无记录" value="快递无记录"></el-option>
-                <el-option label="快递一直没有收到" value="快递一直没有收到"></el-option>
-                <el-option label="买错/不想要" value="买错/不想要"></el-option>
-                <el-option label="未按照时间发货" value="未按照时间发货"></el-option>
-                <el-option label="其他" value="其他"></el-option>
+            <el-form-item label="The return reason：" prop="refund_reason">
+              <el-select v-model="returnGoodsForm.refund_reason" size="small" placeholder="Please select the reason for the refund">
+                <el-option label="There is something wrong with the quality of the goods" value="There is something wrong with the quality of the goods"></el-option>
+                <el-option label="The goods received did not match the description" value="The goods received did not match the description"></el-option>
+                <el-option label="Dont like/Dont want" value="Dont like/Dont want"></el-option>
+                <el-option label="The invoice issue" value="The invoice issue"></el-option>
+                <el-option label="Air parcel" value="Air parcel"></el-option>
+                <el-option label="Express delivery no record" value="Express delivery no record"></el-option>
+                <el-option label="The delivery never arrived" value="The delivery never arrived"></el-option>
+                <el-option label="Buy the wrong/Dont want" value="Buy the wrong/Dont want"></el-option>
+                <el-option label="The goods are not delivered as scheduled" value="The goods are not delivered as scheduled"></el-option>
+                <el-option label="other" value="other"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="退款金额：">
+            <el-form-item label="The refund amount：">
               <span class="price">￥</span>
               <span class="price" style="font-size: 16px;font-weight: 600">{{ returnGoodsForm.return_money | unitPrice }}</span>
             </el-form-item>
-            <!--<el-form-item v-if="order.use_point" label="积分抵扣：">-->
-              <!--<span class="price">-{{ order.use_point }}积分</span>-->
-              <!--<span class="point-tip">（积分不退还）</span>-->
+            <!--<el-form-item v-if="order.use_point" label="Points deduction：">-->
+              <!--<span class="price">-{{ order.use_point }}point</span>-->
+              <!--<span class="point-tip">（Credits are not refundable）</span>-->
             <!--</el-form-item>-->
-            <el-form-item label="退货数量：" prop="return_num">
+            <el-form-item label="Returns the number of：" prop="return_num">
               <el-input-number size="mini" v-model="returnGoodsForm.return_num" :min="1" :max="maxReturnNum"></el-input-number>
             </el-form-item>
-            <el-form-item label="问题描述：" prop="customer_remark">
+            <el-form-item label="Problem description：" prop="customer_remark">
               <el-input
                 type="textarea"
                 :autosize="{ minRows: 2, maxRows: 4 }"
-                placeholder="请输入问题描述(180字以内)"
+                placeholder="Please enter a problem description(180characters)"
                 :maxlength="180"
                 style="width: 300px"
                 v-model="returnGoodsForm.customer_remark">
               </el-input>
             </el-form-item>
             <el-form-item label="">
-              <el-button type="danger" size="small" @click="handleSubmitRturnGoods">提交申请</el-button>
+              <el-button type="danger" size="small" @click="handleSubmitRturnGoods">Submit an application</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -175,72 +175,72 @@
     components: { SkuList },
     data() {
       return {
-        // 订单详情
+        // The order details
         order: '',
-        // 货品列表
+        // The item list
         skuList: [],
-        // 申请售后类型
+        // Type of after-sale application
         type: this.$route.query.sku_id ? 'money' : 'money',
-        // 申请退款 表单
+        // Refund Application Form
         returnMoneyForm: {
           account_type: '',
           order_sn: this.$route.query.order_sn
         },
-        // 申请退款 表单规则
+        // Apply for refund form rules
         returnMoneyRules: {
-          // 退款方式
-          account_type: [{ required: true, message: '请选择退款方式！', trigger: 'change' }],
-          // 退款账号
-          return_account: [{ required: true, message: '请输入退款账号！', trigger: 'blur' }],
-          // 银行名称
-          bank_name: [{ required: false, message: '请输入银行名称', trigger: 'blur' }],
-          // 银行开户行
-          bank_deposit_name: [{ required: false, message: '请输入银行开户行', trigger: 'blur' }],
-          // 银行开户名
-          bank_account_name: [{ required: false, message: '请输入银行开户名', trigger: 'blur' }],
-          // 银行账号
-          bank_account_number: [{ required: false, message: '请输入银行账号', trigger: 'blur' }],
-          // 退款原因 
-          refund_reason: [{ required: true, message: '请选择退款原因！', trigger: 'change' }]
+          // The refund way
+          account_type: [{ required: true, message: 'Please select refund method！', trigger: 'change' }],
+          // Refund account
+          return_account: [{ required: true, message: 'Please enter your refund account number！', trigger: 'blur' }],
+          // Bank name
+          bank_name: [{ required: false, message: 'Please enter the bank name', trigger: 'blur' }],
+          // Bank opening Bank
+          bank_deposit_name: [{ required: false, message: 'Please input bank opening bank', trigger: 'blur' }],
+          // Bank account name
+          bank_account_name: [{ required: false, message: 'Please enter your bank account name', trigger: 'blur' }],
+          // The bank account
+          bank_account_number: [{ required: false, message: 'Please enter your bank account number', trigger: 'blur' }],
+          // A refund reason
+          refund_reason: [{ required: true, message: 'Please select the reason for the refund！', trigger: 'change' }]
         },
-        // 申请退货 表单
+        // Return request Form
         returnGoodsForm: {
           account_type: '',
           order_sn: this.$route.query.order_sn,
           return_num: 1
         },
-        // 申请退货 表单规则
+        // Apply for return form rules
         returnGoodsRules: {
-          // 退款方式
-          account_type: [{ required: true, message: '请选择退款方式！', trigger: 'change' }],
-          // 退款账号
-          return_account: [{ required: true, message: '请输入退款账号！', trigger: 'blur' }],
-          // 银行名称
-          bank_name: [{ required: false, message: '请输入银行名称', trigger: 'blur' }],
-          // 银行开户行
-          bank_deposit_name: [{ required: false, message: '请输入银行开户行', trigger: 'blur' }],
-          // 银行开户名
-          bank_account_name: [{ required: false, message: '请输入银行开户名', trigger: 'blur' }],
-          // 银行账号
-          bank_account_number: [{ required: false, message: '请输入银行账号', trigger: 'blur' }],
-          // 退款原因
-          refund_reason: [{ required: true, message: '请选择退款原因！', trigger: 'change' }],
-          // 退货数量
-          return_num: [{ required: true, message: '请输入退款数量！', trigger: 'change' }]
+          // The refund way
+          account_type: [{ required: true, message: 'Please select refund method！', trigger: 'change' }],
+          // Refund account
+          return_account: [{ required: true, message: 'Please enter your refund account number！', trigger: 'blur' }],
+          // Bank name
+          bank_name: [{ required: false, message: 'Please enter the bank name', trigger: 'blur' }],
+          // Bank opening Bank
+          bank_deposit_name: [{ required: false, message: 'Please input bank opening bank', trigger: 'blur' }],
+          // Bank account name
+          bank_account_name: [{ required: false, message: 'Please enter your bank account name', trigger: 'blur' }],
+          // The bank account
+          bank_account_number: [{ required: false, message: 'Please enter your bank account number', trigger: 'blur' }],
+          // A refund reason
+          refund_reason: [{ required: true, message: 'Please select the reason for the refund！', trigger: 'change' }],
+          // Returns the number of
+          return_num: [{ required: true, message: 'Please enter the amount of refund！', trigger: 'change' }]
         },
-        // 最大可退货数量
+        // Maximum returnable quantity
         maxReturnNum: 1,
-        // 是否为取消订单模式
+        // Whether the order is cancelled
         isCancel: !(!!this.$route.query.sku_id),
-        // 是否为原路返回方式
+        // Whether to return to the original route
         original_way: false,
-        // 是否已收货
+        // Whether the goods have been received
         ship_rog: false,
         ...this.$route.query
       }
     },
     mounted() {
-      // 获取售后数据
+      // Obtain after-sales data
       API_AfterSale.getAfterSaleData(this.order_sn, this.sku_id).then(response => {
         this.order = response.order
         this.ship_rog = response.order.ship_status === 'SHIP_ROG'
@@ -289,11 +289,11 @@
       }
     },
     methods: {
-      /** 申请售后类型发生变化 */
+      /** The type of application for after-sales service is changed*/
       handleChangeType(type) {
         this.type = type
       },
-      /** 申请退款 */
+      /** To apply for a refund*/
       handleSubmitRturnMoney() {
         this.$refs['returnMoneyForm'].validate((valid) => {
           if (valid) {
@@ -305,12 +305,12 @@
               API_AfterSale.applyAfterSaleMoney(params).then(this.handleApplySuccess)
             }
           } else {
-            this.$message.error('表单填写有误，请核对！')
+            this.$message.error('There is an error in the form. Please check it！')
             return false
           }
         })
       },
-      /** 申请退货 */
+      /** To apply for a refund*/
       handleSubmitRturnGoods() {
         this.$refs['returnGoodsForm'].validate((valid) => {
           if (valid) {
@@ -318,14 +318,14 @@
             params.sku_id = this.sku_id
             API_AfterSale.applyAfterSaleGoods(params).then(this.handleApplySuccess)
           } else {
-            this.$message.error('表单填写有误，请核对！')
+            this.$message.error('There is an error in the form. Please check it！')
             return false
           }
         })
       },
-      /** 申请售后成功 */
+      /** Successful application for after-sales service*/
       handleApplySuccess() {
-        this.$message.success('申请成功！')
+        this.$message.success('Application is successful！')
         this.$router.back()
       }
     }

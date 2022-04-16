@@ -1,6 +1,6 @@
 /**
  * Created by Andste on 2018/5/2.
- * 用户认证相关API
+ * User authentication relatedAPI
  */
 
 import request, { Method } from '@/utils/request'
@@ -8,7 +8,7 @@ import Storage from '@/utils/storage'
 import md5 from 'js-md5'
 
 /**
- * 普通登录
+ * Normal login
  * @param params
  */
 export function login(params) {
@@ -22,7 +22,7 @@ export function login(params) {
 }
 
 /**
- * 通过手机号登录
+ * Log in using your mobile phone number
  * @param mobile
  * @param sms_code
  */
@@ -35,7 +35,7 @@ export function loginByMobile(mobile, sms_code) {
 }
 
 /**
- * 发送会员注册手机验证码
+ * Send the mobile verification code for member registration
  * @param mobile
  * @param captcha
  */
@@ -51,7 +51,7 @@ export function sendRegisterSms(mobile, captcha) {
 }
 
 /**
- * 发送会员登录手机验证码
+ * Send the verification code of member login mobile phone
  * @param mobile
  * @param captcha
  */
@@ -67,7 +67,7 @@ export function sendLoginSms(mobile, captcha) {
 }
 
 /**
- * 用户名重复校验
+ * The user name is verified repeatedly
  * @param username
  */
 export function checkUsernameRepeat(username) {
@@ -79,7 +79,7 @@ export function checkUsernameRepeat(username) {
 }
 
 /**
- * 手机号重复校验
+ * The mobile phone number is checked repeatedly
  * @param mobile
  */
 export function checkMobileRepeat(mobile) {
@@ -91,7 +91,7 @@ export function checkMobileRepeat(mobile) {
 }
 
 /**
- * 注册会员【手机号】
+ * Registered members【Mobile phone no.】
  * @param params
  */
 export function registerByMobile(params) {
@@ -105,10 +105,10 @@ export function registerByMobile(params) {
 }
 
 /**
- * 验证手机验证码
- * @param mobile   手机号码
- * @param scene    业务场景
- * @param sms_code 短信验证码
+ * Verify the mobile phone verification code
+ * @param mobile   Mobile phone number
+ * @param scene    The business scenario
+ * @param sms_code SMS verification code
  */
 export function validMobileSms(mobile, scene, sms_code) {
   return request({
@@ -122,7 +122,7 @@ export function validMobileSms(mobile, scene, sms_code) {
 }
 
 /**
- * 验证账户信息
+ * Verify account information
  * @param uuid
  * @param captcha
  * @param account
@@ -140,7 +140,7 @@ export function validAccount(uuid, captcha, account) {
 }
 
 /**
- * 发送找回密码短信
+ * Send a message to retrieve the password
  * @param uuid
  * @param captcha
  */
@@ -156,7 +156,7 @@ export function sendFindPasswordSms(uuid, captcha) {
 }
 
 /**
- * 校验找回密码验证码
+ * Verification retrieve password verification code
  * @param uuid
  * @param sms_code
  */
@@ -172,7 +172,7 @@ export function validFindPasswordSms(uuid, sms_code) {
 }
 
 /**
- * 修改密码【找回密码用】
+ * Change the password【To retrieve the password】
  * @param uuid
  * @param password
  */

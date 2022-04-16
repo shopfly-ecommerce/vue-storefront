@@ -1,9 +1,9 @@
 <template>
   <div id="register">
-    <en-header-other title="欢迎注册">
+    <en-header-other title="Welcome to register">
       <div class="have-account">
-        <span>已有账号？</span>
-        <nuxt-link :to="'/login' + MixinForward">请登录></nuxt-link>
+        <span>Existing account？</span>
+        <nuxt-link :to="'/login' + MixinForward">Sign in ></nuxt-link>
       </div>
     </en-header-other>
     <div class="register-content">
@@ -12,52 +12,52 @@
         :rules="registerRules"
         ref="registerForm"
         status-icon
-        label-width="100px"
+        label-width="200px"
       >
         <el-form-item prop="username">
-          <span slot="label">用&ensp;户&ensp;名</span>
+          <span slot="label">username</span>
           <el-input
             v-model="registerForm.username"
             :maxlength="20"
-            placeholder="请输入用户名"
+            placeholder="Please enter the user name"
             :validate-event="validateEvent"
             @input="input"
           ></el-input>
         </el-form-item>
-        <el-form-item label="设置密码" prop="password">
+        <el-form-item label="password" prop="password">
           <el-input
             v-model="registerForm.password"
             type="password"
             :maxlength="20"
-            placeholder="密码设置6-20位"
+            placeholder="password6-20position"
             :validate-event="validateEvent"
             @input="input"
           ></el-input>
         </el-form-item>
-        <el-form-item label="确认密码" prop="confirm_password">
+        <el-form-item label="Confirm password" prop="confirm_password">
           <el-input
             v-model="registerForm.confirm_password"
             type="password"
             :maxlength="20"
-            placeholder="请牢记您的密码"
+            placeholder="Please remember your password"
             :validate-event="validateEvent"
             @input="input"
           ></el-input>
         </el-form-item>
-        <el-form-item label="手机号码" :error="requiredMobile" prop="mobile">
+        <el-form-item label="mobile" :error="requiredMobile" prop="mobile">
           <el-input
             v-model="registerForm.mobile"
             :maxlength="11"
-            placeholder="请输入手机号"
+            placeholder="Please enter your cell phone number"
             :validate-event="validateEvent"
             @input="input"
           ></el-input>
         </el-form-item>
-        <el-form-item v-if="showValidCode" label="图片验证码" :error="requiredValCode" prop="vali_code" class="vali-code">
+        <el-form-item v-if="showValidCode" label="Image verification code" :error="requiredValCode" prop="vali_code" class="vali-code">
           <el-input
             v-model="registerForm.vali_code"
             :maxlength="4"
-            placeholder="请输入图片验证码"
+            placeholder="Please enter the image verification code"
             :validate-event="validateEvent"
             @input="input"
           >
@@ -65,7 +65,7 @@
           </el-input>
         </el-form-item>
         <el-form-item prop="sms_code" class="sms-code">
-          <span slot="label">短信验证码</span>
+          <span slot="label">SMS verification code</span>
           <el-input
             v-model="registerForm.sms_code"
             :maxlength="6"
@@ -76,7 +76,7 @@
             <en-count-down-btn :start="sendValidMobileSms" @end="changeValidCodeUrl" slot="append"/>
           </el-input>
         </el-form-item>
-        <button type="button" class="register-btn" @click="handleConfirmRegister">立即注册</button>
+        <button type="button" class="register-btn" @click="handleConfirmRegister">Register now</button>
       </el-form>
     </div>
   </div>
@@ -102,19 +102,19 @@
         const protocol = await API_Article.getArticleByPosition('REGISTRATION_AGREEMENT')
         return { protocol }
       } catch (e) {
-        return { protocol: '协议获取失败...' }
+        return { protocol: 'Protocol obtaining failure...' }
       }
     },
     head() {
       return {
-        title: `会员注册-${this.site.title}`
+        title: `Registered members-${this.site.title}`
       }
     },
     data() {
       return {
         //uuid
         uuid: Storage.getItem('uuid'),
-        // 会员注册 表单
+        // Member Registration Form
         registerForm: {
           username: '',
           password: '',
@@ -123,21 +123,21 @@
           vali_code: '',
           sms_code: ''
         },
-        // 会员注册 表单规则
+        // Membership registration form rules
         registerRules: {
           username: [
-            this.MixinRequired('请输入账户名！'),
-            { min: 2, max: 10, message: '长度在 2 到 10 个字符' },
+            this.MixinRequired('Please enter your account name！'),
+            { min: 2, max: 10, message: 'The length of2 to10 A character' },
             { validator: (rule, value, callback) => {
               if (!RegExp.userName.test(value)) {
-                callback(new Error('只支持汉字、字母、数字、“-”、“_”的组合！'))
+                callback(new Error('Support only Chinese characters、The letter、digital、“-”、“_The combination of"！'))
               } else {
                 callback()
               }
             } },
             { validator: (rule, value, callback) => {
               if (!/[^\d]+/.test(value)) {
-                callback(new Error('账户名不能为纯数字！'))
+                callback(new Error('The account name cannot be pure digits！'))
               } else {
                 callback()
               }
@@ -145,72 +145,72 @@
             { validator: (rule, value, callback) => {
               API_Passport.checkUsernameRepeat(value).then(response => {
                   if (response.exist) {
-                    callback(new Error('此用户名已被注册！'))
+                    callback(new Error('This username is already registered！'))
                   } else {
                     callback()
                   }
                 }).catch(error => {
-                callback(new Error('用户名重复校验出错，请稍后再试！'))
+                callback(new Error('User name duplicate verification error, please try again later！'))
               })
             }, trigger: 'blur' }
           ],
           password: [
-            { required: true, message: '请输入密码', trigger: 'blur' },
+            { required: true, message: 'Please enter your password.', trigger: 'blur' },
             { validator: (rule, value, callback) => {
               if (!RegExp.password.test(value)) {
-                callback(new Error('密码应为6-20位数字、英文字母，或者特殊字符！'))
+                callback(new Error('The password should be6-20A digital、English letters, or special characters！'))
               } else {
                 callback()
               }
             } }
           ],
           confirm_password: [
-            { required: true, message: '请确认密码', trigger: 'blur' },
+            { required: true, message: 'Please confirm password.', trigger: 'blur' },
             { validator: (rule, value, callback) => {
                 const { password, confirm_password } = this.registerForm
                 if (password !== confirm_password) {
-                  callback(new Error('两次输入不一致！'))
+                  callback(new Error('The two inputs are inconsistent！'))
                 } else {
                   callback()
                 }
               } }
           ],
           mobile: [
-            this.MixinRequired('请输入手机号码！'),
+            this.MixinRequired('Please enter your mobile phone number！'),
             { validator: (rule, value, callback) => {
               if (!RegExp.mobile.test(value)) {
-                callback(new Error('手机格式有误！'))
+                callback(new Error('Incorrect phone format！'))
               } else {
                 API_Passport.checkMobileRepeat(value).then(response => {
                   if (response.exist) {
-                    callback(new Error('手机号已被注册！'))
+                    callback(new Error('The phone number has been registered！'))
                   } else {
                     this.showValidCode = true
                     callback()
                   }
                 }).catch(error => {
-                  callback(new Error('手机号重复校验出错，请稍后再试！'))
+                  callback(new Error('Duplicate verification error, please try again later！'))
                 })
               }
             } }
           ],
-          vali_code: [this.MixinRequired('请输入图片验证码！')],
-          sms_code: [this.MixinRequired('请输入短信验证码！')]
+          vali_code: [this.MixinRequired('Please enter the image verification code！')],
+          sms_code: [this.MixinRequired('Please enter the SMS verification code！')]
         },
         requiredMobile: '',
         requiredValCode: '',
-        // 是否显示图片验证码
+        // Whether to display the image verification code
         showValidCode: false,
-        // 图片验证码URL
+        // Image verification code URL
         valid_code_url: '',
-        // 同意注册协议
+        // Consent registration Agreement
         agreed: false,
-        // 是否为信任登录
+        // Whether the login is trusted
         isConnect: false,
-        // 初始化校验事件【兼容IE】
+        // Initialization verification event [Compatible with IE]
         validateEvent: false,
-	      // 有效分钟数
-        effectiveMinutes: '2分钟内有效'
+	      // Effective minutes
+        effectiveMinutes: '2Within minutes'
       }
     },
     mounted() {
@@ -221,10 +221,10 @@
       this.$layer.open({
         type: 1,
         skin: 'layer-register',
-        title: '注册协议',
+        title: 'The registration agreement',
         area: ['800px', '600px'],
         scrollbar: false,
-        btn: ['取消', '同意并继续'],
+        btn: ['cancel', 'Agree'],
         btnAlign: 'c',
         yes: () => {
           location.href = '/'
@@ -239,37 +239,37 @@
       });
     },
     methods: {
-      /** 获取图片验证码 */
+      /** Get the image captcha*/
       changeValidCodeUrl() {
         this.valid_code_url = API_Common.getValidateCodeUrl(this.uuid, 'REGISTER')
       },
-      /** 发送手机验证码异步方法 */
+      /** Sending a mobile verification code asynchronously*/
       sendValidMobileSms() {
         return new Promise((resolve, reject) => {
           const { mobile, vali_code } = this.registerForm
           if (!mobile) {
-            this.$message.error('请输入手机号！')
-            this.requiredMobile = '手机号不能为空！'
+            this.$message.error('Please enter your cell phone number！')
+            this.requiredMobile = 'The cell phone number cannot be empty！'
           } else if (!vali_code) {
-            this.$message.error('请输入图片验证码！')
-            this.requiredValCode = '图片验证码不能为空！'
+            this.$message.error('Please enter the image verification code！')
+            this.requiredValCode = 'The image verification code cannot be empty！'
           } else {
             API_Passport.sendRegisterSms(mobile, vali_code).then(response => {
-              this.effectiveMinutes = `${response}分钟内有效`
-              this.$message.success('短信发送成功，请注意查收！')
+              this.effectiveMinutes = `${response}Within minutes`
+              this.$message.success('The text message has been sent successfully, please note that check！')
               resolve()
             }).catch(reject)
           }
         })
       },
-      /** 输入框输入 */
+      /** Input box input*/
       input(value) {
         !this.validateEvent && (this.validateEvent = true)
       },
-      /** 立即注册 */
+      /** Register now*/
       handleConfirmRegister() {
         if (!this.agreed) {
-          this.$message.error('请先同意注册协议！')
+          this.$message.error('Please agree to the registration agreement first！')
           return false
         }
         const _forwardMatch = this.MixinForward.match(/\?forward=(.+)/) || []
@@ -294,7 +294,7 @@
               }
             })
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
@@ -322,7 +322,7 @@
     margin-bottom: 50px;
   }
   .register-content /deep/ .el-form {
-    width: 400px;
+    width: 500px;
     margin: 0 auto;
     .el-form-item {
       position: relative;

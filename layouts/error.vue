@@ -5,32 +5,32 @@
         <img src="~assets/images/background-404.jpg">
       </div>
       <div class="error-right">
-        <h1>糟糕！您访问的页面不见啦...</h1>
-        <span class="error-title">可能是因为：</span>
-        <p>网址有错误：<span class="error-message">请检查地址是否完整或存在多余字符</span></p>
-        <p>网址已失效：<span class="error-message">可能页面已删除，活动已下线等</span></p>
-        <span class="error-title" style="margin-top: 20px">您可以：</span>
+        <h1>bad！The page you visited is missing...</h1>
+        <span class="error-title">Probably because：</span>
+        <p>The url is wrong.：<span class="error-message">Check whether the address is complete or contains extra characters</span></p>
+        <p>The url is no longer valid.：<span class="error-message">The page may have been deleted, the activity may have been taken offline, etc</span></p>
+        <span class="error-title" style="margin-top: 20px">You can：</span>
         <div>
-          <el-button type="danger" size="small" @click="$router.back()">返回上页</el-button>
-          <el-button type="danger" size="small" @click="$router.push({ path: '/' })">去首页</el-button>
+          <el-button type="danger" size="small" @click="$router.back()">On the back page</el-button>
+          <el-button type="danger" size="small" @click="$router.push({ path: '/' })">Go to the home page</el-button>
         </div>
       </div>
     </div>
     <div v-else-if="error.statusCode === 503" class="error-500">
       <div class="inner-error">
-        <p>{{ error.message || '服务器出现错误...' }}</p>
+        <p>{{ error.message || 'Server error...' }}</p>
       </div>
       <div class="inner-btns">
-        <el-button size="small" @click="handleReload">刷新页面</el-button>
+        <el-button size="small" @click="handleReload">Refresh the page</el-button>
       </div>
     </div>
     <div v-else class="error-500">
       <div class="inner-error">
-        <p>{{ error.message || '服务器出现错误...' }}</p>
+        <p>{{ error.message || 'Server error...' }}</p>
       </div>
       <div class="inner-btns">
-	      <el-button size="small" @click="$router.back()">返回上页</el-button>
-        <el-button size="small" @click="handleReload">刷新页面</el-button>
+	      <el-button size="small" @click="$router.back()">On the back page</el-button>
+        <el-button size="small" @click="handleReload">Refresh the page</el-button>
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@
     props: ['error'],
     layout: 'full',
     methods: {
-      /** 刷新网页 */
+      /** Refresh the page*/
       handleReload() {
         window.location.reload()
       }

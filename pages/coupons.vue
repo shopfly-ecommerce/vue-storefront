@@ -2,10 +2,10 @@
   <div id="coupons" class="w">
     <div class="title-coupons">
       <span></span>
-      <h3>精选好券</h3>
+      <h3>Select good stamps</h3>
       <span></span>
     </div>
-    <div v-if="!coupons || !coupons.data.length" class="no-coupons">暂无优惠券</div>
+    <div v-if="!coupons || !coupons.data.length" class="no-coupons">No coupon</div>
     <div v-else class="list-coupons">
       <div
         v-for="(coupon, index) in coupons.data"
@@ -20,7 +20,7 @@
           <div class="price-coupon">
             <em>¥</em>
             <strong>{{ coupon.coupon_price }}</strong>
-            <span class="limit-coupon">满{{ coupon.coupon_threshold_price }}可用</span>
+            <span class="limit-coupon">full{{ coupon.coupon_threshold_price }}available</span>
           </div>
           <div class="range-coupon">
             <span :title="coupon.title">{{ coupon.title }}</span>
@@ -31,8 +31,8 @@
         </div>
         <div class="opt-coupon" @click="receiveCoupon(coupon)">
           <div class="btn-opt-coupon">
-            <a v-if="coupon.create_num === coupon.received_num"><b></b><span class="txt">已领完</span></a>
-            <a v-else href="javascript:;"><b></b><span class="txt">立即领取</span></a>
+            <a v-if="coupon.create_num === coupon.received_num"><b></b><span class="txt">Brought up</span></a>
+            <a v-else href="javascript:;"><b></b><span class="txt">Immediately to receive</span></a>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@
     name: 'coupons',
     head() {
       return {
-        title: `优惠券市场-${this.site.title}`
+        title: `Coupon market-${this.site.title}`
       }
     },
     data() {
@@ -79,24 +79,24 @@
       this.GET_Coupons()
     },
     methods: {
-      /** 加载数据 */
+      /** Load the data*/
       handleCurrentPageChange(page_no) {
         this.params.page_no = page_no
         this.GET_Coupons()
       },
-      /** 领取优惠券 */
+      /** Get a coupon*/
       receiveCoupon(coupon) {
         if (!Storage.getItem('refresh_token')) {
-          this.$confirm('您还未登录，要现在去登录吗？', () => {
+          this.$confirm('You havent logged in yet. Do you want to log in now？', () => {
             this.$router.push({ path: '/login', query: { forward: `${this.$route.path}`} })
           });
           return false
         }
         API_Members.receiveCoupons(coupon.coupon_id).then(() => {
-          this.$message.success('领取成功！')
+          this.$message.success('Get the success！')
         })
       },
-      /** 获取优惠券列表 */
+      /** Get a coupon list*/
       GET_Coupons() {
         API_promotions.getAllCoupons(this.params).then(response => {
           this.coupons = response

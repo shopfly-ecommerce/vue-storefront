@@ -1,28 +1,28 @@
 <template>
   <div id="cashier">
-    <en-header-other title="收银台"/>
+    <en-header-other title="checkstand"/>
     <div class="cashier-box">
       <div class="cashier-change">
         <h2 class="time-tip" v-if="order.pay_type_text === 'ONLINE' && order.need_pay_price !== 0">
-          订单提交成功，请您在<span>24小时</span>内完成支付，否则订单会被自动取消。
+          The order has been submitted successfully<span>24hours</span>Otherwise the order will be automatically cancelled.
         </h2>
-        <h2 class="time-tip" v-else-if="order.pay_type_text !== 'COD'">订单金额为 <span>￥0.00</span>，您无需支付。</h2>
+        <h2 class="time-tip" v-else-if="order.pay_type_text !== 'COD'">The order amount is<span>￥0.00</span>You dont have to pay.</h2>
         <h2 v-if="this.trade_sn">
-          交易号：<b>{{ trade_sn }}</b>
-          <a class="see-order-btn" href="/member/my-order">查看订单</a>
+          Transaction no.：<b>{{ trade_sn }}</b>
+          <a class="see-order-btn" href="/member/my-order">To view the order</a>
         </h2>
-        <h2 v-else>订单编号：<b>{{ order_sn }}</b>
-          <a class="see-order-btn" :href="'/member/my-order/detail?order_sn=' + order_sn">查看订单</a>
+        <h2 v-else>The order no.：<b>{{ order_sn }}</b>
+          <a class="see-order-btn" :href="'/member/my-order/detail?order_sn=' + order_sn">To view the order</a>
         </h2>
-        <h2>{{ !order ? '' : order.pay_type_text === 'ONLINE' ? '在线支付：' : '货到付款：' }}
+        <h2>{{ !order ? '' : order.pay_type_text === 'ONLINE' ? 'Online payment：' : 'Cash on delivery：' }}
           <span v-if="order">￥{{ order.need_pay_price | unitPrice }}</span>
-          <span v-else>加载中...</span>
-          <i>元</i>
-          <span class="pay-tip">订单状态刷新可能会延迟，如果您已付款成功，请勿重复支付！</span>
+          <span v-else>Loading...</span>
+          <i>USD</i>
+          <span class="pay-tip">Order status refresh may be delayed. If you have paid successfully, do not pay again！</span>
         </h2>
         <div class="cashier-order-detail">
           <div class="cashier-order-inside">
-            <h3><i></i>送货至：
+            <h3><i></i>Delivery to the：
               <template v-if="order">
                 <span>{{ order.ship_province }}</span>
                 <span>{{ order.ship_city }}</span>
@@ -31,14 +31,14 @@
                 <span>{{ order.ship_addr }}</span>
                 <span>{{ order.ship_mobile }}</span>
               </template>
-              <span v-else>加载中...</span>
+              <span v-else>In the load...</span>
             </h3>
           </div>
         </div>
         <div class="cashier-tools" v-if="order.pay_type_text === 'ONLINE' && order.need_pay_price !== 0">
           <div class="cashier-tools-inside">
             <div class="cashier-tools-title">
-              <h3>支付平台</h3>
+              <h3>Payment method</h3>
             </div>
             <ul class="cashier-pay-list">
               <li v-for="payment in paymentList" :key="payment.plugin_id" :class="['payment-item', payment.selected && 'selected']">
@@ -50,17 +50,17 @@
         <div v-show="showPayBox" class="cashier-pay-box">
           <div class="pay-item">
             <div class="pay-left">
-              <p v-if="payment_plugin_id !== 'weixinPayPlugin'">使用电脑支付</p>
+              <p v-if="payment_plugin_id !== 'weixinPayPlugin'">Pay by computer</p>
               <div v-if="payment_plugin_id === 'weixinPayPlugin'" class="pc-pay-img">
                 <img src="../../assets/images/background-wechat.jpg">
               </div>
               <div v-else class="pc-pay-img"></div>
-              <a class="pay-btn" href="javascript:;" @click="initiatePay(false, 'normal')">立即支付</a>
+              <a class="pay-btn" href="javascript:;" @click="initiatePay(false, 'normal')">Pay ${{ order.need_pay_price }} </a>
               <i v-if="payment_plugin_id === 'alipayDirectPlugin'" class="icon-or"></i>
             </div>
             <div v-if="payment_plugin_id === 'alipayDirectPlugin' || payment_plugin_id === 'weixinPayPlugin'" class="pay-right">
-              <p v-if="payment_plugin_id === 'alipayDirectPlugin'">使用支付宝钱包扫一扫即可付款</p>
-              <p v-if="payment_plugin_id === 'weixinPayPlugin'">使用微信钱包扫一扫即可付款</p>
+              <p v-if="payment_plugin_id === 'alipayDirectPlugin'">Use Alipay wallet scan to pay</p>
+              <p v-if="payment_plugin_id === 'weixinPayPlugin'">You can pay with a swipe of your wechat wallet</p>
               <div class="pay-qrcode" id="pay-qrcode">
                 <iframe id="iframe-qrcode" width="200px" height="200px" scrolling="no"></iframe>
               </div>
@@ -68,8 +68,8 @@
           </div>
         </div>
         <div class="same-pay-way bank-pay paybtn">
-          <a @click="$message.error('请先选择支付方式！')" href="javascript:;" v-if="!showPayBox && order.pay_type_text === 'ONLINE' && order.need_pay_price !== 0">立即支付</a>
-          <nuxt-link to="/member/my-order" v-if="order.pay_type_text !== 'ONLINE' || order.need_pay_price === 0">查看订单</nuxt-link>
+          <a @click="$message.error('Please select payment method first！')" href="javascript:;" v-if="!showPayBox && order.pay_type_text === 'ONLINE' && order.need_pay_price !== 0">Pay ${{ order.need_pay_price }}</a>
+          <nuxt-link to="/member/my-order" v-if="order.pay_type_text !== 'ONLINE' || order.need_pay_price === 0">To view the order</nuxt-link>
         </div>
       </div>
     </div>
@@ -87,15 +87,15 @@
       return {
         trade_sn: this.$route.query.trade_sn,
         order_sn: this.$route.query.order_sn,
-        // 支付方式列表
+        // List of payment methods
         paymentList: [],
-        // 订单详情
+        // The order details
         order: '',
-        // 显示支付窗口
+        // Display payment window
         showPayBox: false,
-        // 支付方式
+        // Method of payment
         payment_plugin_id: '',
-        // 显示确认订单完成支付dialog
+        // Displays a dialog to confirm order completion payment
         showConfirmDialog: false
       }
     },
@@ -114,7 +114,7 @@
       })
     },
     methods: {
-      /** 发起支付 */
+      /** Initiate payment*/
       initiatePay(payment, pay_mode) {
         this.showPayBox = true
         if (payment) {
@@ -130,19 +130,19 @@
         const sn = this.trade_sn || this.order_sn
         const client_type = 'PC'
         const payment_plugin_id = payment.plugin_id
-        // 如果是普通模式，就跳新窗口支付
+        // If it is normal mode, jump to a new window to pay
         if (pay_mode === 'normal') {
           window.open(`./cashier-load-pay?trade_type=${trade_type}&sn=${sn}&payment_plugin_id=${payment_plugin_id}`)
           return false
         }
-        // 如果是二维码模式，并且支付方式不是支付宝或微信，就跳新窗口支付
+        // If the qr code mode, and the payment method is not Alipay or wechat, jump to the new window to pay
         if (pay_mode === 'qr' && (payment_plugin_id !== 'alipayDirectPlugin' && payment_plugin_id !== 'weixinPayPlugin')) {
           window.open(`./cashier-load-pay?trade_type=${trade_type}&sn=${sn}&payment_plugin_id=${payment_plugin_id}`)
           return false
         }
         this.$nextTick(() => {
           document.getElementById('pay-qrcode').innerHTML = `<iframe id="iframe-qrcode" width="200px" height="200px" scrolling="no"></iframe>`
-          // 如果是普通支付方式，打开新窗口再跳转到支付网站
+          // If it is a normal payment method, open a new window and then jump to the payment website
           API_Trade.initiatePay(trade_type, sn, {
             client_type,
             pay_mode,

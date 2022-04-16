@@ -31,8 +31,8 @@
 
 <script>
   /**
-   * 商品相册模块
-   * 缩略图啥的
+   * Commodity album module
+   * Thumbnail or something
    */
   import Swiper from 'swiper'
   export default {
@@ -56,7 +56,7 @@
       }
     },
     methods: {
-      /** 初始化图片相册 */
+      /** Initialize the photo album*/
       initZoomSwiper() {
         this.zoomSwiper = new Swiper('.swiper-container-zoom', {
           direction : 'vertical',
@@ -71,7 +71,7 @@
           }
         })
       },
-      /** 鼠标悬浮在左侧缩略图上，切换放大镜图片 */
+      /** Hover over the left thumbnail and toggle the magnifying glass image*/
       handleHoverTumb(event, image) {
         if (event.type === 'mouseenter') {
           this.images.map(item => {
@@ -84,7 +84,7 @@
       }
     },
     destroyed() {
-      // 当组件销毁时，移除放大镜的canvas节点
+      // When the component is destroyed, remove the magnifying glass canvas node
       const mcc = document.querySelector('.mouse-cover-canvas')
       mcc && mcc.remove()
     }

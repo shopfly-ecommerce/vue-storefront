@@ -3,10 +3,10 @@
     <div class="goods-share">
       <div class="inner-share-fenxoao" @click="showQRCode"></div>
     </div>
-    <el-dialog title="分享我的链接" :visible.sync="isShowQRCode"  width="30%">
+    <el-dialog title="Share my link" :visible.sync="isShowQRCode"  width="30%">
       <qrcode-vue :value="config.value" :size="config.size" level="H" style="text-align: center"></qrcode-vue>
       <el-form :inline="true" class="demo-form-inline">
-        <el-form-item label="我的分享链接">
+        <el-form-item label="My share link">
           <el-input v-model="config.value_pc" size="mini"></el-input>
         </el-form-item>
         <el-form-item>
@@ -15,7 +15,7 @@
             size="mini"
             v-clipboard:copy="config.value_pc"
             v-clipboard:success="onCopy"
-            v-clipboard:error="onError">复制到剪贴板</el-button>
+            v-clipboard:error="onError">Copy to clipboard</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -24,7 +24,7 @@
 
 <script>
   /**
-   * 分销组件
+   * Distribution of components
    */
   import Vue from 'vue'
   import VueClipboard from 'vue-clipboard2'
@@ -38,26 +38,26 @@
     components:{ QrcodeVue },
     data() {
       return {
-        // 是否显示分销按钮
+        // Whether to display the distribution button
         show_dis: process.env.distribution,
-        /** 是否显示二维码弹框 */
+        /** Whether to display the QR code dialog box*/
         isShowQRCode: false,
 
         config: {
-          // wap端地址
+          // Both wap address
           value: '',
           size: 200,
-	        // PC 端地址
+	        // PC address
 	        value_pc: ''
         }
       }
     },
     methods: {
-      /** 显示并生成二维码 */
+      /** Display and generate a QR code*/
       showQRCode() {
-        /** 登录校验 */
+        /** Log on to check*/
         const { user } = this.$store.getters
-        // 如果没有登录，跳转到登录页
+        // If you have not logged in, go to the login page
         if (!user) {
           this.$router.push(`/login?forward=${this.$route.fullPath}`)
         } else {
@@ -70,14 +70,14 @@
         }
     },
 
-      /** 复制成功 */
+      /** Copy success*/
       onCopy(e) {
-        this.$message.success('已复制')
+        this.$message.success('replicated')
       },
 
-      /** 复制失败 */
+      /** Copy the failure*/
       onError(e) {
-        this.$message.error('无法复制文本')
+        this.$message.error('Unable to copy text')
       }
     }
   }

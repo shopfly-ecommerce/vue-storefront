@@ -1,11 +1,11 @@
 /**
- * 收货地址相关API
+ * The receiving address is relevantAPI
  */
 
 import request, { Method } from '@/utils/request'
 
 /**
- * 获取收货地址列表
+ * Get a list of shipping addresses
  * @returns {AxiosPromise}
  */
 export function getAddressList() {
@@ -17,8 +17,8 @@ export function getAddressList() {
 }
 
 /**
- * 添加收货地址
- * @param params 地址参数
+ * Add a shipping address
+ * @param params Address parameter
  * @returns {AxiosPromise}
  */
 export function addAddress(params) {
@@ -31,9 +31,9 @@ export function addAddress(params) {
 }
 
 /**
- * 编辑地址
- * @param id 地址ID
- * @param params 地址参数
+ * Edit the address
+ * @param id addressID
+ * @param params Address parameter
  * @returns {AxiosPromise}
  */
 export function editAddress(id, params) {
@@ -46,7 +46,7 @@ export function editAddress(id, params) {
 }
 
 /**
- * 删除收货地址
+ * Delete the shipping address
  * @param id
  */
 export function deleteAddress(id) {
@@ -58,7 +58,7 @@ export function deleteAddress(id) {
 }
 
 /**
- * 设置默认地址
+ * Setting the Default address
  * @param id
  */
 export function setDefaultAddress(id) {

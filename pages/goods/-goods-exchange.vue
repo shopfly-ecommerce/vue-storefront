@@ -1,13 +1,13 @@
 <template>
   <div v-if="promotion" class="exchange-container">
     <div class="pro-list">
-      <div class="pro-title">积分兑换</div>
+      <div class="pro-title">Status</div>
       <div class="pro-content price" v-if="promotion.exchange_money">
         <span>￥</span>
-        <strong>{{ promotion.exchange_money | unitPrice }} + {{ promotion.exchange_point }}积分</strong>
+        <strong>{{ promotion.exchange_money | unitPrice }} + {{ promotion.exchange_point }}point</strong>
       </div>
 	    <div class="pro-content price" v-else>
-		    <strong>{{ promotion.exchange_point }}积分</strong>
+		    <strong>{{ promotion.exchange_point }}point</strong>
 	    </div>
     </div>
   </div>
@@ -20,9 +20,9 @@
     computed: {
       promotion() {
         if (!this.promotions || !this.promotions.length) return false
-        // 先试试看有没有团购活动
+        // Try group buying first
         let prom = this.promotions.filter(item => item.exchange)
-        // 如果都没有，返回false
+        // If none, return false
         if (!prom || !prom[0]) return false
         return prom[0].exchange
       }

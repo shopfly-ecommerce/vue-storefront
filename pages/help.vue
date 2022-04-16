@@ -1,9 +1,9 @@
 <template>
   <div style="background-color: #f9f9f9">
-    <en-header-other title="帮助中心"/>
+    <en-header-other title="Help center"/>
     <div v-if="categorys" class="help-container">
       <div class="help-menus">
-        <nuxt-link to="./" class="h3-title">帮助中心</nuxt-link>
+        <nuxt-link to="./" class="h3-title">Help center</nuxt-link>
         <dl
           v-for="cate in categorys"
           :key="cate.id"
@@ -51,7 +51,7 @@
     },
     head() {
       return {
-        title: `帮助中心-${this.site.tilte}`
+        title: `Help center-${this.site.tilte}`
       }
     }
   }

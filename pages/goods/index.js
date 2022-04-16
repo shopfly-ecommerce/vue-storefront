@@ -1,6 +1,6 @@
 /**
  * Created by Andste on 2018/4/26.
- * 商品页组件导出
+ * Product page component export
  */
 
 import BreadNav from './-bread-nav'

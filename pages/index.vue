@@ -38,21 +38,21 @@
       ])
       const floor = datas[0]
       return {
-        // 楼层数据
+        // Floor data
         floorList: floor.page_data ? global.JSON.parse(floor.page_data) : [],
-        // 焦点图
+        // Focus figure
         focusList: datas[1]
       }
     },
     head() {
       return {
-        title: `商城首页-${this.site.title}`
+        title: `Home-${this.site.title}`
       }
     },
     components: components,
     data() {
       return {
-        /** 首页卡片tab x坐标 */
+        /** Home page cardtab xcoordinates*/
         card_news_tab_x: 0,
         floorList: '',
         templates,

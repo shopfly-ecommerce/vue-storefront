@@ -7,22 +7,22 @@
         </nuxt-link>
         <div class="user-info">
           <p>{{ user.nickname || user.uname }}</p>
-          <p v-if="user.mobile">联系方式：{{ user.mobile | secrecyMobile }} </p>
-          <p v-else>联系方式：无 </p>
+          <p v-if="user.mobile">contact：{{ user.mobile | secrecyMobile }} </p>
+          <p v-else>contact：There is no</p>
         </div>
       </div>
       <nuxt-link to="/member/my-order" class="other-item">
-        <p>我的订单</p>
+        <p>Orders</p>
         <i class="iconfont ea-icon-my-order"></i>
         <p class="num">{{ statisticsNum.order_count || 0 }}</p>
       </nuxt-link>
       <nuxt-link to="/member/my-order?order_status=WAIT_COMMENT" class="other-item">
-        <p>待评论</p>
+        <p>To comment on</p>
         <i class="iconfont ea-icon-collection-of-shop" style="font-size: 42px"></i>
         <p class="num">{{ statisticsNum.pending_comment_count || 0}}</p>
       </nuxt-link>
       <nuxt-link to="/member/my-collection" class="other-item">
-        <p>收藏的商品</p>
+        <p>Collectable goods</p>
         <i class="iconfont ea-icon-collection-of-goods"></i>
         <p class="num">{{ statisticsNum.goods_collect_count || 0}}</p>
       </nuxt-link>
@@ -30,15 +30,15 @@
     <div class="box-item">
       <div class="item left order">
         <div class="item-title">
-          <h2>我的订单</h2>
+          <h2>Orders</h2>
           <div class="order-status">
-            <nuxt-link to="/member/my-order">所有订单({{ orderStatusNum.all_num || 0 }})</nuxt-link>
-            <nuxt-link :to="'/member/my-order?order_status=WAIT_PAY'">待付款({{ orderStatusNum.wait_pay_num || 0 }})</nuxt-link>
-            <nuxt-link :to="'/member/my-order?order_status=COMPLETE'">已完成({{ orderStatusNum.complete_num || 0 }})</nuxt-link>
+            <nuxt-link to="/member/my-order">All orders({{ orderStatusNum.all_num || 0 }})</nuxt-link>
+            <nuxt-link :to="'/member/my-order?order_status=WAIT_PAY'">For the payment({{ orderStatusNum.wait_pay_num || 0 }})</nuxt-link>
+            <nuxt-link :to="'/member/my-order?order_status=COMPLETE'">Has been completed({{ orderStatusNum.complete_num || 0 }})</nuxt-link>
           </div>
         </div>
         <div class="item-content">
-          <empty-member v-if="!orderData || orderData.data.length === 0">暂无订单</empty-member>
+          <empty-member v-if="!orderData || orderData.data.length === 0">No orders</empty-member>
           <template v-else>
             <template v-for="(order, index) in orderData.data">
               <div v-if="index < 3" :key="order.sn" class="order-item" >
@@ -48,12 +48,12 @@
                 <div class="order-info">
                   <a :href="'/goods/' + order.sku_list[0].goods_id" class="goods-name" target="_blank">{{ order.sku_list[0].name }}</a>
                   <p v-if="order.sku_list[0].spec_list" class="sku-spec">{{ order.sku_list[0] | formatterSkuSpec }}</p>
-                  <p>下单时间：{{ order.create_time | unixToDate }}</p>
-                  <p>订单金额：<span class="price">￥{{ order.order_amount | unitPrice }}</span></p>
-                  <p class="order-status-num"><span>订单状态：{{ order.order_status_text }}</span><span>订单内共有（{{ order.sku_list.length }}）种商品</span></p>
+                  <p>Create time：{{ order.create_time | unixToDate }}</p>
+                  <p>Amount：<span class="price">￥{{ order.order_amount | unitPrice }}</span></p>
+                  <p class="order-status-num"><span>Status：{{ order.order_status_text }}</span><span>In common with order（{{ order.sku_list.length }}）Kinds of goods</span></p>
                 </div>
                 <div class="order-oper">
-                  <nuxt-link :to="'/member/my-order/detail?order_sn=' + order.sn">查看订单</nuxt-link>
+                  <nuxt-link :to="'/member/my-order/detail?order_sn=' + order.sn">To view the order</nuxt-link>
                 </div>
               </div>
             </template>
@@ -62,11 +62,11 @@
       </div>
       <div class="item right cart">
         <div class="item-title">
-          <h2>购物车</h2>
-          <nuxt-link to="/cart">查看全部 	&gt;&gt;</nuxt-link>
+          <h2>The shopping cart</h2>
+          <nuxt-link to="/cart">Look at all&gt;&gt;</nuxt-link>
         </div>
         <div class="item-content">
-          <empty-member v-if="cartSkuList.length === 0">暂无商品</empty-member>
+          <empty-member v-if="cartSkuList.length === 0">Your cart is empty</empty-member>
           <template v-else>
             <template v-for="(item, index) in cartSkuList">
               <div v-if="index < 4" :key="item.sku_id" class="cart-item">
@@ -77,7 +77,7 @@
                   <a :href="'/goods/' + item.goods_id">{{ item.name }}</a>
                   <p><em>￥{{ item.purchase_price | unitPrice }}</em> <span>x {{ item.num }}</span></p>
                 </div>
-                <a href="javascript:;" class="delete-btn" @click="handleDeleteSkuItem(item)">删除</a>
+                <a href="javascript:;" class="delete-btn" @click="handleDeleteSkuItem(item)">delete</a>
               </div>
             </template>
           </template>
@@ -87,11 +87,11 @@
     <div class="box-item">
       <div class="item centon goods-collection">
         <div class="item-title">
-          <h2>商品收藏</h2>
-          <nuxt-link to="/member/my-collection">查看全部 	&gt;&gt;</nuxt-link>
+          <h2>Goods collection</h2>
+          <nuxt-link to="/member/my-collection">Look at all&gt;&gt;</nuxt-link>
         </div>
         <div class="item-content">
-          <empty-member v-if="!goodsCollectionData || goodsCollectionData.data.length === 0">暂无收藏商品</empty-member>
+          <empty-member v-if="!goodsCollectionData || goodsCollectionData.data.length === 0">No collection goods at present</empty-member>
           <template v-else>
             <template v-for="(item, index) in goodsCollectionData.data">
               <div
@@ -105,7 +105,7 @@
                 <span class="goods-name">{{ item.goods_name }}</span>
                 <div class="goods-price">
                   <span>￥{{ item.goods_price | unitPrice }}</span>
-                  <a href="javascript:;" class="delete-btn" @click="handleDeleteGoodsCollection(item)">删除</a>
+                  <a href="javascript:;" class="delete-btn" @click="handleDeleteGoodsCollection(item)">delete</a>
                 </div>
               </div>
             </template>
@@ -125,17 +125,17 @@
     name: 'member-index',
     data() {
       return {
-        // 订单数据
+        // Order data
         orderData: '',
-        // 统计数量
+        // Statistics of the number
         statisticsNum: {},
-        // 订单状态数量
+        // Order Status quantity
         orderStatusNum: {},
-        // 商品收藏
+        // Goods collection
         goodsCollectionData: '',
-        //积分明细
+        // The integral subsidiary
         pointsData: '',
-        // 店铺商品swiper配置
+        // Swiper store product configuration
         shopSwiperOptions: {
           slidesPerView: 3,
           slidesPerGroup: 3,
@@ -151,11 +151,11 @@
     mounted() {
       this.GET_OrderStatusNum()
       this.GET_StatisticsNum()
-      // 获取订单数据
+      // Get order data
       API_Order.getOrderList().then(response => {
         this.orderData = response
       })
-      // 获取商品收藏
+      // Get merchandise collection
       this.GET_GoodsCollection()
     },
     computed: {
@@ -165,39 +165,39 @@
       })
     },
     methods: {
-      /** 删除购物车货品 */
+      /** Delete cart items*/
       handleDeleteSkuItem(sku) {
-        this.$confirm('确定要删除这个货品吗？', () => {
-          this.deleteSkuItem(sku.sku_id).then(() => this.$message.success('删除成功！'))
+        this.$confirm('Are you sure you want to delete this item？', () => {
+          this.deleteSkuItem(sku.sku_id).then(() => this.$message.success('Delete the success！'))
         })
       },
-      /** 删除商品收藏 */
+      /** Delete merchandise collection*/
       handleDeleteGoodsCollection(goods) {
-        this.$confirm('确定要删除这个商品收藏吗？', () => {
+        this.$confirm('Are you sure you want to delete this item collection？', () => {
           API_Members.deleteGoodsCollection(goods.goods_id).then(() => {
-            this.$message.success('删除成功！')
+            this.$message.success('Delete the success！')
             this.GET_GoodsCollection()
           })
         })
       },
-      /** 获取订单状态数量 */
+      /** Gets the order status quantity*/
       GET_OrderStatusNum() {
         API_Order.getOrderStatusNum().then(response => {
           this.orderStatusNum = response
         })
       },
-      /** 获取统计数量 包括但不限于【订单数量、收藏的商品数量、收藏的店铺数量】 */
+      /** Obtaining statistics includes but is not limited to【The order number、The number of items in the collection、Number of stores collected】 */
       GET_StatisticsNum() {
         API_Members.getStatisticsNum().then(response => { this.statisticsNum = response })
       },
-      /** 获取商品收藏 */
+      /** Get merchandise collection*/
       GET_GoodsCollection() {
         API_Members.getGoodsCollection({ page_no: 1, page_size: 20 }).then(response => {
           this.goodsCollectionData = response
         })
       },
       ...mapActions({
-        /** 删除购物车货品 */
+        /** Delete cart items*/
         deleteSkuItem: 'cart/deleteSkuItemAction'
       })
     }
@@ -278,7 +278,7 @@
     width: 100%;
     height: 410px;
     z-index: 1;
-    font-family: "Hiragino Sans GB", "Microsoft Yahei", arial, 宋体, "Helvetica Neue", Helvetica, STHeiTi, sans-serif;;
+    font-family: "Hiragino Sans GB", "Microsoft Yahei", arial, Song typeface, "Helvetica Neue", Helvetica, STHeiTi, sans-serif;;
     .item {
       box-sizing: border-box;
       height: 100%;

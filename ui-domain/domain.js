@@ -1,8 +1,8 @@
 /**
  * Created by Andste on 2018/7/2.
- * buyer_pc : 买家PC端
- * buyer_wap: 买家WAP端
- * seller   : 商家中心
+ * buyer_pc : buyersPCend
+ * buyer_wap: buyersWAPend
+ * seller   : Business center
  */
 
 export const dev = {

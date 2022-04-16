@@ -12,7 +12,7 @@
     mounted() {
       const { uuid } = this.$route.query
       if (uuid) Storage.setItem('uuid', uuid, { expires: 30 })
-      // 如果有刷新token，说明是在已登录的情况下绑定或换绑
+      // If there is a refresh token, binding or binding is performed after login
       if (Storage.getItem('refresh_token')) {
         const uuid_connect = Storage.getItem('uuid_connect')
         API_Connect.loginBindConnect(uuid_connect).then(response => {
@@ -28,10 +28,10 @@
         return false
       }
       this.$layer.open({
-        title: '授权成功',
-        btn: ['登录', '注册'],
+        title: 'Authorization success',
+        btn: ['Sign in', 'Register'],
         closeBtn: 0,
-        content: '当前已授权成功，请您：',
+        content: 'The current authorization is successful. Please：',
         move: false,
         yes: (index) => {
           this.$layer.close(index)

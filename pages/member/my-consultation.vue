@@ -3,11 +3,11 @@
     <div class="member-nav">
       <ul class="member-nav-list">
         <li class="active">
-          <nuxt-link to="./my-consultation">我的咨询</nuxt-link>
+          <nuxt-link to="./my-consultation">My advice</nuxt-link>
         </li>
       </ul>
     </div>
-    <empty-member v-if="consultation && !consultation.data.length">暂无咨询</empty-member>
+    <empty-member v-if="consultation && !consultation.data.length">No consulting</empty-member>
     <template v-else>
       <div class="consultation-container">
         <ul>
@@ -18,15 +18,15 @@
             </div>
             <div class="comment-body">
               <div class="comment-content">
-                <strong>咨询内容：</strong>
+                <strong>Consulting content：</strong>
                 <div>
                   <p v-html="consultation.content.replace(/\n/g, '<br>')"></p>
                 </div>
               </div>
               <div class="comment-content seller-reply">
-                <strong>商家回复：</strong>
+                <strong>Business reply：</strong>
                 <div>
-                  <p>{{ consultation.reply || '暂未回复' }}</p>
+                  <p>{{ consultation.reply || 'Temporary didnt respond' }}</p>
                 </div>
               </div>
             </div>
@@ -52,7 +52,7 @@
     name: 'my-consultation',
     head() {
       return {
-        title: `我的咨询-${this.site.title}`
+        title: `My advice-${this.site.title}`
       }
     },
     data() {
@@ -68,12 +68,12 @@
       this.GET_Consulatation()
     },
     methods: {
-      /** 当前页数发生改变 */
+      /** The current page number changed*/
       handleCurrentPageChange(page) {
         this.params.page_no = page
         this.GET_Consulatation()
       },
-      /** 获取我的咨询 */
+      /** Get my advice*/
       GET_Consulatation() {
         API_Members.getConsultations(this.params).then(response => {
           this.consultation = response

@@ -3,12 +3,12 @@
     <div class="member-nav">
       <ul class="member-nav-list">
         <li class="active">
-          <a href="./my-coupons">我的优惠券</a>
+          <a href="./my-coupons">My coupon</a>
         </li>
       </ul>
     </div>
     <div class="coupons-container">
-      <empty-member v-if="coupons && !coupons.data.length">暂无优惠券</empty-member>
+      <empty-member v-if="coupons && !coupons.data.length">No coupon</empty-member>
       <ul v-else class="coupon-list">
         <li v-for="(coupon, index) in coupons.data" :key="index" class="coupon-item" :class="[coupon.used_status === 1 && 'used', coupon.used_status === 2 && 'overdue']">
           <div class="c-type">
@@ -17,16 +17,16 @@
               <strong>{{ coupon.coupon_price | unitPrice }}</strong>
             </div>
             <div class="c-limit">
-              满￥{{ coupon.coupon_threshold_price | unitPrice }}可用
+              full￥{{ coupon.coupon_threshold_price | unitPrice }}available
             </div>
             <div class="c-time">
               {{ coupon.start_time | unixToDate('yyyy-MM-dd') }} - {{ coupon.end_time | unixToDate('yyyy-MM-dd') }}
             </div>
           </div>
           <div class="c-othr">
-            <span v-if="coupon.used_status === 1">已使用</span>
-            <span v-else-if="coupon.used_status === 2">已过期</span>
-            <nuxt-link v-else to="/goods" class="use-btn">立即使用</nuxt-link>
+            <span v-if="coupon.used_status === 1">Has been used</span>
+            <span v-else-if="coupon.used_status === 2">expired</span>
+            <nuxt-link v-else to="/goods" class="use-btn">Immediate use</nuxt-link>
           </div>
           <i class="is-used"></i>
           <i class="is-overdue"></i>
@@ -53,7 +53,7 @@
     name: 'my-coupons',
     head() {
       return {
-        title: `我的优惠券-${this.site.title}`
+        title: `My coupon-${this.site.title}`
       }
     },
     data() {
@@ -69,7 +69,7 @@
       this.GET_Coupons()
     },
     methods: {
-      /** 当前页数发生改变 */
+      /** The current page number changed*/
       handleCurrentPageChange(page) {
         this.params.page_no = page
         this.GET_Coupons()

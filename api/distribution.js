@@ -5,7 +5,7 @@
 import request, { Method } from '@/utils/request'
 
 /**
- * 生成短链接
+ * Generating short links
  */
 export function generateShortLink() {
   return request({
@@ -16,7 +16,7 @@ export function generateShortLink() {
 }
 
 /**
- * 访问短链接
+ * Accessing short links
  * @param params
  */
 export function accessShortLink(params) {
@@ -31,7 +31,7 @@ export function accessShortLink(params) {
 
 
 /**
- * 获取我的推荐人
+ * Get my references
  */
 export function getMyRefereer() {
   return request({
@@ -42,7 +42,7 @@ export function getMyRefereer() {
 }
 
 /**
- * 获取推荐人列表
+ * Get a list of referees
  */
 export function getRefereeList() {
   return request({
@@ -53,7 +53,7 @@ export function getRefereeList() {
 }
 
 /**
- * 获取与我相关的结算单信息
+ * Obtain statement information related to me
  * @param params
  */
 export function getSettlementTotal(params) {
@@ -66,7 +66,7 @@ export function getSettlementTotal(params) {
 }
 
 /**
- * 获取与我相关的订单信息
+ * Get the order information related to me
  * @param params
  */
 export function getRelevantList(params) {
@@ -79,7 +79,7 @@ export function getRelevantList(params) {
 }
 
 /**
- * 获取与我相关的退款单信息
+ * Get the refund receipt information related to me
  * @param params
  */
 export function getRelevantRefundList(params) {
@@ -92,7 +92,7 @@ export function getRelevantRefundList(params) {
 }
 
 /**
- * 获取我的历史业绩
+ * Get my track record
  * @param params
  */
 export function getMyHistoryList(params) {
@@ -105,7 +105,7 @@ export function getMyHistoryList(params) {
 }
 
 /**
- * 获取提现设置
+ * Gets the withdrawal Settings
  */
 export function getWithdrawalsParams() {
   return request({
@@ -116,7 +116,7 @@ export function getWithdrawalsParams() {
 }
 
 /**
- * 保存提现设置
+ * Save the withdrawal Settings
  * @param params
  */
 export function reserveWithdrawalsParams(params) {
@@ -129,7 +129,7 @@ export function reserveWithdrawalsParams(params) {
 }
 
 /**
- * 申请提现
+ * To apply for cash withdrawals
  * @param params
  */
 export function applyWithdrawals(params) {
@@ -143,7 +143,7 @@ export function applyWithdrawals(params) {
 
 
 /**
- * 获取可提现金额
+ * Get the amount available for withdrawal
  */
 export function getWithdrawalsCanRebate() {
   return request({
@@ -154,7 +154,7 @@ export function getWithdrawalsCanRebate() {
 }
 
 /**
- * 获取提现记录
+ * Get withdrawal records
  * @param params
  */
 export function getWithdrawalsList(params) {

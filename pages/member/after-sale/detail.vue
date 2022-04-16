@@ -1,17 +1,17 @@
 <template>
   <div id="after-sale-detail">
     <div v-if="detail" class="order-detail">
-      <h1>订单信息</h1>
+      <h1>The order information</h1>
       <div class="detail-list">
-        <dl><dt>订单编号：</dt><dd>{{ detail.order_sn }}</dd></dl>
-        <dl class="top-line"><dt>申请时间：</dt><dd>{{ detail.create_time | unixToDate }}</dd></dl>
-        <dl><dt>状态：</dt><dd><span>{{ detail.refund_status_text }}</span></dd></dl>
-        <dl><dt>商家审核备注：</dt><dd><span>{{ detail.seller_remark || '无' }}</span></dd></dl>
-        <dl><dt>申请售后原因：</dt><dd>{{ detail.refund_reason }}</dd></dl>
-        <dl><dt>申请售后详细描述：</dt><dd>{{ detail.customer_remark || '无' }}</dd></dl>
-        <dl><dt>退款方式：</dt><dd>{{ detail.refund_way === 'ORIGINAL' ? '原路退回' : (detail.account_type_text || '无') }}</dd></dl>
-        <dl><dt>退款账号：</dt><dd>{{ detail.refund_way === 'ORIGINAL' ? '原路退回' : (detail.return_account || '无') }}</dd></dl>
-        <dl><dt>申请售后金额：</dt><dd>￥{{ detail.refund_price | unitPrice }}</dd></dl>
+        <dl><dt>Order no.：</dt><dd>{{ detail.order_sn }}</dd></dl>
+        <dl class="top-line"><dt>To apply for time：</dt><dd>{{ detail.create_time | unixToDate }}</dd></dl>
+        <dl><dt>Status：</dt><dd><span>{{ detail.refund_status_text }}</span></dd></dl>
+        <dl><dt>Business Audit Remarks：</dt><dd><span>{{ detail.seller_remark || 'There is no' }}</span></dd></dl>
+        <dl><dt>Reasons for applying for after-sales service：</dt><dd>{{ detail.refund_reason }}</dd></dl>
+        <dl><dt>Apply for after-sale details：</dt><dd>{{ detail.customer_remark || 'There is no' }}</dd></dl>
+        <dl><dt>The refund way：</dt><dd>{{ detail.refund_way === 'ORIGINAL' ? 'The way back' : (detail.account_type_text || 'There is no') }}</dd></dl>
+        <dl><dt>Refund account：</dt><dd>{{ detail.refund_way === 'ORIGINAL' ? 'The way back' : (detail.return_account || 'There is no') }}</dd></dl>
+        <dl><dt>Application for after-sale amount：</dt><dd>￥{{ detail.refund_price | unitPrice }}</dd></dl>
       </div>
     </div>
     <div v-if="sku" class="goods-list">

@@ -6,32 +6,32 @@
   export default {
     name: 'EnCountDownBtn',
     props: {
-      /** 需要倒数的时间 */
+      /** You need to count down the time*/
       time: {
         type: Number,
         default: 60
       },
-      /** 初始化提示 */
+      /** Initialization prompt*/
       initTip: {
         type: String,
-        default: '获取验证码'
+        default: 'Get verification code'
       },
-      /** 倒计时结束的提示 */
+      /** A reminder that the countdown is over*/
       endTip: {
         type: String,
-        default: '重新获取'
+        default: 'To obtain'
       },
-      /** 倒计时开始后 秒数的前缀 */
+      /** The prefix of the number of seconds after the countdown begins*/
       preTip: {
         type: String,
         default: ''
       },
-      /** 倒计时开始后 秒数的后缀*/
+      /** The suffix for the number of seconds after the countdown begins*/
       sufTip: {
         type: String,
-        default: '秒后重新获取'
+        default: 'Retrieve after seconds'
       },
-      /** 一个异步方法，回调后开始倒计时 */
+      /** An asynchronous method that starts the countdown after the callback*/
       start:{
         type: Function,
         required: true
@@ -57,7 +57,7 @@
             this.message = this.count_time + this.sufTip
           } else {
             clearInterval(this.interval)
-            this.message = '重新发送'
+            this.message = 'To resend'
             this.count_time = this.time
             this.disabled = false
             this.$emit('end')

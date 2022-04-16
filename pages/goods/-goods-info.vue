@@ -8,8 +8,8 @@
       <goods-groupbuy-seckill :promotions="promotions"/>
       <div class="price-box">
         <div class="pro-list">
-          <div class="pro-title">价格</div>
-          <!--如果有大于1个的sku，则显示价格区间-->
+          <div class="pro-title">Price</div>
+          <!--If I have more than1One of thesku, the price range is displayed-->
           <div v-if="priceRange" class="pro-content price">
             <span>￥</span>
             <strong>{{ priceRange[0] | unitPrice }}</strong>
@@ -60,15 +60,15 @@
       </div>
       <div v-if="unselectedSku" class="pro-list error-msg">
         <div class="pro-title"></div>
-        <div class="pro-content">请选择商品规格！</div>
+        <div class="pro-content">Please select product specifications！</div>
       </div>
     </div>
     <div v-if="goods.is_auth === 0" class="no-auth">
-      此商品正在审核中，先看看其它商品吧。
+      This product is under review, lets have a look at other products first.
     </div>
     <div v-else-if="is_snapshot" class="snapshot-box">
-      当前页面内容为订单快照，展示的是创建时的商品信息，当发生交易争议时，此页面作为判断依据。
-      <a :href="'/goods/' + goods.goods_id">点此查看最新商品详情</a>
+      The current page is a snapshot of the order, which shows the product information when it is created. This page can be used as the basis for judging the transaction dispute.
+      <a :href="'/goods/' + goods.goods_id">Click here for the latest product details</a>
     </div>
     <template v-else>
       <div class="pro-list buy-num">
@@ -90,13 +90,13 @@
           class="buy-btn buy"
           :class="[!in_store && 'disabled']"
           @click="handleBuyNow"
-        >立即购买</button>
+        >Buy now</button>
         <button
           type="button"
           class="buy-btn add"
           :class="[!in_store && 'disabled']"
           @click="handleAddToCart"
-        ><i class="iconfont ea-icon-cart"></i>加入购物车</button>
+        ><i class="iconfont ea-icon-cart"></i>Add cart</button>
       </div>
     </template>
   </div>
@@ -104,12 +104,12 @@
 
 <script>
   /**
-   * 商品信息模块
-   * 包括商品名称、商品价格、购买数量、加入购物车
-   * 包括优惠券
-   * 包括促销信息
-   * 包括限时抢购
-   * 包括团购活动
+   * Commodity information module
+   * Including trade name、Price、Purchase quantity、Add cart
+   * Including coupons
+   * Including promotional information
+   * Including flash sales
+   * Including group-buying activities
    */
   import Vue from 'vue'
   import { RegExp } from '@/ui-utils'
@@ -132,25 +132,25 @@
       const is_snapshot = this.$route.name === 'goods-snapshot'
       return {
         goodsInfo: JSON.parse(JSON.stringify(this.goods)),
-        // 购买数量
+        // Purchase quantity
         buyNum: 1,
         // skuMap
         skuMap: new Map(),
-        // 规格列表
+        // Specification list
         specList: [],
-        // 被选中规格
+        // Selected specification
         selectedSpec: [],
-        // 被选中sku
+        // The selected sku
         selectedSku: '',
-        // 没有选中sku，初始化为false
+        // Sku is not selected, initialize to false
         unselectedSku: false,
-        // 有规格的商品价格区间
+        // Price range with specifications
         priceRange: '',
-        // 是否是快照页
+        // Snapshot page
         is_snapshot,
-        // 配送地区是否为有货状态
+        // Whether the distribution area is in stock
         in_store: true,
-        // 促销信息
+        // Promotional information
         promotions: ''
       }
     },
@@ -223,7 +223,7 @@
             this.skuMap.set('no_spec', sku)
           }
         })
-        // 如果价格区间大于1个
+        // If the price range is greater than 1
         if (priceList.length > 1) {
           const min = Math.min(...priceList)
           const max = Math.max(...priceList)
@@ -234,7 +234,7 @@
           }
         }
         this.specList = specList
-        // 如果没有规格，把商品第一个sku给已选择sku
+        // If there is no specification, the first SKU of the item is given to the selected SKU
         if (!specList.length) {
           this.selectedSku = this.skuMap.get('no_spec')
           this.goodsInfo = {
@@ -243,14 +243,14 @@
           }
         }
         this.promotions = promotions
-        // 如果有sku信息，初始化已选规格
+        // If there is SKU information, initialize the selected specifications
         if (this.$route.query.sku_id) {
           this.initSpec()
         }
       }
     },
     methods: {
-      /** 初始化规格 */
+      /** Initializing specifications*/
       initSpec() {
         let { sku_id } = this.$route.query
         let selectedSpecs = ''
@@ -283,7 +283,7 @@
         })
         this.handleSelectedSku()
       },
-      /** 选择规格 */
+      /** Choose specifications*/
       handleClickSpec(spec, specIndex, spec_val) {
         if (spec.spec_type === 1 ) {
           this.$emit('spec-img-change', JSON.parse(JSON.stringify(spec_val.spec_value_img)))
@@ -297,26 +297,26 @@
         this.selectedSpec[specIndex] = spec_val.spec_value_id
         this.handleSelectedSku()
       },
-      /** 购买数量增加减少 */
+      /** The number of purchases increased and decreased*/
       handleBuyNumChanged(symbol) {
         if (symbol === '+') {
           const { enable_quantity } = this.selectedSku
           if (enable_quantity === 0) {
-            this.$message.error('该规格暂时缺货！')
+            this.$message.error('This specification is temporarily out of stock！')
           } else if (this.buyNum >= enable_quantity) {
-            this.$message.error('超过最大库存！')
+            this.$message.error('Over maximum stock！')
           } else {
             this.buyNum += 1
           }
         } else {
           if (this.buyNum < 2) {
-            this.$message.error('不能再少啦！')
+            this.$message.error('No less！')
           } else {
             this.buyNum -= 1
           }
         }
       },
-      /** 根据已选规格选出对应的sku */
+      /** Select one based on the selected specificationssku */
       handleSelectedSku() {
         let sku
         if (this.selectedSpec.length) {
@@ -334,7 +334,7 @@
           this.buyNum = sku.enable_quantity === 0 ? 0 : 1
         }
       },
-      /** 立即购买 */
+      /** Buy now*/
       handleBuyNow() {
         if (!this.in_store || !this.isLogin()) return
         const { buyNum } = this
@@ -345,7 +345,7 @@
           this.$router.push('/checkout')
         })
       },
-      /** 加入购物车 */
+      /** Add cart*/
       handleAddToCart() {
         if (!this.in_store || !this.isLogin()) return
         const { buyNum } = this
@@ -353,20 +353,20 @@
         const { sku_id } = this.selectedSku
         API_Trade.addToCart(sku_id, buyNum, this.getActivityId()).then(response => {
           this.$store.dispatch('cart/getCartDataAction')
-          this.$confirm('加入购物车成功！要去看看吗？', () => {
+          this.$confirm('Added to shopping cart successfully！Want to go check it out？', () => {
             this.$router.push({ path: '/cart' })
           })
         })
       },
-      /** 是否已登录 */
+      /** Login or not*/
       isLogin() {
         if (!this.selectedSku) {
-          this.$message.error('请选择商品规格！')
+          this.$message.error('Please select product specifications！')
           this.unselectedSku = true
           return false
         }
         if (!Storage.getItem('refresh_token')) {
-          this.$confirm('您还未登录，要现在去登录吗？', () => {
+          this.$confirm('You havent logged in yet. Do you want to log in now？', () => {
             this.$router.push({ path: '/login', query: { forward: `${this.$route.path}?sku_id=${this.selectedSku.sku_id}`} })
           })
           return false
@@ -374,7 +374,7 @@
           return true
         }
       },
-      /** 检查是否有积分兑换、团购、限时抢购活动 */
+      /** Check if there are points redeemable、A bulk、Flash sales*/
       getActivityId() {
         const { promotions } = this
         if (!promotions || !promotions.length) return ''
@@ -395,16 +395,16 @@
         if (!pro) return ''
         return pro.activity_id
       },
-      /** 检查购买数量有效性 */
+      /** Check the validity of the purchase quantity*/
       handleCheckNum() {
         let { buyNum } = this
         if (!RegExp.integer.test(buyNum) || buyNum < 1) {
-          this.$message.error('商品库存已不足，不能购买！')
+          this.$message.error('The goods are out of stock and cannot be purchased！')
           return false
         }
         return true
       },
-      /** 配送地区是否有货发生改变 */
+      /** Whether there is a change of goods in the distribution area*/
       handleInStockChange(in_store) {
         this.in_store = in_store
       }

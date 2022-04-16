@@ -1,53 +1,53 @@
 <template>
   <div id="find-password" class="container">
     <div class="find-container w">
-      <h1>找回密码<span>请您填写下面的表单来修改密码</span></h1>
+      <h1>Retrieve password<span>Please fill in the form below to change your password</span></h1>
       <div class="find-content">
         <div v-show="step === 1" class="find-item RegExp">
           <el-form :model="validAccountForm" :rules="validAccountRules" ref="validAccountForm" label-width="120px" style="width: 370px">
-            <el-form-item label="账户名：" prop="account" :error="accountError">
+            <el-form-item label="Account name：" prop="account" :error="accountError">
               <el-input v-model="validAccountForm.account"></el-input>
             </el-form-item>
-            <el-form-item label="图片验证码：" prop="img_code" class="vali-img">
+            <el-form-item label="Image verification code：" prop="img_code" class="vali-img">
               <el-input v-model="validAccountForm.img_code" :maxlength="4">
                 <img :src="valid_img_url" @click="getValidImgUrl" slot="append">
               </el-input>
             </el-form-item>
             <el-form-item>
-              <el-button class="next-btn" type="danger" @click="handleValidAccount">验证账户</el-button>
+              <el-button class="next-btn" type="danger" @click="handleValidAccount">Verify the account</el-button>
             </el-form-item>
           </el-form>
         </div>
         <div v-show="step === 2" class="find-item RegExp">
           <el-form :model="validMobileForm" :rules="validMobileRules" ref="validMobileForm" label-width="120px" style="width: 370px">
-            <el-form-item label="手机号码：">
+            <el-form-item label="Mobile phone number：">
               <span>{{ validMobileForm.mobile }}</span>
             </el-form-item>
-            <el-form-item label="图片验证码：" prop="img_code" class="vali-img">
+            <el-form-item label="Image verification code：" prop="img_code" class="vali-img">
               <el-input v-model="validMobileForm.img_code" :maxlength="4">
                 <img :src="valid_img_url" @click="getValidImgUrl" slot="append">
               </el-input>
             </el-form-item>
-            <el-form-item label="短信验证码：" prop="sms_code">
+            <el-form-item label="SMS verification code：" prop="sms_code">
               <el-input v-model="validMobileForm.sms_code" :maxlength="6">
                 <en-count-down-btn :time="60" :start="sendValidMobileSms" @end="getValidImgUrl" slot="append"/>
               </el-input>
             </el-form-item>
             <el-form-item>
-              <el-button class="next-btn" type="danger" @click="handleNextStep">下一步</el-button>
+              <el-button class="next-btn" type="danger" @click="handleNextStep">Next</el-button>
             </el-form-item>
           </el-form>
         </div>
         <div v-show="step === 3" class="find-item RegExp">
           <el-form :model="changePasswordForm" :rules="changePasswordRules" ref="changePasswordForm" label-width="140px">
-            <el-form-item label="请输入密码：" prop="password">
-              <el-input v-model="changePasswordForm.password" placeholder="请输入密码" type="password"></el-input>
+            <el-form-item label="Please enter your password.：" prop="password">
+              <el-input v-model="changePasswordForm.password" placeholder="Please enter your password." type="password"></el-input>
             </el-form-item>
-            <el-form-item label="请确认密码：" prop="rep_password">
-              <el-input v-model="changePasswordForm.rep_password" placeholder="请确认密码" type="password" auto-complete="off"></el-input>
+            <el-form-item label="Please confirm password.：" prop="rep_password">
+              <el-input v-model="changePasswordForm.rep_password" placeholder="Please confirm password." type="password" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button @click.stop="submitChangeForm">确认修改</el-button>
+              <el-button @click.stop="submitChangeForm">Confirm the change</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -74,38 +74,38 @@
       return {
         // uuid
         uuid: Storage.getItem('uuid'),
-        // 步骤
+        // steps
         step: 1,
-        /** 校验账户信息 表单 */
+        /** Verify the account information form*/
         validAccountForm: {},
-        /** 校验账户信息 表单验证 */
+        /** Verify account information form authentication*/
         validAccountRules: {
-          account: [this.MixinRequired('请输入账户名称！')],
-          img_code: [this.MixinRequired('请输入图片验证码！')]
+          account: [this.MixinRequired('Please enter your account name！')],
+          img_code: [this.MixinRequired('Please enter the image verification code！')]
         },
         accountError: '',
-        /** 校验手机 表单 */
+        /** Verify the mobile form*/
         validMobileForm: {},
-        /** 校验手机 表单规则 */
+        /** Verify mobile form rules*/
         validMobileRules: {
-          img_code: [this.MixinRequired('请输入图片验证码！')],
-          sms_code: [this.MixinRequired('请输入短信验证码！')]
+          img_code: [this.MixinRequired('Please enter the image verification code！')],
+          sms_code: [this.MixinRequired('Please enter the SMS verification code！')]
         },
-        /** 图片验证码URL */
+        /** Image verification codeURL */
         valid_img_url: '',
-        /** 修改密码 表单 */
+        /** Change password Form*/
         changePasswordForm: {
           password: '',
           rep_password: ''
         },
-        /** 修改密码 表单规则 */
+        /** Modify password form rules*/
         changePasswordRules: {
           password: [
-            this.MixinRequired('请输入新的登录密码！'),
+            this.MixinRequired('Please enter a new login password！'),
             {
               validator: (rule, value, callback) => {
                 if (!RegExp.password.test(value)) {
-                  callback(new Error('密码应为6-20位英文或数字！'))
+                  callback(new Error('The password should be6-20English bits or Numbers！'))
                 } else {
                   callback()
                 }
@@ -114,11 +114,11 @@
             }
           ],
           rep_password: [
-            this.MixinRequired('请再次输入密码！'),
+            this.MixinRequired('Please enter your password again！'),
             {
               validator: (rule, value, callback) => {
                 if (value !== this.changePasswordForm.password) {
-                  callback(new Error('两次输入的密码不相同'))
+                  callback(new Error('The passwords entered are different'))
                 } else {
                   callback()
                 }
@@ -133,12 +133,12 @@
       this.$nextTick(this.getValidImgUrl)
     },
     methods: {
-      /** 获取图片验证码URL */
+      /** Get the image captchaURL */
       getValidImgUrl() {
         const uuid = this.step === 1 ? this.uuid : this.validMobileForm.uuid
         this.valid_img_url = API_Common.getValidateCodeUrl(uuid, 'FIND_PASSWORD')
       },
-      /** 验证账户 */
+      /** Verify the account*/
       handleValidAccount() {
         this.$refs['validAccountForm'].validate((valid) => {
           if (valid) {
@@ -155,22 +155,22 @@
               this.accountError = error.response.data.message
             })
           } else {
-            this.$message.error('表单填写有误，请核对！')
+            this.$message.error('There is an error in the form. Please check it！')
             return false
           }
         })
       },
-      /** 发送手机验证码异步方法 */
+      /** Sending a mobile verification code asynchronously*/
       sendValidMobileSms() {
         return new Promise((resolve, reject) => {
           this.$refs['validMobileForm'].validateField('img_code', (error) => {
             if (error) {
-              this.$message.error('请输入图片验证码！')
+              this.$message.error('Please enter the image verification code！')
               reject()
             } else {
               const { uuid, img_code } = this.validMobileForm
               API_Passport.sendFindPasswordSms(uuid, img_code).then(() => {
-                this.$message.success('发送成功，请注意查收！')
+                this.$message.success('Successfully sent, please note to check！')
                 resolve()
               }).catch(() => {
                 this.getValidImgUrl()
@@ -180,7 +180,7 @@
           })
         })
       },
-      /** 下一步 */
+      /** Next*/
       handleNextStep() {
         this.$refs['validMobileForm'].validate((valid) => {
           if (valid) {
@@ -190,25 +190,25 @@
               this.getValidImgUrl()
             }).catch(this.getValidImgUrl)
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
       },
-      /** 找回密码 */
+      /** Retrieve password*/
       submitChangeForm() {
         this.$refs['changePasswordForm'].validate((valid) => {
           if (valid) {
             const { uuid } = this.validMobileForm
             const { password } = this.changePasswordForm
             API_Passport.changePassword(uuid, password).then(() => {
-              this.$message.success('密码找回成功，请牢记您的新密码！')
+              this.$message.success('Password recovered successfully, please remember your new password！')
               setTimeout(() => {
                 this.$router.push(`/login${this.MixinForward}`)
               }, 200)
             }).catch(this.getValidImgUrl)
           } else {
-            this.$message.error('表单填写有误，请检查！')
+            this.$message.error('The form is filled incorrectly, please check！')
             return false
           }
         })
@@ -233,7 +233,7 @@
         font-weight: 600;
         color: #333;
         line-height: 1.5;
-        font-family: arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei","微軟正黑體","儷黑 Pro",sans-serif;
+        font-family: arial,"Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei","Microsoft is in bold","Midnight blackPro",sans-serif;
         span {
           color: #757575;
           font-size: 12px;

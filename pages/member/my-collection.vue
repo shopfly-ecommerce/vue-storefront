@@ -3,13 +3,13 @@
     <div class="member-nav">
       <ul class="member-nav-list">
         <li>
-          <nuxt-link to="./my-collection">商品收藏</nuxt-link>
+          <nuxt-link to="./my-collection">Goods collection</nuxt-link>
         </li>
       </ul>
     </div>
     <div class="collection-container">
       <div v-show="type !== 'shop'" class="goods">
-        <empty-member v-if="goodsData.data && !goodsData.data.length">暂无商品收藏</empty-member>
+        <empty-member v-if="goodsData.data && !goodsData.data.length">No commodity collection at present</empty-member>
         <template v-else>
           <ul>
             <li
@@ -43,10 +43,10 @@
               <div class="del-pop">
                 <div class="del-pop-bg"></div>
                 <div class="del-pop-box">
-                  <div class="txt">确定删除？</div>
+                  <div class="txt">Sure to delete？</div>
                   <div class="btns">
-                    <a href="javascript:;" @click="handleDeleteGoodsColl(goods)">确定</a>
-                    <a href="javascript:;" @click="goods.show_del_pop = 0">取消</a>
+                    <a href="javascript:;" @click="handleDeleteGoodsColl(goods)">save</a>
+                    <a href="javascript:;" @click="goods.show_del_pop = 0">cancel</a>
                   </div>
                 </div>
               </div>
@@ -72,20 +72,20 @@
     name: 'my-collection',
     head() {
       return {
-        title: `我的收藏-${this.site.title}`
+        title: `Collection-${this.site.title}`
       }
     },
     data() {
       return {
         type: this.$route.query.type,
-        /** 商品收藏参数 */
+        /** Commodity collection parameters*/
         params_goods: {
           page_no: 1,
           page_size: 30
         },
-        /** 商品数据 */
+        /** Product data*/
         goodsData: '',
-        // 店铺swiper配置
+        // Shop swiper configuration
         shopSwiperOptions: {
           slidesPerView: 5,
           slidesPerGroup: 5
@@ -103,22 +103,22 @@
       }
     },
     methods: {
-      /** 删除商品收藏 */
+      /** Delete merchandise collection*/
       handleDeleteGoodsColl(goods) {
         API_Members.deleteGoodsCollection(goods.goods_id).then(() => {
           this.GET_Collection()
         })
       },
-      /** 商品收藏当前页发生改变 */
+      /** Merchandise Collection current page changed*/
       handleGoodsCurrentChange(page) {
         this.params_goods.page_no = page
         this.GET_Collection()
       },
-      /** 获取收藏 */
+      /** For collection*/
       GET_Collection() {
         API_Members.getGoodsCollection(this.params_goods).then(response => {
           response.data.map(item => {
-            // 初始化是否显示删除遮罩标识
+            // Initialize whether to display the delete mask flag
             item.show_del_pop = 0
             return item
           })
