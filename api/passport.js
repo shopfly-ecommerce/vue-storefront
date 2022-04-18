@@ -94,6 +94,21 @@ export function checkMobileRepeat(mobile) {
  * Registered members【Mobile phone no.】
  * @param params
  */
+export function registerByEmail(params) {
+  params = JSON.parse(JSON.stringify(params))
+  params.password = md5(params.password)
+  return request({
+    url: `passport/register/email`,
+    method: Method.POST,
+    data: params
+  })
+}
+
+
+/**
+ * Registered members【Mobile phone no.】
+ * @param params
+ */
 export function registerByMobile(params) {
   params = JSON.parse(JSON.stringify(params))
   params.password = md5(params.password)

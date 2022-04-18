@@ -197,9 +197,11 @@ export const actions = {
    * @param params
    * @returns {Promise<any>}
    */
-  registerByMobileAction: ({ commit, dispatch }, params) => {
+  registerByEmailAction: ({ commit, dispatch }, params) => {
     return new Promise((resolve, reject) => {
-      API_Passport.registerByMobile(params).then(res=> {
+      console.log("email...")
+      params.uuid = Storage.getItem('uuid')
+      API_Passport.registerByEmail(params).then(res=> {
         const { access_token, refresh_token, uid } = res
         commit(types.SET_ACCESS_TOKEN, access_token)
         commit(types.SET_REFRESH_TOKEN, refresh_token)

@@ -14,17 +14,28 @@
         status-icon
         label-width="200px"
       >
-        <el-form-item prop="username">
-          <span slot="label">username</span>
+        <el-form-item prop="nickname">
+          <span slot="label">Your name</span>
           <el-input
-            v-model="registerForm.username"
+            v-model="registerForm.nickname"
             :maxlength="20"
-            placeholder="Please enter the user name"
+            placeholder="Please enter the nickname"
             :validate-event="validateEvent"
             @input="input"
           ></el-input>
         </el-form-item>
-        <el-form-item label="password" prop="password">
+
+        <el-form-item label="Email" :error="requiredEmail" prop="email">
+          <el-input
+            v-model="registerForm.email"
+            :maxlength="50"
+            placeholder="your email"
+            :validate-event="validateEvent"
+            @input="input"
+          ></el-input>
+        </el-form-item>
+
+        <el-form-item label="Password" prop="password">
           <el-input
             v-model="registerForm.password"
             type="password"
@@ -44,38 +55,19 @@
             @input="input"
           ></el-input>
         </el-form-item>
-        <el-form-item label="mobile" :error="requiredMobile" prop="mobile">
+
+        <el-form-item  label="Captcha" :error="requiredValCode" prop="captcha" class="vali-code">
           <el-input
-            v-model="registerForm.mobile"
-            :maxlength="11"
-            placeholder="Please enter your cell phone number"
-            :validate-event="validateEvent"
-            @input="input"
-          ></el-input>
-        </el-form-item>
-        <el-form-item v-if="showValidCode" label="Image verification code" :error="requiredValCode" prop="vali_code" class="vali-code">
-          <el-input
-            v-model="registerForm.vali_code"
+            v-model="registerForm.captcha"
             :maxlength="4"
-            placeholder="Please enter the image verification code"
+            placeholder="Please enter the captcha"
             :validate-event="validateEvent"
             @input="input"
           >
             <img v-if="valid_code_url" :src="valid_code_url" slot="append" @click="changeValidCodeUrl">
           </el-input>
         </el-form-item>
-        <el-form-item prop="sms_code" class="sms-code">
-          <span slot="label">SMS verification code</span>
-          <el-input
-            v-model="registerForm.sms_code"
-            :maxlength="6"
-            :placeholder="effectiveMinutes"
-            :validate-event="validateEvent"
-            @input="input"
-          >
-            <en-count-down-btn :start="sendValidMobileSms" @end="changeValidCodeUrl" slot="append"/>
-          </el-input>
-        </el-form-item>
+
         <button type="button" class="register-btn" @click="handleConfirmRegister">Register now</button>
       </el-form>
     </div>
@@ -97,14 +89,14 @@
   export default {
     name: 'register',
     layout: 'full',
-    async asyncData() {
-      try {
-        const protocol = await API_Article.getArticleByPosition('REGISTRATION_AGREEMENT')
-        return { protocol }
-      } catch (e) {
-        return { protocol: 'Protocol obtaining failure...' }
-      }
-    },
+    // async asyncData() {
+    //   try {
+    //     const protocol = await API_Article.getArticleByPosition('REGISTRATION_AGREEMENT')
+    //     return { protocol }
+    //   } catch (e) {
+    //     return { protocol: 'Protocol obtaining failure...' }
+    //   }
+    // },
     head() {
       return {
         title: `Registered members-${this.site.title}`
@@ -112,25 +104,25 @@
     },
     data() {
       return {
+        labelPosition: 'left',
         //uuid
         uuid: Storage.getItem('uuid'),
         // Member Registration Form
         registerForm: {
-          username: '',
+          nickname: '',
           password: '',
           confirm_password: '',
-          mobile: '',
-          vali_code: '',
-          sms_code: ''
+          email: '',
+          captcha: ''
         },
         // Membership registration form rules
         registerRules: {
           username: [
-            this.MixinRequired('Please enter your account name！'),
-            { min: 2, max: 10, message: 'The length of2 to10 A character' },
+            this.MixinRequired('Please enter your nickname！'),
+            { min: 2, max: 10, message: 'The length of2 to20 A character' },
             { validator: (rule, value, callback) => {
               if (!RegExp.userName.test(value)) {
-                callback(new Error('Support only Chinese characters、The letter、digital、“-”、“_The combination of"！'))
+                callback(new Error('Support only The letter、digital、“-”、“_The combination of"！'))
               } else {
                 callback()
               }
@@ -141,18 +133,7 @@
               } else {
                 callback()
               }
-            } },
-            { validator: (rule, value, callback) => {
-              API_Passport.checkUsernameRepeat(value).then(response => {
-                  if (response.exist) {
-                    callback(new Error('This username is already registered！'))
-                  } else {
-                    callback()
-                  }
-                }).catch(error => {
-                callback(new Error('User name duplicate verification error, please try again later！'))
-              })
-            }, trigger: 'blur' }
+            } }
           ],
           password: [
             { required: true, message: 'Please enter your password.', trigger: 'blur' },
@@ -175,17 +156,16 @@
                 }
               } }
           ],
-          mobile: [
-            this.MixinRequired('Please enter your mobile phone number！'),
+          email: [
+            this.MixinRequired('Please enter your email！'),
             { validator: (rule, value, callback) => {
-              if (!RegExp.mobile.test(value)) {
-                callback(new Error('Incorrect phone format！'))
+              if (!RegExp.email.test(value)) {
+                callback(new Error('Incorrect email format！'))
               } else {
-                API_Passport.checkMobileRepeat(value).then(response => {
+                API_Passport.checkUsernameRepeat(value).then(response => {
                   if (response.exist) {
-                    callback(new Error('The phone number has been registered！'))
+                    callback(new Error('The email has been registered！'))
                   } else {
-                    this.showValidCode = true
                     callback()
                   }
                 }).catch(error => {
@@ -194,13 +174,12 @@
               }
             } }
           ],
-          vali_code: [this.MixinRequired('Please enter the image verification code！')],
-          sms_code: [this.MixinRequired('Please enter the SMS verification code！')]
+          captcha: [this.MixinRequired('Please enter the captcha')],
         },
-        requiredMobile: '',
+        requiredEmail: '',
         requiredValCode: '',
         // Whether to display the image verification code
-        showValidCode: false,
+        showValidCode: true,
         // Image verification code URL
         valid_code_url: '',
         // Consent registration Agreement
@@ -210,7 +189,7 @@
         // Initialization verification event [Compatible with IE]
         validateEvent: false,
 	      // Effective minutes
-        effectiveMinutes: '2Within minutes'
+        effectiveMinutes: '2 Within minutes'
       }
     },
     mounted() {
@@ -218,25 +197,6 @@
       const uuid_connect = Storage.getItem('uuid_connect')
       const isConnect = this.$route.query.form === 'connect' && !!uuid_connect
       this.isConnect = isConnect
-      this.$layer.open({
-        type: 1,
-        skin: 'layer-register',
-        title: 'The registration agreement',
-        area: ['800px', '600px'],
-        scrollbar: false,
-        btn: ['cancel', 'Agree'],
-        btnAlign: 'c',
-        yes: () => {
-          location.href = '/'
-        },
-        btn2: () => {
-          this.agreed = true
-        },
-        cancel: () => {
-          location.href = '/'
-        },
-        content: `<div style="padding: 15px">${this.protocol.content}</div>`
-      });
     },
     methods: {
       /** Get the image captcha*/
@@ -267,11 +227,11 @@
         !this.validateEvent && (this.validateEvent = true)
       },
       /** Register now*/
-      handleConfirmRegister() {
-        if (!this.agreed) {
-          this.$message.error('Please agree to the registration agreement first！')
-          return false
-        }
+      handleConfirmRegister: function () {
+        // if (!this.agreed) {
+        //   this.$message.error('Please agree to the registration agreement first！')
+        //   return false
+        // }
         const _forwardMatch = this.MixinForward.match(/\?forward=(.+)/) || []
         let forward = _forwardMatch[1]
         if (!forward || forward.indexOf('/login') > -1) {
@@ -279,20 +239,12 @@
         }
         this.$refs['registerForm'].validate(valide => {
           if (valide) {
-            this.registerByMobile(this.registerForm).then(() => {
-              if (this.isConnect) {
-                API_Connect.registerBindConnect(Storage.getItem('uuid_connect')).then(() => {
-                  Storage.removeItem('uuid_connect')
-                  this.getUserData().then(() => {
-                    this.$router.push({ path: forward || '/member' })
-                  })
-                })
-              } else {
-                this.getUserData().then(() => {
-                  this.$router.push({ path: forward || '/member' })
-                })
-              }
+            this.registerByEmail(this.registerForm).then(() => {
+              this.getUserData().then(() => {
+                this.$router.push({path: forward || '/member'})
+              })
             })
+
           } else {
             this.$message.error('The form is filled incorrectly, please check！')
             return false
@@ -300,7 +252,7 @@
         })
       },
       ...mapActions({
-        registerByMobile: 'user/registerByMobileAction',
+        registerByEmail: 'user/registerByEmailAction',
         getUserData: 'user/getUserDataAction'
       })
     }
@@ -362,7 +314,7 @@
           height: 50px;
           cursor: pointer;
           position: absolute;
-          top: -6px;
+          top: 0px;
           left: 0;
         }
       }
@@ -372,7 +324,7 @@
       border: none;
     }
     .register-btn {
-      width: 400px;
+      width: 500px;
       height: 52px;
       background-color: $color-main;
       color: #fff;
