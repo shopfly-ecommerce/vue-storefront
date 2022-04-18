@@ -9,52 +9,20 @@
 
           <div class="login-tab">
             <ul>
-              <li @click="!isConnect && (login_type = 'quick')">
-                <a href="javascript:;" class="tab-a" :class="[login_type === 'quick' && 'active', isConnect && 'disabled']">Mobile login</a>
-              </li>
-              <li @click="login_type = 'account'">
-                <a href="javascript:;" :class="[login_type === 'account' && 'active']">Password login</a>
+
+              <li>
+                <a href="javascript:;" >Sign in</a>
               </li>
             </ul>
           </div>
           <div class="login-interface">
-            <div v-show="login_type === 'quick'" class="login-show quick-login">
-              <form class="quick-form" @keyup.enter="handleLogin">
-                <div class="item item-form-o">
-                  <label for="mobile">
-                    <i class="iconfont ea-icon-mobile"></i>
-                  </label>
-                  <input id="mobile" v-model="quickForm.mobile" placeholder="Please enter your cell phone number" maxlength="20" autofocus>
-                </div>
-                <div class="item">
-                  <label for="validcode-mobile">
-                    <i class="iconfont ea-icon-safe"></i>
-                  </label>
-                  <input id="validcode-mobile" v-model="quickForm.captcha" placeholder="Image verification code" maxlength="4">
-                  <img v-if="val_code_url" class="validcode-img" :src="val_code_url" @click="handleChangeValUrl">
-                </div>
-                <div class="item item-form-t">
-                  <en-count-down-btn :start="sendValidMobileSms" @end="handleChangeValUrl" class="send-sms-btn"/>
-                </div>
-                <div class="item item-form-p">
-                  <label for="sms-code">
-                    <i class="iconfont ea-icon-sms"></i>
-                  </label>
-                  <input id="sms-code" v-model="quickForm.sms_code" placeholder="SMS verification code" maxlength="6">
-                </div>
-                <div class="forget">
-                  <span><nuxt-link :to="'/find-password' + MixinForward">Forgot password</nuxt-link></span>
-                </div>
-                <button class="form-sub" type="button" @click="handleLogin">Sign in</button>
-              </form>
-            </div>
-            <div v-show=" login_type === 'account'" class="login-show account-login">
+            <div class="login-show account-login">
               <form class="account-form" @keyup.enter="handleLogin">
                 <div class="item">
                   <label for="username">
                     <i class="iconfont ea-icon-persion"></i>
                   </label>
-                  <input id="username" v-model="accountForm.username" placeholder="email/username/mobile">
+                  <input id="username" v-model="accountForm.username" placeholder="email">
                 </div>
                 <div class="item">
                   <label for="password">
@@ -66,7 +34,7 @@
                   <label for="validcode">
                     <i class="iconfont ea-icon-safe"></i>
                   </label>
-                  <input id="validcode" v-model="accountForm.captcha" placeholder="Image verification code" maxlength="4">
+                  <input id="validcode" v-model="accountForm.captcha" placeholder="Please enter captcha" maxlength="4">
                   <img v-if="val_code_url" class="validcode-img" :src="val_code_url" @click="handleChangeValUrl">
                 </div>
                 <div class="forget">
@@ -114,8 +82,8 @@
         },
         // Normal Login form
         accountForm: {
-          username: 'food',
-          password: '111111'
+          username: '',
+          password: ''
         },
         // Whether the login is trusted
         isConnect: false
@@ -134,30 +102,7 @@
       ...mapGetters(['site'])
     },
     methods: {
-      /** Send SMS verification code asynchronous callback*/
-      sendValidMobileSms() {
-        const { mobile, captcha } = this.quickForm
-        return new Promise((resolve, reject) => {
-          if (!mobile) {
-            this.$message.error('Please enter your mobile phone number！')
-            reject()
-          } else if (!RegExp.mobile.test(mobile)) {
-            this.$message.error('The phone number is incorrectly formatted！')
-            reject()
-          } else if (!captcha) {
-            this.$message.error('Please enter the image verification code！')
-            reject()
-          } else {
-            API_Passport.sendLoginSms(mobile, captcha).then(() => {
-              this.$message.success('The text message has been sent successfully, please note that check！')
-              resolve()
-            }).catch(() => {
-              this.handleChangeValUrl()
-              reject()
-            })
-          }
-        })
-      },
+
       /** Change the image verification codeURL */
       handleChangeValUrl() {
         this.val_code_url = API_Common.getValidateCodeUrl(this.uuid, 'LOGIN')
@@ -170,49 +115,18 @@
           forward = '/'
         }
         const login_type = this.login_type
-        const form = login_type === 'quick' ? this.quickForm : this.accountForm
-        if (login_type === 'quick') {
-          if (!form.mobile || !RegExp.mobile.test(form.mobile) || !form.sms_code) {
+        const form =  this.accountForm
+
+        if (!form.username || !form.password || !form.captcha) {
             this.$message.error('The form is filled incorrectly, please check！')
             return false
-          }
-        } else {
-          if (!form.username || !form.password || !form.captcha) {
-            this.$message.error('The form is filled incorrectly, please check！')
-            return false
-          }
         }
-        if (this.isConnect) {
-          const uuid = Storage.getItem('uuid_connect')
-          if (!uuid) {
-            this.$message.error('Parameters are abnormal. Please refresh the page！')
-            return false
-          }
-          const params = JSON.parse(JSON.stringify(form))
-          params.uuid = this.uuid
-          API_Connect.loginByConnect(uuid, params).then(async response => {
-            if (response.result === 'bind_success') {
-              this.setAccessToken(response.access_token)
-              this.setRefreshToken(response.refresh_token)
-              const expires = new Date(jwt_decode(response.refresh_token).exp * 1000)
-              Storage.setItem('uid', response.uid, { expires })
-              await this.getUserData()
-              Storage.removeItem('uuid_connect')
-              window.location.href = forward
-            } else {
-              this.$alert('The current user has been bound to another account！', () => {
-                this.removeAccessToken()
-                this.removeRefreshToken()
-                Storage.removeItem('uuid_connect')
-              })
-            }
-          }).catch(this.handleChangeValUrl)
-        } else {
+
           this.login({ login_type, form }).then(async () => {
             await this.getCartData()
             window.location.href = forward
           }).catch(this.handleChangeValUrl)
-        }
+
       },
       getConnectUrl: API_Connect.getConnectUrl,
       ...mapActions({
@@ -279,7 +193,7 @@
     clear: both;
     ul li {
       float: left;
-      width: 50%;
+      width: 100%;
       padding: 20px 0;
       text-align: center;
       font-size: 20px;
