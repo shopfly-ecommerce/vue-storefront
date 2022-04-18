@@ -1,6 +1,5 @@
 import * as types from './mutation-types'
 import * as API_Common from '@/api/common'
-import * as API_Home from '@/api/home'
 import * as API_Message from '@/api/message'
 import uuidv1 from 'uuid/v1'
 import Storage from '@/utils/storage'
@@ -11,12 +10,6 @@ if (!Storage.getItem('uuid') && process.client) {
 
 /** state */
 export const state = () => ({
-  // The navigation bar
-  navList: [],
-  // Categories
-  categories: [],
-  // Hot search keywords
-  hotKeywords: [],
   // Site information
   site: '',
   // Number of unread messages
@@ -33,30 +26,6 @@ export const mutations = {
   [types.SET_SITE_DATA](state, data) {
     state.site = data
     process.client && Storage.setItem('site', global.JSON.stringify(data))
-  },
-  /**
-   * Setting Classification Data
-   * @param state
-   * @param data
-   */
-  [types.SET_CATEGORY_DATA](state, data) {
-    state.categories = data
-  },
-  /**
-   * Set the navigation bar data
-   * @param state
-   * @param data
-   */
-  [types.SET_NAV_DATA](state, data) {
-    state.navList = data
-  },
-  /**
-   * Set the hot search keyword data
-   * @param state
-   * @param data
-   */
-  [types.SET_HOT_KEYWORDS](state, data) {
-    state.hotKeywords = data
   },
   /**
    * Number of unread messages
@@ -78,33 +47,18 @@ export const actions = {
    * @param res
    */
   async nuxtServerInit({ commit, dispatch }, { req, res }) {
-    // Getting public data
-    await dispatch('getCommonDataAction')
+    // Getting site data
+    await dispatch('getSiteDataAction')
   },
   /**
    * Getting public data
    * @param commit
    * @returns {Promise<void>}
    */
-  async getCommonDataAction({ commit }) {
-    const commons = await Promise.all([
-      // Site information
-      API_Common.getSiteData(),
-      // The navigation bar
-      API_Home.getSiteMenu(),
-      // Categorical data
-      API_Home.getCategory(),
-      // Hot keywords
-      API_Home.getHotKeywords()
-    ])
+  async getSiteDataAction({ commit }) {
+    const siteData = await API_Common.getSiteData()
     // Site information
-    commit(types.SET_SITE_DATA, commons[0])
-    // The navigation bar
-    commit(types.SET_NAV_DATA, commons[1])
-    // Categorical data
-    commit(types.SET_CATEGORY_DATA, commons[2])
-    // Hot keywords
-    commit(types.SET_HOT_KEYWORDS, commons[3])
+    commit(types.SET_SITE_DATA, siteData)
   },
   /**
    * Gets the number of unread messages
@@ -119,24 +73,6 @@ export const actions = {
 
 /** getters */
 export const getters = {
-  /**
-   * Classification list
-   * @param state
-   * @returns {*}
-   */
-  categories: state => state.categories,
-  /**
-   * The navigation bar
-   * @param state
-   * @returns {*}
-   */
-  navList: state => state.navList,
-  /**
-   * Hot search keywords
-   * @param state
-   * @returns {*}
-   */
-  hotKeywords: state => state.hotKeywords,
   /**
    * Obtaining User information
    * @param state

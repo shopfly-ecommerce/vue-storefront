@@ -1,8 +1,8 @@
 <template>
   <div id="nav" class="w">
     <en-category/>
-    <ul class="nav-list">
-      <li v-for="nav in $store.getters.navList" :key="nav.navigation_id">
+    <ul v-if="navList" class="nav-list">
+      <li v-for="nav in navList" :key="nav.navigation_id">
         <a :href="getUrl(nav.url)">{{ nav.navigation_name }}</a>
       </li>
     </ul>
@@ -11,8 +11,18 @@
 
 <script>
   import { parse, stringify } from 'querystring'
+  import * as API_Home from '@/api/home'
+
   export default {
     name: 'EnNav',
+    data() {
+      return {
+        navList: ''
+      }
+    },
+    async fetch() {
+      this.navList = await API_Home.getSiteMenu()
+    },
     methods: {
       getUrl(url) {
         if (/keyword=(.*)/.test(url)) {
