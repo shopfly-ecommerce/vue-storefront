@@ -3,7 +3,6 @@ import * as API_Common from '@/api/common'
 import * as API_Home from '@/api/home'
 import * as API_Message from '@/api/message'
 import uuidv1 from 'uuid/v1'
-import Cookie from 'cookie'
 import Storage from '@/utils/storage'
 
 if (!Storage.getItem('uuid') && process.client) {
@@ -79,16 +78,6 @@ export const actions = {
    * @param res
    */
   async nuxtServerInit({ commit, dispatch }, { req, res }) {
-    if (req && req.headers && req.headers.cookie) {
-      const cookies = Cookie.parse(req.headers.cookie) || {}
-      let { user } = cookies
-      try {
-        user = global.JSON.parse(user)
-      } catch (e) {
-        user = ''
-      }
-      await commit('user/SET_USER_INFO', user)
-    }
     // Getting public data
     await dispatch('getCommonDataAction')
   },

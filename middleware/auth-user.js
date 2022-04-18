@@ -5,8 +5,18 @@
  * @param route
  * @returns {*}
  */
-export default function ({ store, redirect, route }) {
-  if (!store.getters.user) {
+
+import Cookie from 'cookie'
+import Storage from '@/utils/storage'
+
+export default function ({ redirect, route, req }) {
+  // if (req && req.headers && req.headers.cookie) {
+  //   const cookies = Cookie.parse(req.headers.cookie) || {}
+  //   if (!cookies.user) {
+  //     return redirect(`/login?forward=${route.fullPath}`)
+  //   }
+  // }
+  if (!Storage.getItem('user')) {
     return redirect(`/login?forward=${route.fullPath}`)
   }
 }

@@ -276,6 +276,7 @@
   .login-box .login-form .login-tab {
     height: 60px;
     border-bottom: 1px solid #f4f4f4;
+    clear: both;
     ul li {
       float: left;
       width: 50%;

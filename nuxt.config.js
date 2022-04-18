@@ -60,6 +60,7 @@ module.exports = {
       ]
     },
   },
+  ssr: false,
   css: [
     '~assets/styles/normalize.css',
     '~assets/styles/base.scss',
@@ -68,16 +69,17 @@ module.exports = {
     'swiper/dist/css/swiper.css',
     'viewerjs/dist/viewer.css'
   ],
-  modules: ['@kimyvgy/nuxt-page-cache'],
-  cache: {
-    useHostPrefix: false,
-    pages: ['/'],
-    store: {
-      type: 'memory',
-      max: 200,
-      ttl: 60
-    }
-  },
+  // modules: ['@kimyvgy/nuxt-page-cache'],
+  // cache: {
+  //   enabled: process.env.NODE_ENV === 'production',
+  //   useHostPrefix: false,
+  //   pages: ['/'],
+  //   store: {
+  //     type: 'memory',
+  //     max: 200,
+  //     ttl: 60
+  //   }
+  // },
   plugins: [
     { src: '~plugins/vue-layer', ssr: false },
     { src: '~plugins/vue-lazyload', ssr: true },
