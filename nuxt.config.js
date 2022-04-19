@@ -4,7 +4,8 @@ import { api, domain } from './ui-domain'
 module.exports = {
   alias: {
     '~': resolve(__dirname),
-    '@': resolve(__dirname)
+    '@': resolve(__dirname),
+    'vue$': 'vue/dist/vue.esm.js'
   },
   env: {
     /**
