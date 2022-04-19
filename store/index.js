@@ -19,7 +19,7 @@ export const state = () => ({
 /** mutations */
 export const mutations = {
   /**
-   * Set up the sitecookie
+   * Set up the site data
    * @param state
    * @param data
    */
@@ -47,8 +47,7 @@ export const actions = {
    * @param res
    */
   async nuxtServerInit({ commit, dispatch }, { req, res }) {
-    // Getting site data
-    await dispatch('getSiteDataAction')
+    //
   },
   /**
    * Getting public data
