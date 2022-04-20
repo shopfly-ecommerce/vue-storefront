@@ -29,7 +29,7 @@ export default {
               }
             }, trigger: 'blur' }
         ],
-        region: [this.MixinRequired('Please select the address region！')],
+        // region: [this.MixinRequired('Please select the address region！')],
         addr: [
           this.MixinRequired('Please enter the detailed address！'),
           { min: 1, max: 50, message: 'The length of1 to50 A character', trigger: 'blur' }
@@ -65,7 +65,7 @@ export default {
       })
       this.$nextTick(()  => {
         if (_refs) {
-          _refs.clearValidate()
+          // _refs.clearValidate()
         }
       })
     },
