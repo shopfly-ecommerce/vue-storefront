@@ -1,12 +1,13 @@
 <template>
   <div
+    v-if="categories"
     id="category"
     @mouseover="handleCategoryMouseover"
     @mouseout="handleCategoryMouseout"
   >
     <a href="/goods" class="category-title">Categories</a>
     <div v-show="unfold" class="category-layer">
-      <template v-for="(item, index) in $store.getters.categories">
+      <template v-for="(item, index) in categories">
         <div v-if="index < 7" :key="item.category_id" class="category-item">
           <div class="item-content">
             <i class="item-icon"></i>
@@ -81,7 +82,13 @@
     data() {
       let unfold = this.$route.path === '/'
       if (this.initUnfold === false) unfold = false
-      return { unfold }
+      return {
+        unfold,
+        categories: ''
+      }
+    },
+    async fetch() {
+      this.categories = await API_Home.getCategory()
     },
     watch: {
       $route() {

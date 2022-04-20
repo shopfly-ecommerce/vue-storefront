@@ -8,7 +8,7 @@
 </template>
 <script>
   export default {
-    name: 'defalt'
+    name: 'default'
   }
 </script>
 <style type="text/scss" lang="scss">

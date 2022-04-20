@@ -44,14 +44,6 @@ export const SET_SHOP_DATA = 'SET_SHOP_DATA'
 // Setting site Information
 export const SET_SITE_DATA = 'SET_SITE_DATA'
 
-/** Home page static data*/
-// Set up the classification
-export const SET_CATEGORY_DATA = 'SET_CATEGORY_DATA'
-// Setting the navigation bar
-export const SET_NAV_DATA = 'SET_NAV_DATA'
-// Set the hot search keywords
-export const SET_HOT_KEYWORDS = 'SET_HOT_KEYWORDS'
-
 /** Intra-station message correlation*/
 // Gets unread messages
 export const GET_UNREAD_MESSAGE = 'GET_UNREAD_MESSAGE'

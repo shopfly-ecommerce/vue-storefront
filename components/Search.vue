@@ -12,8 +12,8 @@
       >
       <button type="button" class="search-btn goods" @click="handleSearchGoods">Search</button>
     </div>
-    <ul v-if="!hideKeywords" class="search-hot-keywords">
-      <li v-for="item in $store.getters.hotKeywords" :key="item.id">
+    <ul v-if="!hideKeywords && hotKeywords" class="search-hot-keywords">
+      <li v-for="item in hotKeywords" :key="item.id">
         <a :href="'/goods?keyword=' + encodeURIComponent(item.hot_name)">{{ item.hot_name }}</a>
       </li>
     </ul>
@@ -37,15 +37,19 @@
   import * as API_Goods from '@/api/goods'
   export default {
     name: 'EnSearch',
-    props: ['hide-keywords'],
+    props: ['hideKeywords'],
     data() {
       const { keyword } = this.$route.query;
       return {
         keyword: keyword || '',
         autoCompleteStr: '',
         autoCompleteData: [],
-        show_autocomplete: false
+        show_autocomplete: false,
+        hotKeywords: ''
       }
+    },
+    async fetch() {
+      this.hotKeywords = await API_Home.getHotKeywords()
     },
     mounted() {
       this.handleQueryKeywordChange()
