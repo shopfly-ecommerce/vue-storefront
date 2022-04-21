@@ -1,2 +1,2 @@
 # vue-storefront
-shopflix storefront
+shopfly storefront
