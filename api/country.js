@@ -20,6 +20,7 @@ export function getStates(code) {
   return request({
     url: `${process.env.api_base}/countries/${code}/states`,
     method: Method.GET,
-    needToken: true
+    needToken: true,
+    loading: false
   })
 }
