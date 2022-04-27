@@ -34,7 +34,7 @@ Vue.mixin({
     },
     /** Use it a lot. Put it inmixinIn the*/
     MixinRequired(message, trigger) {
-      return { required: true, pattern: /^\S.*$/gi, message: message + '【Cannot start with a space】', trigger: trigger || 'blur' }
+      return { required: true, pattern: /^\S.*$/gi, message, trigger: trigger || 'blur' }
     },
     /** Return to previous page*/
     MixinRouterBack() {
