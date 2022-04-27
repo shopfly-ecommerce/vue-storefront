@@ -144,6 +144,7 @@ export default {
     /** Handle country changed */
     handleCountryChange(code) {
       const country = this.countries.find(item => item.code === code)
+      if (!country) return
       this.addressForm.country = country.name
       this.addressForm.state_name = ''
       this.addressForm.state_code = ''
@@ -152,6 +153,7 @@ export default {
     /** Handle state changed */
     handleStateChange(code) {
       const state = this.states.find(item => item.code === code)
+      if (!state) return
       this.addressForm.state_name = state.name
     },
     /** Get all countries */

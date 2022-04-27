@@ -280,6 +280,7 @@
       /** Handle country changed */
       handleCountryChange(code) {
         const country = this.countries.find(item => item.code === code)
+        if (!country) return
         this.profileForm.country = country.name
         this.profileForm.state_name = ''
         this.profileForm.state_code = ''
@@ -288,6 +289,7 @@
       /** Handle state changed */
       handleStateChange(code) {
         const state = this.states.find(item => item.code === code)
+        if (!state) return
         this.profileForm.state_name = state.name
       },
       ...mapActions({
