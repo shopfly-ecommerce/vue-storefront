@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     areaFormatter(row) {
-      return row.country + row.state_name + row.city + row.addr
+      return `${row.country} - ${row.state_name} - ${row.city}`
     },
     /** Add the address*/
     handleAddAddress(_refs) {

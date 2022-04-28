@@ -23,7 +23,7 @@
             <span v-else :title="item.name">{{ item.name }}</span>
           </div>
           <div class="name-li-ckt-info" :title="item.name">{{ item.name }}</div>
-          <div class="address-li-ckt-info" :title="areaFormatter(item)">{{ areaFormatter(item) }}</div>  <!--40Character length-->
+          <div class="address-li-ckt-info" :title="areaFormatter(item) + ' - ' + item.addr">{{ areaFormatter(item) + ' - ' + item.addr }}</div>  <!--40Character length-->
           <div class="mobile-li-ckt-info" :title="item.mobile">{{ item.mobile }}</div>
           <div v-if="item.def_addr" class="default-li-ckt-info">Default</div>
           <div class="operate-li-ckt-info">
