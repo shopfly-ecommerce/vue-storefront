@@ -116,7 +116,7 @@
       },
       /** Formatting address information*/
       formatterAddress(address) {
-        return `${address.province} ${address.city} ${address.county} ${address.town} ${address.addr}`
+        return `${address.country} ${address.state_name} ${address.city} ${address.addr}`
       },
       /** Submit orders*/
       handleCreateTrade() {

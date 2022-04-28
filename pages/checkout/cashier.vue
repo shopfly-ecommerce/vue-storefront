@@ -24,10 +24,9 @@
           <div class="cashier-order-inside">
             <h3><i></i>Delivery to the：
               <template v-if="order">
-                <span>{{ order.ship_province }}</span>
+                <span>{{ order.ship_country }}</span>
+                <span>{{ order.ship_state }}</span>
                 <span>{{ order.ship_city }}</span>
-                <span>{{ order.ship_county }}</span>
-                <span>{{ order.ship_town || '' }}</span>
                 <span>{{ order.ship_addr }}</span>
                 <span>{{ order.ship_mobile }}</span>
               </template>

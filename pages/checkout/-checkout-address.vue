@@ -119,7 +119,6 @@
   Vue.use(Checkbox).use(Form).use(FormItem).use(Select).use(Option)
   import addressMixin from '@/pages/member/addressMixin'
 
-  import * as API_Country from '@/api/country'
   import * as API_Trade from '@/api/trade'
   export default {
     name: 'checkout-address',
@@ -128,17 +127,8 @@
     props: ['address-id'],
     data() {
       return {
-        expanded: false,
-        countries:[],
-        states:[]
-
+        expanded: false
       }
-    },
-    mounted() {
-      API_Country.getCountries().then(response => {
-        this.countries=response;
-        console.log(this.countries)
-      });
     },
     computed: {
       /** Put the selected address in the first place*/
@@ -162,21 +152,12 @@
       }
     },
     methods: {
-      /** Formatting address information*/
-      formatterAddress(address) {
-        return `${address.province} ${address.city} ${address.county} ${address.town} ${address.addr}`
-      },
       /** Select the shipping address*/
       handleSelectAddress(item, showMsg) {
         if (item.addr_id === this.addressId) return
         API_Trade.setAddressId(item.addr_id).then(response => {
           showMsg !== false && this.$message.success('Set up the success！')
           this.$emit('change', item)
-        })
-      },
-      handleCountryChange(code) {
-        API_Country.getStates(code).then(response=>{
-          this.states=response;
         })
       }
     }
