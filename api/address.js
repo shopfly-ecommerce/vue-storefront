@@ -26,7 +26,7 @@ export function addAddress(params) {
     url: 'members/address',
     method: Method.POST,
     needToken: true,
-    data: params
+    params: params
   })
 }
 

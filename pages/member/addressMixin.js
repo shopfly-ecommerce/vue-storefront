@@ -1,78 +1,81 @@
 /**
  * Created by Andste on 2018/6/13.
- * Address associatedmixin
  * Personal center and settlement page reuse
  */
 
 import * as API_Address from '@/api/address'
+import * as API_Country from '@/api/country'
+
 import { RegExp } from '@/ui-utils'
+import el from 'element-ui/src/locale/lang/el.js'
 export default {
   data() {
     return {
       // Address list
       addressList: [],
       // Add and edit address forms
-      addressForm: {},
+      addressForm: {
+        name: '',
+        mobile: '',
+        country_code: '',
+        state_code: '',
+        city: '',
+        zip_code: ''
+      },
       // Add and edit address form rules
       addressRules: {
         name: [
-          this.MixinRequired('Please enter the name of consignee！'),
+          this.MixinRequired('Please enter the name of consignee'),
           { min: 2, max: 20, message: 'The length of2 to20 A character', trigger: 'blur' }
         ],
-        mobile: [
-          this.MixinRequired('Please enter contact information！'),
-          { validator: (rule, value, callback) => {
-              if (!RegExp.mobile.test(value)) {
-                callback(new Error('Incorrect phone format！'))
-              } else {
-                callback()
-              }
-            }, trigger: 'blur' }
-        ],
-        // region: [this.MixinRequired('Please select the address region！')],
+        mobile: [this.MixinRequired('Please enter contact information！')],
+        country_code: [{ required: true, message: 'Please select a country', trigger: 'change' }],
+        state_code: [{ required: false, message: 'Please select a state', trigger: 'change' }],
+        city: [this.MixinRequired('Please enter the city')],
+        zip_code: [this.MixinRequired('Please enter the zip code')],
         addr: [
           this.MixinRequired('Please enter the detailed address！'),
           { min: 1, max: 50, message: 'The length of1 to50 A character', trigger: 'blur' }
         ]
       },
-      // The address of the operation is temporarily saved while editing the address
-      regions: null
+      countries: [],
+      states: [],
+      stateLoading: false
     }
   },
   mounted() {
+    this.getAllCountries()
     this.GET_AddressList()
   },
   methods: {
     areaFormatter(row) {
-      return row.province + row.city + row.county + row.town
+      return `${row.country} - ${row.state_name} - ${row.city}`
     },
     /** Add the address*/
     handleAddAddress(_refs) {
-      if (!this.regions) {
-        const $regionPicker = this.$refs['regionPicker']
-        $regionPicker && $regionPicker['initAddressSelect']()
-      }
       this.addressForm = {
-        def_addr: 0,
-        ship_address_name: ''
+        name: '',
+        mobile: '',
+        country_code: '',
+        state_code: '',
+        city: '',
+        addr: '',
+        zip_code: '',
+        ship_address_name: '',
+        def_addr: 0
       }
-      this.regions = new Date().getTime()
+      this.addressRules.state_code[0].required = false
       this.openLayer({
         title: 'Add the address',
         yes: index => {
           this.submitAddressForm('add', index)
         }
       })
-      this.$nextTick(()  => {
-        if (_refs) {
-          // _refs.clearValidate()
-        }
-      })
     },
     /** Edit the address*/
-    handleEaitAddress(row) {
+    handleEditAddress(row) {
       this.addressForm = JSON.parse(JSON.stringify(row))
-      this.regions = [row.province_id, row.city_id, row.county_id || -1, row.town_id || -1]
+      this.getCountryState(this.addressForm.country_code)
       this.openLayer({
         yes: index => {
           this.submitAddressForm('edit', index)
@@ -136,6 +139,42 @@ export default {
     GET_AddressList() {
       API_Address.getAddressList().then(response => {
         this.addressList = response
+      })
+    },
+    /** Handle country changed */
+    handleCountryChange(code) {
+      const country = this.countries.find(item => item.code === code)
+      if (!country) return
+      this.addressForm.country = country.name
+      this.addressForm.state_name = ''
+      this.addressForm.state_code = ''
+      this.getCountryState(code)
+    },
+    /** Handle state changed */
+    handleStateChange(code) {
+      const state = this.states.find(item => item.code === code)
+      if (!state) return
+      this.addressForm.state_name = state.name
+    },
+    /** Get all countries */
+    getAllCountries() {
+      API_Country.getCountries().then(res => {
+        this.countries = res
+      })
+    },
+    /** Get country state */
+    getCountryState(code) {
+      this.stateLoading = true
+      this.states = []
+      API_Country.getStates(code).then(res => {
+        if (res && res.length) {
+          this.addressRules.state_code[0].required = true
+          this.states = res
+        } else {
+          this.addressRules.state_code[0].required = false
+        }
+      }).finally(() => {
+        this.stateLoading = false
       })
     }
   }

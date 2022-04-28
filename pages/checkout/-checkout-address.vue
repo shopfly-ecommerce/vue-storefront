@@ -23,12 +23,12 @@
             <span v-else :title="item.name">{{ item.name }}</span>
           </div>
           <div class="name-li-ckt-info" :title="item.name">{{ item.name }}</div>
-          <div class="address-li-ckt-info" :title="formatterAddress(item)">{{ formatterAddress(item) }}</div>  <!--40Character length-->
+          <div class="address-li-ckt-info" :title="areaFormatter(item) + ' - ' + item.addr">{{ areaFormatter(item) + ' - ' + item.addr }}</div>  <!--40Character length-->
           <div class="mobile-li-ckt-info" :title="item.mobile">{{ item.mobile }}</div>
-          <div v-if="item.def_addr" class="default-li-ckt-info">The default address</div>
+          <div v-if="item.def_addr" class="default-li-ckt-info">Default</div>
           <div class="operate-li-ckt-info">
-            <a v-if="!item.def_addr" href="javascript:;" class="set" @click="handleSetDefaultAddress(item)">Set to default</a>
-            <a href="javascript:;" class="edit" @click="handleEaitAddress(item)">edit</a>
+            <!--<a v-if="!item.def_addr" href="javascript:;" class="set" @click="handleSetDefaultAddress(item)">Set to default</a>-->
+            <a href="javascript:;" class="edit" @click="handleEditAddress(item)">edit</a>
             <a v-if="!item.def_addr" href="javascript:;" class="delete" @click="handleDeleteAddress(item)">delete</a>
           </div>
         </li>
@@ -45,55 +45,64 @@
     </div>
     <div class="placeholder-20"></div>
     <div id="addressForm" style="display: none">
-      <el-form :model="addressForm" :rules="addressRules"  :label-position="labelPosition" ref="addressForm" label-width="100px" style="width: 450px">
-
-        <el-form-item label="Country" prop="country" >
-          <el-select v-model="addressForm.country"   filterable @change="handleCountryChange" placeholder="Select" style="margin-top: 5px">
-            <el-option
-              v-for="item in countries"
-              :key="item.code"
-              :label="item.name"
-              :value="item.code">
-            </el-option>
-          </el-select>
-        </el-form-item>
-
-        <el-form-item label="State / Province / Region" prop="province">
-          <el-input v-if="states.length==0" v-model="addressForm.province" size="small" :maxlength="11"></el-input>
-
-          <el-select v-if="states.length>0" v-model="addressForm.state" onchange="" placeholder="Select" style="margin-top: 5px">
-            <el-option
-              v-for="item in states"
-              :key="item.code"
-              :label="item.name"
-              :value="item.code">
-            </el-option>
-          </el-select>
-
-        </el-form-item>
-
-        <el-form-item label="City" prop="city">
-          <el-input v-model="addressForm.city" size="small" :maxlength="11"></el-input>
-        </el-form-item>
-
+      <el-form :model="addressForm" :rules="addressRules" ref="addressForm">
         <el-form-item label="Full name (First and Last name)" prop="name">
           <el-input v-model="addressForm.name" size="small"></el-input>
         </el-form-item>
-
-        <el-form-item label="Street address" prop="addr">
+        <el-form-item label="Contact" prop="mobile">
+          <el-input v-model="addressForm.mobile" size="small"></el-input>
+        </el-form-item>
+        <el-form-item label="Country" prop="country_code">
+          <el-select
+            v-model="addressForm.country_code"
+            size="small"
+            filterable
+            clearable
+            placeholder="Select country"
+            style="width: 100%"
+            @change="handleCountryChange"
+          >
+            <el-option
+              v-for="item in countries"
+              :key="item.code"
+              :value="item.code"
+              :label="item.name"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item v-if="addressRules.state_code[0].required" label="State / Province / Region" prop="state_code">
+          <el-select
+            v-model="addressForm.state_code"
+            v-loading="stateLoading"
+            size="small"
+            filterable
+            clearable
+            placeholder="Select state"
+            style="width: 100%"
+            @change="handleStateChange"
+          >
+            <el-option
+              v-for="item in states"
+              :key="item.code"
+              :value="item.code"
+              :label="item.name"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="City" prop="city">
+          <el-input v-model="addressForm.city" size="small"></el-input>
+        </el-form-item>
+        <el-form-item label="Detailed address" prop="addr">
           <el-input v-model="addressForm.addr" size="small"></el-input>
         </el-form-item>
-
-        <el-form-item label="Zip Code" prop="zipCode">
-          <el-input v-model="addressForm.zipCode" size="small" :maxlength="11"></el-input>
+        <el-form-item label="Zip code" prop="zip_code">
+          <el-input v-model="addressForm.zip_code" size="small"></el-input>
         </el-form-item>
-
-        <el-form-item label="Phone number" prop="mobile">
-          <el-input v-model="addressForm.mobile" size="small" :maxlength="11"></el-input>
+        <el-form-item label="Address the alias" prop="ship_address_name">
+          <el-input v-model="addressForm.ship_address_name" size="small" placeholder="The company、In the home、School or something"></el-input>
         </el-form-item>
-
-        <el-form-item label="">
-          <el-checkbox v-model="addressForm.def_addr" :true-label="1" :false-label="0">Use as my default address</el-checkbox>
+        <el-form-item label="Set to default">
+          <el-checkbox v-model="addressForm.def_addr" :true-label="1" :false-label="0">default</el-checkbox>
         </el-form-item>
       </el-form>
     </div>
@@ -119,7 +128,6 @@
     props: ['address-id'],
     data() {
       return {
-        labelPosition:'top',
         expanded: false,
         countries:[],
         states:[]
@@ -199,6 +207,12 @@
   #addressForm{
     padding: 10px 20px;
     /deep/ .app-address { margin-top: 7px }
+    /deep/ {
+      .el-form-item__label,
+      .el-form-item__content {
+        line-height: 25px;
+      }
+    }
   }
   .empyt-addr {
     width: 100%;

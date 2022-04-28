@@ -41,14 +41,70 @@
               <h3>Payment method</h3>
             </div>
             <ul class="cashier-pay-list">
-              <li v-for="payment in paymentList" :key="payment.plugin_id" :class="['payment-item', payment.selected && 'selected']">
-                <img :src="payment.image" @click="initiatePay(payment, 'qr')">
+              <li
+                v-for="payment in paymentList"
+                :key="payment.plugin_id"
+                :class="['payment-item', payment.selected && 'selected']"
+                @click="initiatePay(payment, 'qr')"
+              >
+                <img :src="payment.image">
               </li>
             </ul>
           </div>
         </div>
-        <div v-show="showPayBox" class="cashier-pay-box">
-          <div class="pay-item">
+        <div v-show="showPayBox" class="cashier-pay-box" :class="payment_plugin_id">
+          <div v-if="payment_plugin_id === 'creditCardPlugin'" class="credit-card-box">
+            <div class="credit-card">
+              <div class="card-box">
+                <div class="card-item">
+                  <label for="credit-card-number" class="card-item-label">Card number</label>
+                  <input type="text" id="credit-card-number" class="card-item-input" autocomplete="off">
+                  <div class="icon-card"></div>
+                </div>
+                <div class="card-item card-valid-thru">
+                  <label for="credit-card-month" class="card-item-label">Valid thru (mm/yy)</label>
+                  <input type="text" id="credit-card-month" class="card-item-input" maxlength="2" autocomplete="off">
+                  &nbsp;&nbsp;/&nbsp;&nbsp;
+                  <input type="text" id="credit-card-year" class="card-item-input" maxlength="2" autocomplete="off">
+                </div>
+                <div class="card-item">
+                  <label for="credit-card-name" class="card-item-label">Cardholder's name</label>
+                  <input type="text" id="credit-card-name" class="card-item-input" autocomplete="off">
+                </div>
+              </div>
+              <div class="card-box cvv2">
+                <div class="card-item">
+                  <label for="credit-card-cvv" class="card-item-label">CVV/CVC</label>
+                  <input type="text" id="credit-card-cvv" class="card-item-input" autocomplete="off">
+                  <div class="cvv-tip-box">
+                    <span class="cvv-tip">What is CVV/CVC</span>
+                    <div class="cvv-tip-dialog">
+                      <div class="cvv-tip-info">
+                        <div class="cvv-tip-info-image">
+                          <img src="https://demos.mv.cs-cart.com/99a10ad1927fad52/design/themes/responsive/media/images/visa_cvv.png" alt="">
+                        </div>
+                        <div class="cvv-tip-info-description">
+                          <h5 class="cvv-tip-info-description-title">Visa, MasterCard, Discover</h5>
+                          <p>This number is printed in the signature area on the back of the card. It is the 3 digits AFTER the credit card number.</p>
+                        </div>
+                      </div>
+                      <div class="cvv-tip-info">
+                        <div class="cvv-tip-info-image">
+                          <img src="https://demos.mv.cs-cart.com/99a10ad1927fad52/design/themes/responsive/media/images/express_cvv.png" alt="">
+                        </div>
+                        <div class="cvv-tip-info-description">
+                          <h5 class="cvv-tip-info-description-title">American Express</h5>
+                          <p>CVV is on the front of the card above the credit card number (either on the right or on the left side of the credit card).</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a class="pay-btn" href="javascript:;" @click="payWithCreditCard">Pay ${{ order.need_pay_price }} </a>
+          </div>
+          <div v-else class="pay-item">
             <div class="pay-left">
               <p v-if="payment_plugin_id !== 'weixinPayPlugin'">Pay by computer</p>
               <div v-if="payment_plugin_id === 'weixinPayPlugin'" class="pc-pay-img">
@@ -111,6 +167,12 @@
           item.selected = false
           return item
         })
+        this.paymentList.push({
+          image: require('../../assets/images/icon-credit-card.png'),
+          is_retrace: 0,
+          method_name: 'CreditCard',
+          plugin_id: 'creditCardPlugin',
+        })
       })
     },
     methods: {
@@ -118,14 +180,14 @@
       initiatePay(payment, pay_mode) {
         this.showPayBox = true
         if (payment) {
-          this.$set(this, 'paymentList', this.paymentList.map(item => {
+          this.paymentList.forEach(item => {
             item.selected = item.plugin_id === payment.plugin_id
-            return item
-          }))
+          })
         } else {
           payment = this.paymentList.filter(item => item.selected)[0]
         }
         this.payment_plugin_id = payment.plugin_id
+        if (payment.plugin_id === 'creditCardPlugin') return
         const trade_type = this.trade_sn ? 'trade' : 'order'
         const sn = this.trade_sn || this.order_sn
         const client_type = 'PC'
@@ -158,6 +220,9 @@
             qrIframe.forms[0].submit()
           })
         })
+      },
+      payWithCreditCard() {
+        this.$message.error('Test site, cannot pay')
       }
     }
   }
@@ -323,17 +388,6 @@
           width: 165px;
           background: url(../../assets/images/icons-cashier.png) no-repeat 0 -1417px;
         }
-        .pay-btn {
-          width: 180px;
-          height: 40px;
-          line-height: 40px;
-          text-align: center;
-          color: #fff;
-          font-size: 14px;
-          background: $color-main;
-          display: block;
-          margin: 30px auto 0 auto;
-        }
         .icon-or {
           display: block;
           background: url(../../assets/images/icons-cashier.png) no-repeat -212px -1417px;
@@ -363,6 +417,17 @@
         }
       }
     }
+    .pay-btn {
+      width: 180px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      color: #fff;
+      font-size: 14px;
+      background: $color-main;
+      display: block;
+      margin: 30px auto 0 auto;
+    }
   }
   .see-order-btn {
     margin-left: 20px;
@@ -374,6 +439,133 @@
     font-weight: 400;
     span {
       color: $color-main;
+    }
+  }
+  .cashier-pay-box.creditCardPlugin {
+    background-color: #ffffff;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .credit-card-box {
+    .credit-card {
+      display: flex;
+    }
+    .card-box {
+      display: inline-block;
+      box-sizing: border-box;
+      padding: 15px 22px;
+      width: 363px;
+      border: 1px solid #f6f6f6;
+      border-radius: 5px;
+      background: #f6f6f6;
+    }
+    .card-item {
+      position: relative;
+      margin: 0 0 12px 0;
+      vertical-align: middle;
+      .card-item-label {
+        position: relative;
+        color: #737373;
+        display: block;
+        padding: 6px 0;
+        font-weight: bold;
+        &:after {
+          padding-left: 3px;
+          color: #ea7162;
+          content: "*";
+          font-size: 13px;
+          line-height: 1px;
+        }
+      }
+      .card-item-input {
+        padding: 8px 60px 8px 8px;
+        width: 100%;
+        background-color: #fff;
+        min-height: 36px;
+        height: 36px;
+        outline: none;
+        border: 1px solid #c8c8c8;
+        font-size: 14px;
+        color: #000000;
+        box-sizing: border-box;
+        border-radius: 4px;
+        transition: all ease .2s;
+        &:focus,
+        &:hover {
+          border-color: #10b9e4;
+          box-shadow: 0 0 0 2px rgba(16,185,228,0.1);
+        }
+      }
+      .icon-card {
+        position: absolute;
+        right: 5px;
+        bottom: -10px;
+        z-index: 10;
+        display: inline-block;
+        border-radius: 4px;
+        margin: 0;
+        width: 51px;
+        height: 32px;
+        background: url(../../assets/images/payments.png) no-repeat -300px 0px;
+      }
+      &.card-valid-thru {
+        .card-item-input {
+          width: 50px;
+          padding-left: 8px;
+          padding-right: 8px;
+        }
+      }
+    }
+    .card-box.cvv2 {
+      background-color: #ffffff;
+      .card-item-input {
+        width: 65px;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      .cvv-tip-box {
+        position: relative;
+        display: inline-block;
+        .cvv-tip {
+          cursor: pointer;
+          color: #10b9e4;
+          font-size: 13px;
+        }
+        .cvv-tip-dialog {
+          display: none;
+          position: absolute;
+          bottom: 0;
+          left: 100%;
+          z-index: 100;
+          padding: 15px 5px;
+          width: 340px;
+          border: 1px solid #fff;
+          background-color: #fff;
+          border-radius: 6px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+          .cvv-tip-info {
+            display: flex;
+            color: #000;
+            font-weight: 400;
+            .cvv-tip-info-image {
+              padding: 0 15px;
+            }
+            .cvv-tip-info-description {
+              width: 240px;
+              font-size: 13px;
+              h5, p {
+                margin: 0;
+              }
+              p {
+                padding: 6px 0;
+              }
+            }
+          }
+        }
+        &:hover .cvv-tip-dialog {
+          display: block;
+        }
+      }
     }
   }
 </style>

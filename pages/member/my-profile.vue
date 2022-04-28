@@ -50,8 +50,42 @@
           >
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="region">
-          <en-region-picker :api="MixinRegionApi" :default="defaultRegions" @changed="(object) => { profileForm.region = object.last_id }"/>
+        <el-form-item label="Country" prop="country_code">
+          <el-select
+            v-model="profileForm.country_code"
+            size="small"
+            filterable
+            clearable
+            placeholder="Select country"
+            style="width: 100%"
+            @change="handleCountryChange"
+          >
+            <el-option
+              v-for="item in countries"
+              :key="item.code"
+              :value="item.code"
+              :label="item.name"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item v-if="profileRules.state_code[0].required" label="State / Province / Region" prop="state_code">
+          <el-select
+            v-model="profileForm.state_code"
+            v-loading="stateLoading"
+            size="small"
+            filterable
+            clearable
+            placeholder="Select state"
+            style="width: 100%"
+            @change="handleStateChange"
+          >
+            <el-option
+              v-for="item in states"
+              :key="item.code"
+              :value="item.code"
+              :label="item.name"
+            />
+          </el-select>
         </el-form-item>
         <el-form-item label="Detailed address" prop="address">
           <el-input v-model="profileForm.address" placeholder="most50A character" maxlength="50" size="small" clearable></el-input>
@@ -93,12 +127,11 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import { DatePicker, Upload, Dialog } from 'element-ui'
-  Vue.use(DatePicker).use(Upload).use(Dialog)
+  import { Select, Option, DatePicker, Upload, Dialog } from 'element-ui'
   import { mapGetters, mapActions } from 'vuex'
   import EnRegionPicker from "@/components/RegionPicker"
   import { RegExp } from '@/ui-utils'
+  import * as API_Country from '@/api/country'
   import request from '@/utils/request'
   export default {
     name: 'my-profile',
@@ -107,14 +140,18 @@
         title: `My profile-${this.site.title}`
       }
     },
-    components: { EnRegionPicker },
+    components: {
+      EnRegionPicker,
+      'el-date-picker': DatePicker,
+      'el-upload': Upload,
+      'el-dialog': Dialog,
+      'el-select': Select,
+      'el-option': Option
+    },
     data() {
-      const user = this.$store.state.user.user
       return {
-        /** region*/
-        regions: {},
         /** Personal Information Form*/
-        profileForm: user ? JSON.parse(JSON.stringify(user)) : {},
+        profileForm: {},
         /** Profile form rules*/
         profileRules: {
           nickname: [
@@ -141,34 +178,34 @@
               } },
               trigger: 'blur'
             }
-          ]
+          ],
+          state_code: [{ required: false, message: 'Please select a state', trigger: 'change' }]
         },
         // Modify avatar dialog
         dialogFaceVisible: false,
         // Cropped picture address
-        cropperImg: ''
+        cropperImg: '',
+        countries: [],
+        states: [],
+        stateLoading: false
       }
     },
+    mounted() {
+      this.getAllCountries()
+    },
     watch: {
-      user(newVal, oldVal) {
-        this.profileForm = newVal ? JSON.parse(JSON.stringify(newVal)) : {}
+      user: {
+        immediate: true,
+        handler(newVal) {
+          this.profileForm = newVal ? JSON.parse(JSON.stringify(newVal)) : {}
+          if (newVal.country_code) {
+            this.getCountryState(newVal.country_code)
+          }
+        }
       }
     },
     computed: {
-      /** The default address*/
-      defaultRegions() {
-        const { user } = this.$store.state.user
-        if(!user || !user.province_id) return null
-        return [
-          user.province_id,
-          user.city_id,
-          user.county_id,
-          user.town_id
-        ]
-      },
-      ...mapGetters({
-        user: 'user'
-      })
+      ...mapGetters({ user: 'user' })
     },
     methods: {
       /** The profile picture file is changed. Procedure*/
@@ -218,6 +255,42 @@
             return false
           }
         })
+      },
+      /** Get all countries */
+      getAllCountries() {
+        API_Country.getCountries().then(res => {
+          this.countries = res
+        })
+      },
+      /** Get country state */
+      getCountryState(code) {
+        this.stateLoading = true
+        this.states = []
+        API_Country.getStates(code).then(res => {
+          if (res && res.length) {
+            this.profileRules.state_code[0].required = true
+            this.states = res
+          } else {
+            this.profileRules.state_code[0].required = false
+          }
+        }).finally(() => {
+          this.stateLoading = false
+        })
+      },
+      /** Handle country changed */
+      handleCountryChange(code) {
+        const country = this.countries.find(item => item.code === code)
+        if (!country) return
+        this.profileForm.country = country.name
+        this.profileForm.state_name = ''
+        this.profileForm.state_code = ''
+        this.getCountryState(code)
+      },
+      /** Handle state changed */
+      handleStateChange(code) {
+        const state = this.states.find(item => item.code === code)
+        if (!state) return
+        this.profileForm.state_name = state.name
       },
       ...mapActions({
         saveUserInfo: 'user/saveUserInfoAction'
@@ -292,6 +365,11 @@
     }
     .el-dialog__footer {
       padding: 10px;
+    }
+  }
+  /deep/ {
+    .el-form-item__label {
+      word-break: break-word;
     }
   }
 </style>

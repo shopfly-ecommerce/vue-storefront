@@ -80,7 +80,7 @@
           <div class="order-intro">
             <h1>The order information</h1>
             <div class="detail-list">
-              <dl><dt>Shipping address：</dt><dd>{{ this.order.ship_province }} {{ this.order.ship_city }} {{ this.order.ship_county }} {{ this.order.ship_town }} - {{ order.ship_addr }}</dd></dl>
+              <dl><dt>Shipping address：</dt><dd>{{ `${order.ship_country} - ${order.ship_state} - ${order.ship_city} - ${order.ship_addr}` }}</dd></dl>
               <dl class="top-line"><dt>Order no.：</dt><dd>{{ this.order_sn }}</dd></dl>
               <dl><dt>Terms of payment：</dt><dd>{{ this.order.payment_type === 'ONLINE' ? `Online payment${this.order.payment_method_name || ''}` : 'Cash on delivery' }}</dd></dl>
               <dl><dt>Amount paid：</dt><dd><span class="price">￥{{ this.order.order_price | unitPrice }}</span></dd></dl>

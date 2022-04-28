@@ -6,7 +6,7 @@
         <div class="info-list">
           <dl><dt>Order no.：</dt><dd>{{ order.sn }}</dd></dl>
           <dl><dt>Create time：</dt><dd>{{ order.create_time | unixToDate }}</dd></dl>
-          <dl><dt>Shipping address：</dt><dd>{{ order.ship_province }} {{ order.ship_city }} {{ order.ship_county }} {{ order.ship_town }} {{order.ship_address}} - {{ order.ship_addr }}</dd></dl>
+          <dl><dt>Shipping address：</dt><dd>{{ `${order.ship_country} - ${order.ship_state} - ${order.ship_city} - ${order.ship_addr}` }}</dd></dl>
           <dl><dt>The consignee：</dt><dd>{{ order.ship_name }}</dd></dl>
           <dl><dt>Delivery time:</dt><dd>{{ order.receive_time }}</dd></dl>
           <dl><dt>Customer message：</dt><dd>{{ order.remark || 'There is no' }}</dd></dl>
