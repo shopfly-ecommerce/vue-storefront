@@ -78,9 +78,9 @@
                   <i v-if="index === 0" class="ex-text">The latest</i>
                 </div>
                 <div class="ex-info">
-                  {{ item.time }}
+                  {{ formatterDateTime(item.datetime) }}
                   <br>
-                  {{ item.context }}
+                  {{ item.message }}
                 </div>
               </div>
             </li>
@@ -113,6 +113,8 @@
   import * as API_Trade from '@/api/trade'
   import SkuList from '../-skuList'
   import GiftList from '../-giftList'
+  import { Foundation } from '~/ui-utils'
+
   export default {
     name: 'order-detail',
     validate({ query }) {
@@ -188,6 +190,13 @@
           const index = response.findIndex(item => item.show_status === 0)
           this.flow_active = index === -1 ? response.length : index
         })
+      },
+      // Formatter date and time
+      formatterDateTime(dateTime) {
+        let time = new Date(dateTime).getTime()
+        time = parseInt(String(time / 1000))
+        time = Foundation.unixToDate(time, 'MM/dd/yy hh:mm:ss')
+        return time
       }
     }
   }
