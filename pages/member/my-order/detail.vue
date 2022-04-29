@@ -75,7 +75,7 @@
               <div class="inner-ex">
                 <div class="ex-circle">
                   <i class="ex-icon iconfont ea-icon-dot"></i>
-                  <i v-if="index === 0" class="ex-text">The latest</i>
+                  <!--<i v-if="index === 0" class="ex-text">The latest</i>-->
                 </div>
                 <div class="ex-info">
                   {{ formatterDateTime(item.datetime) }}
@@ -314,7 +314,7 @@
       border-bottom: solid 1px #f5f5f5;
       width: 500px;
       overflow: hidden;
-      &:first-child {
+      &:last-child {
         color: $color-main
       }
     }
